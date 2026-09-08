@@ -1,0 +1,11 @@
+{
+  "name": "rail-samay-root",
+  "version": "1.0.0",
+  "description": "Rail Samay - Advanced ETA Forecasting",
+  "scripts": {
+    "install:all": "cd frontend && npm install",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && pip install -r requirements.txt && python -m uvicorn main:app --reload --port 8000",
+    "dev:all": "npx concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
+  }
+}
