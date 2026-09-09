@@ -82,27 +82,28 @@ function App() {
 
       {/* Hero Section */}
       <div className="w-full relative h-[calc(100vh-80px)] overflow-hidden">
-        {/* Background Image */}
+        {/* Background Image - No Overlay */}
         <div className="absolute inset-0 z-0">
-          <img src="/hero-bg.png" alt="Indian Railways Vande Bharat" className="w-full h-full object-cover object-[80%_center]" />
-          {/* Navy Blue Gradient Overlay - strictly left sided so train is visible */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1E3A8A]/90 via-[#1E3A8A]/40 to-transparent w-full md:w-[70%] lg:w-[55%]"></div>
+          <img src="/hero-bg.png" alt="Indian Railways WAG-12B" className="w-full h-full object-cover object-[80%_center]" />
         </div>
+        
         <div className="w-full px-4 sm:px-8 lg:px-12 relative z-10 flex items-center h-full">
-          <div className="max-w-2xl text-white mt-16 lg:mt-28">
-            <h1 className="text-4xl lg:text-6xl font-montserrat font-extrabold leading-[1.1] mb-6 text-white">
-              <span className="block mb-2">India's Most Accurate</span>
-              <span className="block">Train Tracker.</span>
+          <div className="max-w-2xl mt-16 lg:mt-28">
+            <h1 className="text-4xl lg:text-[3.5rem] font-montserrat font-extrabold leading-[1.15] mb-6 text-[#0f172a] uppercase tracking-tight">
+              <span className="block mb-2">National Train</span>
+              <span className="block text-[#1E3A8A]">Tracking System</span>
             </h1>
-            <p className="text-lg text-blue-50 mb-10 font-inter leading-relaxed max-w-xl opacity-95">
-              Experience the next generation of railway tracking. Rail Samay uses advanced dynamic forecasting to provide you with the most accurate, real-time arrival predictions across the Indian Railways network.
+            <p className="text-lg font-inter mb-10 text-slate-800 max-w-xl leading-relaxed font-medium">
+              An advanced digital infrastructure for real-time fleet positioning, algorithmic delay forecasting, and centralized network oversight. Ensuring precision and transparency across all railway zones.
             </p>
-            <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-              <button className="bg-white text-[#1E3A8A] font-bold py-4 px-8 rounded shadow hover:bg-gray-100 transition-colors text-sm uppercase tracking-wider">
-                Track Your Train
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button className="bg-[#F97316] text-white font-bold py-4 px-8 rounded-sm shadow-md hover:bg-orange-700 transition-colors uppercase tracking-widest text-sm flex items-center justify-center">
+                Track Live Status
+                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </button>
-              <button className="border-2 border-white text-white font-bold py-4 px-8 rounded hover:bg-white/10 transition-colors text-sm uppercase tracking-wider">
-                Live Station Board
+              <button className="bg-white text-[#1E3A8A] font-bold py-4 px-8 rounded-sm shadow-md hover:shadow-lg hover:bg-slate-50 transition-all uppercase tracking-widest text-sm flex items-center justify-center">
+                ATS Control Room
+                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
               </button>
             </div>
           </div>
@@ -230,17 +231,33 @@ function App() {
           {/* ATS Control Room - Left Text, Right Mockup */}
           <div className="flex flex-col lg:flex-row items-center gap-16 mb-32">
             <div className="w-full lg:w-1/2">
-              <div className="bg-[#F97316] text-white text-xs font-bold px-4 py-1.5 uppercase tracking-widest rounded-full inline-block mb-6">For Railway Operators</div>
-              <h3 className="text-4xl font-montserrat font-extrabold text-[#1E3A8A] mb-6 leading-tight">ATS Control Room Dashboard</h3>
-              <p className="text-slate-600 font-inter text-lg leading-relaxed mb-8">
+              <div className="bg-[#1E3A8A] text-white text-xs font-bold px-4 py-1.5 uppercase tracking-widest rounded-sm border-l-4 border-[#F97316] inline-block mb-6 shadow-sm">For Railway Operators</div>
+              <h3 className="text-4xl font-montserrat font-extrabold text-[#0f172a] mb-6 leading-tight">ATS Control Room Dashboard</h3>
+              <p className="text-slate-700 font-inter text-lg leading-relaxed mb-8">
                 The central nervous system for railway staff. Monitor live network traffic, predict cascading delays across zones, and manage train schedules with unprecedented precision from a unified command center.
               </p>
-              <ul className="space-y-4 mb-10 text-slate-700 font-inter font-medium">
-                 <li className="flex items-center"><svg className="w-6 h-6 text-[#F97316] mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Live Network Map & Grid View</li>
-                 <li className="flex items-center"><svg className="w-6 h-6 text-[#F97316] mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Algorithmic Delay Prediction</li>
-                 <li className="flex items-center"><svg className="w-6 h-6 text-[#F97316] mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Global Fleet Oversight</li>
-              </ul>
-              <button className="bg-[#1E3A8A] text-white font-bold py-4 px-10 rounded shadow hover:bg-blue-900 transition-colors uppercase tracking-widest text-sm flex items-center group w-max">
+              {/* Railway Track Timeline */}
+              <div className="relative border-l-[6px] border-double border-slate-300 ml-4 py-2 space-y-8 mb-10 font-inter">
+                 <div className="relative pl-10 flex items-center">
+                   <div className="absolute -left-[13px] bg-white text-[#F97316] rounded-full p-1 border-2 border-[#F97316] shadow-sm flex items-center justify-center">
+                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>
+                   </div>
+                   <span className="font-semibold text-slate-800">Live Network Map & Grid View</span>
+                 </div>
+                 <div className="relative pl-10 flex items-center">
+                   <div className="absolute -left-[13px] bg-white text-[#F97316] rounded-full p-1 border-2 border-[#F97316] shadow-sm flex items-center justify-center">
+                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>
+                   </div>
+                   <span className="font-semibold text-slate-800">Algorithmic Delay Prediction</span>
+                 </div>
+                 <div className="relative pl-10 flex items-center">
+                   <div className="absolute -left-[13px] bg-white text-[#F97316] rounded-full p-1 border-2 border-[#F97316] shadow-sm flex items-center justify-center">
+                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>
+                   </div>
+                   <span className="font-semibold text-slate-800">Global Fleet Oversight</span>
+                 </div>
+              </div>
+              <button className="bg-white border-2 border-[#1E3A8A] text-[#1E3A8A] font-bold py-4 px-10 rounded-sm shadow-sm hover:bg-slate-50 hover:shadow-md transition-all uppercase tracking-widest text-sm flex items-center group w-max">
                 Access ATS Portal
                 <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </button>
@@ -265,17 +282,33 @@ function App() {
           {/* Passenger Portal - Left Mockup, Right Text */}
           <div className="flex flex-col lg:flex-row-reverse items-center gap-16">
             <div className="w-full lg:w-1/2">
-              <div className="bg-[#10B981] text-white text-xs font-bold px-4 py-1.5 uppercase tracking-widest rounded-full inline-block mb-6">For Citizens</div>
-              <h3 className="text-4xl font-montserrat font-extrabold text-[#1E3A8A] mb-6 leading-tight">Passenger Tracking Portal</h3>
-              <p className="text-slate-600 font-inter text-lg leading-relaxed mb-8">
+              <div className="bg-[#1E3A8A] text-white text-xs font-bold px-4 py-1.5 uppercase tracking-widest rounded-sm border-l-4 border-[#F97316] inline-block mb-6 shadow-sm">For Citizens</div>
+              <h3 className="text-4xl font-montserrat font-extrabold text-[#0f172a] mb-6 leading-tight">Passenger Tracking Portal</h3>
+              <p className="text-slate-700 font-inter text-lg leading-relaxed mb-8">
                 A frictionless tracking experience for everyday citizens. Enter your train number to get real-time dynamic ETAs, access live station boards, and receive instant WhatsApp alerts without complex registrations.
               </p>
-              <ul className="space-y-4 mb-10 text-slate-700 font-inter font-medium">
-                 <li className="flex items-center"><svg className="w-6 h-6 text-[#10B981] mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Open Live Station Boards</li>
-                 <li className="flex items-center"><svg className="w-6 h-6 text-[#10B981] mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Dynamic Map-Based Tracking</li>
-                 <li className="flex items-center"><svg className="w-6 h-6 text-[#10B981] mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> WhatsApp Schedule Alerts</li>
-              </ul>
-              <button className="bg-white border-2 border-[#1E3A8A] text-[#1E3A8A] font-bold py-4 px-10 rounded shadow hover:bg-slate-50 transition-colors uppercase tracking-widest text-sm flex items-center group w-max">
+              {/* Railway Track Timeline */}
+              <div className="relative border-l-[6px] border-double border-slate-300 ml-4 py-2 space-y-8 mb-10 font-inter">
+                 <div className="relative pl-10 flex items-center">
+                   <div className="absolute -left-[13px] bg-white text-[#F97316] rounded-full p-1 border-2 border-[#F97316] shadow-sm flex items-center justify-center">
+                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>
+                   </div>
+                   <span className="font-semibold text-slate-800">Open Live Station Boards</span>
+                 </div>
+                 <div className="relative pl-10 flex items-center">
+                   <div className="absolute -left-[13px] bg-white text-[#F97316] rounded-full p-1 border-2 border-[#F97316] shadow-sm flex items-center justify-center">
+                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>
+                   </div>
+                   <span className="font-semibold text-slate-800">Dynamic Map-Based Tracking</span>
+                 </div>
+                 <div className="relative pl-10 flex items-center">
+                   <div className="absolute -left-[13px] bg-white text-[#F97316] rounded-full p-1 border-2 border-[#F97316] shadow-sm flex items-center justify-center">
+                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>
+                   </div>
+                   <span className="font-semibold text-slate-800">WhatsApp Schedule Alerts</span>
+                 </div>
+              </div>
+              <button className="bg-white border-2 border-[#1E3A8A] text-[#1E3A8A] font-bold py-4 px-10 rounded-sm shadow-sm hover:bg-slate-50 hover:shadow-md transition-all uppercase tracking-widest text-sm flex items-center group w-max">
                 Track Your Train
                 <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </button>
