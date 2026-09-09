@@ -92,15 +92,15 @@ function App() {
         </div>
         
         <div className="w-full px-4 sm:px-8 lg:px-12 relative z-10 flex items-center h-full">
-          <div className="max-w-2xl mt-16 lg:mt-28">
-            <h1 className="text-4xl lg:text-[3.5rem] font-montserrat font-extrabold leading-[1.15] mb-6 text-[#0f172a] uppercase tracking-tight">
-              <span className="block mb-2">National Train</span>
+          <div className="max-w-3xl mt-16 lg:mt-28">
+            <h1 className="text-4xl lg:text-[4rem] font-montserrat font-extrabold leading-[1.15] mb-8 text-[#0f172a] uppercase tracking-tight drop-shadow-sm">
+              <span className="block mb-3">National Train</span>
               <span className="block text-[#1E3A8A]">Tracking System</span>
             </h1>
-            <p className="text-lg font-inter mb-10 text-slate-800 max-w-xl leading-relaxed font-medium">
+            <p className="text-lg lg:text-xl font-inter mb-12 text-slate-800 max-w-2xl leading-[1.8] font-medium drop-shadow-sm">
               An advanced digital infrastructure for real-time fleet positioning, algorithmic delay forecasting, and centralized network oversight. Ensuring precision and transparency across all railway zones.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-5">
               <button className="bg-[#F97316] text-white font-bold py-4 px-8 rounded-sm shadow-md hover:bg-orange-700 transition-colors uppercase tracking-widest text-sm flex items-center justify-center">
                 Track Live Status
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
