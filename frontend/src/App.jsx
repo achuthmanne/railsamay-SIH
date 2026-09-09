@@ -63,7 +63,9 @@ function App() {
                 <img src="/favicon.png" alt="Rail Samay Logo" className="h-14 w-14 object-contain flex-shrink-0" />
               </div>
               <div className="flex flex-col justify-center">
-                <span className={`font-montserrat font-extrabold text-[#1E3A8A] tracking-tight transition-all duration-500 ${isScrolled ? 'text-xl leading-none' : 'text-2xl leading-none'}`}>RAIL SAMAY</span>
+                <span className={`font-montserrat font-extrabold text-[#1E3A8A] tracking-tight transition-all duration-500 ${isScrolled ? 'text-xl leading-none' : 'text-2xl leading-none'}`}>
+                  RAIL <span className="text-[#F97316]">SAMAY</span>
+                </span>
                 <span className={`font-medium tracking-widest uppercase text-slate-500 transition-all duration-500 ease-in-out ${isScrolled ? 'text-[0.55rem] mt-0.5' : 'text-[0.65rem] mt-1'}`}>The Accurate Time of Indian Railways</span>
               </div>
             </div>
@@ -236,25 +238,71 @@ function App() {
               <p className="text-slate-700 font-inter text-lg leading-relaxed mb-8">
                 The central nervous system for railway staff. Monitor live network traffic, predict cascading delays across zones, and manage train schedules with unprecedented precision from a unified command center.
               </p>
-              {/* Railway Track Timeline */}
-              <div className="relative border-l-[6px] border-double border-slate-300 ml-4 py-2 space-y-8 mb-10 font-inter">
-                 <div className="relative pl-10 flex items-center">
-                   <div className="absolute -left-[13px] bg-white text-[#F97316] rounded-full p-1 border-2 border-[#F97316] shadow-sm flex items-center justify-center">
-                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>
-                   </div>
-                   <span className="font-semibold text-slate-800">Live Network Map & Grid View</span>
+              {/* Animated Official Location-Train Track */}
+              <div className="relative mb-10 font-inter pl-16">
+                 <style>{`
+                   @keyframes trainRoute {
+                     0%, 15% { top: -7px; }
+                     35%, 65% { top: 61px; }
+                     85%, 100% { top: 129px; }
+                   }
+                   @keyframes signalBlink {
+                     0%, 15% { opacity: 1; transform: scale(1); }
+                     16%, 34% { opacity: 0; transform: scale(0.5); }
+                     35%, 65% { opacity: 1; transform: scale(1); }
+                     66%, 84% { opacity: 0; transform: scale(0.5); }
+                     85%, 100% { opacity: 1; transform: scale(1); }
+                   }
+                   .moving-train {
+                     animation: trainRoute 8s ease-in-out infinite alternate;
+                   }
+                   .signal-blink {
+                     animation: signalBlink 8s ease-in-out infinite alternate;
+                   }
+                 `}</style>
+                 
+                 {/* Extended Visual Track (Perfect Sleeper Symmetry) */}
+                 <div className="absolute left-[10px] w-[12px] z-0" 
+                      style={{
+                        top: '-12px',
+                        height: '204px',
+                        borderLeft: '3px solid #64748b',
+                        borderRight: '3px solid #64748b',
+                        backgroundImage: 'repeating-linear-gradient(to bottom, transparent, transparent 12px, #cbd5e1 12px, #cbd5e1 16px)'
+                      }}>
                  </div>
-                 <div className="relative pl-10 flex items-center">
-                   <div className="absolute -left-[13px] bg-white text-[#F97316] rounded-full p-1 border-2 border-[#F97316] shadow-sm flex items-center justify-center">
-                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>
+
+                 {/* Official Location Pin with Broadcast Signals */}
+                 <div className="absolute left-[-16px] w-[64px] h-14 z-20 moving-train flex justify-center">
+                   
+                   {/* Left Broadcast Signal */}
+                   <svg className="absolute left-[-6px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                     <path d="M14 4 A10 10 0 0 0 14 20 M20 8 A5 5 0 0 0 20 16" />
+                   </svg>
+
+                   {/* Right Broadcast Signal */}
+                   <svg className="absolute right-[-6px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                     <path d="M10 4 A10 10 0 0 1 10 20 M4 8 A5 5 0 0 1 4 16" />
+                   </svg>
+
+                   {/* Marker Body */}
+                   <div className="relative w-12 h-14">
+                     {/* Solid Blue Map Marker */}
+                     <svg className="absolute inset-0 w-full h-full text-[#1E3A8A] drop-shadow-xl" viewBox="0 0 24 24" fill="currentColor">
+                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+                     </svg>
+                     {/* White Train Icon Center */}
+                     <svg className="absolute top-[10px] left-[13px] w-[22px] h-[22px] text-white z-10" fill="currentColor" viewBox="0 0 24 24">
+                       <path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path>
+                     </svg>
                    </div>
-                   <span className="font-semibold text-slate-800">Algorithmic Delay Prediction</span>
                  </div>
-                 <div className="relative pl-10 flex items-center">
-                   <div className="absolute -left-[13px] bg-white text-[#F97316] rounded-full p-1 border-2 border-[#F97316] shadow-sm flex items-center justify-center">
-                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>
-                   </div>
-                   <span className="font-semibold text-slate-800">Global Fleet Oversight</span>
+
+                 {/* The Station Points */}
+                 <div className="space-y-10 relative z-10">
+                   <div className="font-semibold text-slate-800 text-lg flex items-center h-7">Live Network Map & Grid View</div>
+                   <div className="font-semibold text-slate-800 text-lg flex items-center h-7">Algorithmic Delay Prediction</div>
+                   <div className="font-semibold text-slate-800 text-lg flex items-center h-7">Global Fleet Oversight</div>
                  </div>
               </div>
               <button className="bg-white border-2 border-[#1E3A8A] text-[#1E3A8A] font-bold py-4 px-10 rounded-sm shadow-sm hover:bg-slate-50 hover:shadow-md transition-all uppercase tracking-widest text-sm flex items-center group w-max">
@@ -287,25 +335,50 @@ function App() {
               <p className="text-slate-700 font-inter text-lg leading-relaxed mb-8">
                 A frictionless tracking experience for everyday citizens. Enter your train number to get real-time dynamic ETAs, access live station boards, and receive instant WhatsApp alerts without complex registrations.
               </p>
-              {/* Railway Track Timeline */}
-              <div className="relative border-l-[6px] border-double border-slate-300 ml-4 py-2 space-y-8 mb-10 font-inter">
-                 <div className="relative pl-10 flex items-center">
-                   <div className="absolute -left-[13px] bg-white text-[#F97316] rounded-full p-1 border-2 border-[#F97316] shadow-sm flex items-center justify-center">
-                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>
-                   </div>
-                   <span className="font-semibold text-slate-800">Open Live Station Boards</span>
+              {/* Animated Official Location-Train Track */}
+              <div className="relative mb-10 font-inter pl-16">
+                 {/* Extended Visual Track (Perfect Sleeper Symmetry) */}
+                 <div className="absolute left-[10px] w-[12px] z-0" 
+                      style={{
+                        top: '-12px',
+                        height: '204px',
+                        borderLeft: '3px solid #64748b',
+                        borderRight: '3px solid #64748b',
+                        backgroundImage: 'repeating-linear-gradient(to bottom, transparent, transparent 12px, #cbd5e1 12px, #cbd5e1 16px)'
+                      }}>
                  </div>
-                 <div className="relative pl-10 flex items-center">
-                   <div className="absolute -left-[13px] bg-white text-[#F97316] rounded-full p-1 border-2 border-[#F97316] shadow-sm flex items-center justify-center">
-                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>
+
+                 {/* Official Location Pin with Broadcast Signals */}
+                 <div className="absolute left-[-16px] w-[64px] h-14 z-20 moving-train flex justify-center">
+                   
+                   {/* Left Broadcast Signal */}
+                   <svg className="absolute left-[-6px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                     <path d="M14 4 A10 10 0 0 0 14 20 M20 8 A5 5 0 0 0 20 16" />
+                   </svg>
+
+                   {/* Right Broadcast Signal */}
+                   <svg className="absolute right-[-6px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                     <path d="M10 4 A10 10 0 0 1 10 20 M4 8 A5 5 0 0 1 4 16" />
+                   </svg>
+
+                   {/* Marker Body */}
+                   <div className="relative w-12 h-14">
+                     {/* Solid Blue Map Marker */}
+                     <svg className="absolute inset-0 w-full h-full text-[#1E3A8A] drop-shadow-xl" viewBox="0 0 24 24" fill="currentColor">
+                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+                     </svg>
+                     {/* White Train Icon Center */}
+                     <svg className="absolute top-[10px] left-[13px] w-[22px] h-[22px] text-white z-10" fill="currentColor" viewBox="0 0 24 24">
+                       <path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path>
+                     </svg>
                    </div>
-                   <span className="font-semibold text-slate-800">Dynamic Map-Based Tracking</span>
                  </div>
-                 <div className="relative pl-10 flex items-center">
-                   <div className="absolute -left-[13px] bg-white text-[#F97316] rounded-full p-1 border-2 border-[#F97316] shadow-sm flex items-center justify-center">
-                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>
-                   </div>
-                   <span className="font-semibold text-slate-800">WhatsApp Schedule Alerts</span>
+
+                 {/* The Station Points */}
+                 <div className="space-y-10 relative z-10">
+                   <div className="font-semibold text-slate-800 text-lg flex items-center h-7">Open Live Station Boards</div>
+                   <div className="font-semibold text-slate-800 text-lg flex items-center h-7">Dynamic Map-Based Tracking</div>
+                   <div className="font-semibold text-slate-800 text-lg flex items-center h-7">WhatsApp Schedule Alerts</div>
                  </div>
               </div>
               <button className="bg-white border-2 border-[#1E3A8A] text-[#1E3A8A] font-bold py-4 px-10 rounded-sm shadow-sm hover:bg-slate-50 hover:shadow-md transition-all uppercase tracking-widest text-sm flex items-center group w-max">
@@ -334,6 +407,47 @@ function App() {
         </div>
       </div>
 
+      {/* Official Footer */}
+      <footer className="bg-[#0f172a] text-slate-400 py-12 font-inter border-t-4 border-[#F97316]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between gap-8 mb-10">
+            <div className="md:w-1/2">
+              <div className="mb-4">
+                <div className="text-white font-black text-2xl tracking-tight">RAIL <span className="text-[#F97316]">SAMAY</span></div>
+              </div>
+              <p className="text-sm leading-relaxed max-w-sm">
+                Advanced Algorithmic Delay Prediction & GPS Fleet Tracking System. 
+                Developed as a Proof of Concept for the Smart India Hackathon.
+              </p>
+            </div>
+            <div className="flex gap-16 md:gap-24 md:justify-end">
+              <div>
+                <h3 className="text-white font-semibold mb-4 tracking-wider text-sm uppercase">Portals</h3>
+                <ul className="space-y-3 text-sm">
+                  <li><a href="#" className="hover:text-white transition-colors">ATS Command Center</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Passenger Tracking</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Live Station Boards</a></li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-white font-semibold mb-4 tracking-wider text-sm uppercase">Resources</h3>
+                <ul className="space-y-3 text-sm">
+                  <li><a href="#" className="hover:text-white transition-colors">API Documentation</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">System Status</a></li>
+                  <li><a href="#" className="hover:text-white transition-colors">Contact Support</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center text-xs">
+            <p>© 2024 Rail Samay. A Smart India Hackathon Initiative.</p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
