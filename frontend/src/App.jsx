@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import LiveEcosystem from './components/LiveEcosystem';
+
 // Custom Animated Counter Component
 const AnimatedCounter = ({ end, duration = 2000, suffix = "", decimals = 0, colorClass, sizeClass = "text-5xl md:text-6xl" }) => {
   const [count, setCount] = useState(0);
@@ -406,6 +408,9 @@ function App() {
 
         </div>
       </div>
+
+      {/* Live AI Ecosystem Section */}
+      <LiveEcosystem />
 
       {/* Official Footer */}
       <footer className="bg-[#0f172a] text-slate-400 py-12 font-inter border-t-4 border-[#F97316]">
