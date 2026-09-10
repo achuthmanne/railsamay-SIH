@@ -1,0 +1,557 @@
+12615 GRAND TRUNK EXP
+Journey PURATCHI THALAIVAR DR. MGR CTL CHENNAI (MAS) to NEW DELHI (NDLS)
+
+Last updated: 10-Sep-2026 22:19
+
+Refresh
+Status: Yet to start from source
+
+
+Sun, 06 Sep
+Journey completed
+
+Mon, 07 Sep
+Journey completed
+
+Tue, 08 Sep
+Journey completed
+
+Wed, 09 Sep
+Running
+
+Thu, 10 Sep
+Running
+
+Fri, 11 Sep
+Yet to start from source
+
+
+Yet to start from its source
+
+Data shown with (*) are dynamic in nature and may change.
+Journey Progress
+0%
+SRC
+Train current position
+MAS
+PURATCHI THALAIVAR DR. MGR CTL
+PF9*
+0 Kms
+Scheduled
+18:15 | 11-Sep
+Expected *
+18:15 | 11-Sep
+On Time
+Scheduled
+20:28 | 11-Sep
+Expected *
+20:28 | 11-Sep
+On Time
+GDR
+GUDUR JN
+PF2*
+135 Kms
+Scheduled
+20:30 | 11-Sep
+Expected *
+20:30 | 11-Sep
+On Time
+Scheduled
+20:58 | 11-Sep
+Expected *
+20:58 | 11-Sep
+On Time
+NLR
+NELLORE
+PF2*
+174 Kms
+Scheduled
+21:00 | 11-Sep
+Expected *
+21:00 | 11-Sep
+On Time
+Scheduled
+22:28 | 11-Sep
+Expected *
+22:28 | 11-Sep
+On Time
+OGL
+ONGOLE
+PF1*
+290 Kms
+Scheduled
+22:30 | 11-Sep
+Expected *
+22:30 | 11-Sep
+On Time
+Scheduled
+23:13 | 11-Sep
+Expected *
+23:13 | 11-Sep
+On Time
+CLX
+CHIRALA
+PF4*
+339 Kms
+Scheduled
+23:15 | 11-Sep
+Expected *
+23:15 | 11-Sep
+On Time
+Scheduled
+00:08 | 12-Sep
+Expected *
+00:08 | 12-Sep
+On Time
+TEL
+TENALI JN
+PF4*
+397 Kms
+Scheduled
+00:10 | 12-Sep
+Expected *
+00:10 | 12-Sep
+On Time
+Scheduled
+00:45 | 12-Sep
+Expected *
+00:45 | 12-Sep
+On Time
+BZA
+VIJAYAWADA JN
+PF2*
+428 Kms
+Scheduled
+00:55 | 12-Sep
+Expected *
+00:55 | 12-Sep
+On Time
+Scheduled
+02:29 | 12-Sep
+Expected *
+02:29 | 12-Sep
+On Time
+KMT
+KHAMMAM
+PF2*
+529 Kms
+Scheduled
+02:30 | 12-Sep
+Expected *
+02:30 | 12-Sep
+On Time
+Scheduled
+03:58 | 12-Sep
+Expected *
+03:58 | 12-Sep
+On Time
+WL
+WARANGAL
+PF2*
+635 Kms
+Scheduled
+04:00 | 12-Sep
+Expected *
+04:00 | 12-Sep
+On Time
+Scheduled
+05:29 | 12-Sep
+Expected *
+05:29 | 12-Sep
+On Time
+RDM
+RAMGUNDAM
+PF1*
+738 Kms
+Scheduled
+05:30 | 12-Sep
+Expected *
+05:30 | 12-Sep
+On Time
+Scheduled
+05:49 | 12-Sep
+Expected *
+05:49 | 12-Sep
+On Time
+MCI
+MANCHERAL
+PF1*
+752 Kms
+Scheduled
+05:50 | 12-Sep
+Expected *
+05:50 | 12-Sep
+On Time
+Scheduled
+06:44 | 12-Sep
+Expected *
+06:44 | 12-Sep
+On Time
+SKZR
+SIRPUR KAGHAZNAGAR
+PF2*
+811 Kms
+Scheduled
+06:45 | 12-Sep
+Expected *
+06:45 | 12-Sep
+On Time
+Scheduled
+08:05 | 12-Sep
+Expected *
+08:05 | 12-Sep
+On Time
+BPQ
+BALHARSHAH
+PF4*
+880 Kms
+Scheduled
+08:10 | 12-Sep
+Expected *
+08:10 | 12-Sep
+On Time
+Scheduled
+08:25 | 12-Sep
+Expected *
+08:25 | 12-Sep
+On Time
+CD
+CHANDRAPUR
+PF2*
+894 Kms
+Scheduled
+08:27 | 12-Sep
+Expected *
+08:27 | 12-Sep
+On Time
+Scheduled
+09:29 | 12-Sep
+Expected *
+09:29 | 12-Sep
+On Time
+HGT
+HINGANGHAT
+PF1*
+980 Kms
+Scheduled
+09:30 | 12-Sep
+Expected *
+09:30 | 12-Sep
+On Time
+Scheduled
+10:03 | 12-Sep
+Expected *
+10:03 | 12-Sep
+On Time
+SEGM
+SEVAGRAM
+PF3*
+1013 Kms
+Scheduled
+10:05 | 12-Sep
+Expected *
+10:05 | 12-Sep
+On Time
+Scheduled
+11:25 | 12-Sep
+Expected *
+11:25 | 12-Sep
+On Time
+NGP
+NAGPUR JN
+PF1*
+1089 Kms
+Scheduled
+11:30 | 12-Sep
+Expected *
+11:30 | 12-Sep
+On Time
+Scheduled
+12:33 | 12-Sep
+Expected *
+12:33 | 12-Sep
+On Time
+NRKR
+NARKHER
+PF1*
+1173 Kms
+Scheduled
+12:34 | 12-Sep
+Expected *
+12:34 | 12-Sep
+On Time
+Scheduled
+12:49 | 12-Sep
+Expected *
+12:49 | 12-Sep
+On Time
+PAR
+PANDHURNA
+PF3*
+1191 Kms
+Scheduled
+12:50 | 12-Sep
+Expected *
+12:50 | 12-Sep
+On Time
+Scheduled
+13:48 | 12-Sep
+Expected *
+13:48 | 12-Sep
+On Time
+AMLA
+AMLA JN
+PF3*
+1255 Kms
+Scheduled
+13:50 | 12-Sep
+Expected *
+13:50 | 12-Sep
+On Time
+Scheduled
+14:08 | 12-Sep
+Expected *
+14:08 | 12-Sep
+On Time
+BZU
+BETUL
+PF2*
+1278 Kms
+Scheduled
+14:10 | 12-Sep
+Expected *
+14:10 | 12-Sep
+On Time
+Scheduled
+14:49 | 12-Sep
+Expected *
+14:49 | 12-Sep
+On Time
+GDYA
+GHORADONGRI
+PF1*
+1314 Kms
+Scheduled
+14:50 | 12-Sep
+Expected *
+14:50 | 12-Sep
+On Time
+Scheduled
+16:40 | 12-Sep
+Expected *
+16:40 | 12-Sep
+On Time
+ET
+ITARSI JN
+PF3*
+1385 Kms
+Scheduled
+16:50 | 12-Sep
+Expected *
+16:50 | 12-Sep
+On Time
+Scheduled
+17:08 | 12-Sep
+Expected *
+17:08 | 12-Sep
+On Time
+NDPM
+NARMADAPURAM
+PF1*
+1402 Kms
+Scheduled
+17:10 | 12-Sep
+Expected *
+17:10 | 12-Sep
+On Time
+Scheduled
+18:18 | 12-Sep
+Expected *
+18:18 | 12-Sep
+On Time
+RKMP
+RANI KAMALAPATI
+PF3*
+1470 Kms
+Scheduled
+18:20 | 12-Sep
+Expected *
+18:20 | 12-Sep
+On Time
+Scheduled
+18:40 | 12-Sep
+Expected *
+18:40 | 12-Sep
+On Time
+BPL
+BHOPAL JN
+PF2*
+1476 Kms
+Scheduled
+18:45 | 12-Sep
+Expected *
+18:45 | 12-Sep
+On Time
+Scheduled
+19:20 | 12-Sep
+Expected *
+19:20 | 12-Sep
+On Time
+BHS
+VIDISHA
+PF1*
+1530 Kms
+Scheduled
+19:22 | 12-Sep
+Expected *
+19:22 | 12-Sep
+On Time
+Scheduled
+19:53 | 12-Sep
+Expected *
+19:53 | 12-Sep
+On Time
+BAQ
+GANJ BASODA
+PF1*
+1569 Kms
+Scheduled
+19:55 | 12-Sep
+Expected *
+19:55 | 12-Sep
+On Time
+Scheduled
+20:50 | 12-Sep
+Expected *
+20:50 | 12-Sep
+On Time
+BINA
+BINA JN
+PF4*
+1615 Kms
+Scheduled
+20:55 | 12-Sep
+Expected *
+20:55 | 12-Sep
+On Time
+Scheduled
+22:50 | 12-Sep
+Expected *
+22:50 | 12-Sep
+On Time
+VGLJ
+VIRANGANA LAKSHMIBAI JHANSI JN
+1766 Kms
+Scheduled
+22:55 | 12-Sep
+Expected *
+22:55 | 12-Sep
+On Time
+Scheduled
+23:55 | 12-Sep
+Expected *
+23:55 | 12-Sep
+On Time
+GWL
+GWALIOR JN
+PF4*
+1865 Kms
+Scheduled
+23:57 | 12-Sep
+Expected *
+23:57 | 12-Sep
+On Time
+Scheduled
+00:26 | 13-Sep
+Expected *
+00:26 | 13-Sep
+On Time
+MRA
+MORENA
+PF2*
+1903 Kms
+Scheduled
+00:28 | 13-Sep
+Expected *
+00:28 | 13-Sep
+On Time
+Scheduled
+01:13 | 13-Sep
+Expected *
+01:13 | 13-Sep
+On Time
+DHO
+DHAULPUR
+PF3*
+1931 Kms
+Scheduled
+01:15 | 13-Sep
+Expected *
+01:15 | 13-Sep
+On Time
+Scheduled
+01:48 | 13-Sep
+Expected *
+01:48 | 13-Sep
+On Time
+AGC
+AGRA CANTT JN
+PF2*
+1983 Kms
+Scheduled
+01:53 | 13-Sep
+Expected *
+01:53 | 13-Sep
+On Time
+Scheduled
+02:05 | 13-Sep
+Expected *
+02:05 | 13-Sep
+On Time
+BFP
+BILOCHPURA
+PF1*
+1988 Kms
+Scheduled
+02:07 | 13-Sep
+Expected *
+02:07 | 13-Sep
+On Time
+Scheduled
+02:35 | 13-Sep
+Expected *
+02:35 | 13-Sep
+On Time
+MTJ
+MATHURA JN
+PF2*
+2036 Kms
+Scheduled
+02:40 | 13-Sep
+Expected *
+02:40 | 13-Sep
+On Time
+Scheduled
+04:40 | 13-Sep
+Expected *
+04:40 | 13-Sep
+On Time
+NZM
+HAZRAT NIZAMUDDIN JN
+PF3*
+2170 Kms
+Scheduled
+04:42 | 13-Sep
+Expected *
+04:42 | 13-Sep
+On Time
+Scheduled
+05:10 | 13-Sep
+Expected *
+05:10 | 13-Sep
+On Time
+NDLS
+NEW DELHI
+PF4*
+2177 Kms
+DSTN
