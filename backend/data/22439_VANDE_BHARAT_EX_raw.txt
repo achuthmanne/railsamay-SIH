@@ -1,0 +1,729 @@
+22439 VANDE BHARAT EX
+Journey NEW DELHI (NDLS) to SHRI MATA VAISHNO DEVI KATRA (SVDK)
+
+Last updated: 10-Sep-2026 18:01
+
+Refresh
+Status: Yet to start from source
+
+
+Tue, 08 Sep
+Journey completed
+
+Thu, 10 Sep
+Journey completed
+
+Fri, 11 Sep
+Yet to start from source
+
+
+Yet to start from its source
+
+Data shown with (*) are dynamic in nature and may change.
+Journey Progress
+0%
+SRC
+Train current position
+NDLS
+NEW DELHI
+PF14*
+0 Kms
+
+33 Non-Stopping Stations
+Scheduled
+06:00 | 11-Sep
+Expected *
+06:00 | 11-Sep
+On Time
+Non-Stopping
+DSB
+Sadar Bazar
+2.0 Kms
+Arrival Time: 06:09
+Departure Time: 06:09
+Non-Stopping
+Non-Stopping
+SZM
+Subzi Mandi
+4.0 Kms
+Arrival Time: 06:15
+Departure Time: 06:15
+Non-Stopping
+Non-Stopping
+DAZ
+Delhi Azadpur
+8.0 Kms
+Arrival Time: 06:18
+Departure Time: 06:18
+Non-Stopping
+Non-Stopping
+ANDI
+Adrsh Ngr Delhi
+10.0 Kms
+Arrival Time: 06:21
+Departure Time: 06:21
+Non-Stopping
+Non-Stopping
+BHD
+Badli
+15.0 Kms
+Arrival Time: 06:24
+Departure Time: 06:24
+Non-Stopping
+Non-Stopping
+KHKN
+Khera Kalan
+18.0 Kms
+Arrival Time: 06:26
+Departure Time: 06:26
+Non-Stopping
+Non-Stopping
+HUK
+Holambi Kalan
+22.0 Kms
+Arrival Time: 06:28
+Departure Time: 06:28
+Non-Stopping
+Non-Stopping
+NUR
+Narela
+27.0 Kms
+Arrival Time: 06:31
+Departure Time: 06:31
+Non-Stopping
+Non-Stopping
+RDDE
+Rathdhana
+34.0 Kms
+Arrival Time: 06:35
+Departure Time: 06:35
+Non-Stopping
+Non-Stopping
+HNN
+Harana Kalan
+39.0 Kms
+Arrival Time: 06:38
+Departure Time: 06:38
+Non-Stopping
+Non-Stopping
+SNP
+Sonipat
+44.0 Kms
+Arrival Time: 06:40
+Departure Time: 06:40
+Non-Stopping
+Non-Stopping
+SLKN
+Sandal Kalan
+53.0 Kms
+Arrival Time: 06:44
+Departure Time: 06:44
+Non-Stopping
+Non-Stopping
+RUG
+Rajlu Garhi
+56.0 Kms
+Arrival Time: 06:46
+Departure Time: 06:46
+Non-Stopping
+Non-Stopping
+GNU
+Ganaur
+60.0 Kms
+Arrival Time: 06:48
+Departure Time: 06:48
+Non-Stopping
+Non-Stopping
+BDMJ
+Bhodwal Majri
+66.0 Kms
+Arrival Time: 06:51
+Departure Time: 06:51
+Non-Stopping
+Non-Stopping
+SMK
+Samalkha
+72.0 Kms
+Arrival Time: 06:54
+Departure Time: 06:54
+Non-Stopping
+Non-Stopping
+DWNA
+Diwana
+81.0 Kms
+Arrival Time: 06:58
+Departure Time: 06:58
+Non-Stopping
+Non-Stopping
+PNP
+Panipat Jn
+89.0 Kms
+Arrival Time: 07:03
+Departure Time: 07:03
+Non-Stopping
+Non-Stopping
+BBDE
+Babarpur
+96.0 Kms
+Arrival Time: 07:06
+Departure Time: 07:06
+Non-Stopping
+Non-Stopping
+KFU
+Kohand
+101.0 Kms
+Arrival Time: 07:09
+Departure Time: 07:09
+Non-Stopping
+Non-Stopping
+GRA
+Gharaunda
+106.0 Kms
+Arrival Time: 07:11
+Departure Time: 07:11
+Non-Stopping
+Non-Stopping
+BZJT
+Bazida Jatan
+114.0 Kms
+Arrival Time: 07:15
+Departure Time: 07:15
+Non-Stopping
+Non-Stopping
+KUN
+Karnal
+124.0 Kms
+Arrival Time: 07:20
+Departure Time: 07:20
+Non-Stopping
+Non-Stopping
+BZK
+Bhaini Khurd
+131.0 Kms
+Arrival Time: 07:24
+Departure Time: 07:24
+Non-Stopping
+Non-Stopping
+TRR
+Taraori
+136.0 Kms
+Arrival Time: 07:27
+Departure Time: 07:27
+Non-Stopping
+Non-Stopping
+NLKR
+Nilokheri
+140.0 Kms
+Arrival Time: 07:29
+Departure Time: 07:29
+Non-Stopping
+Non-Stopping
+AMIN
+Amin
+148.0 Kms
+Arrival Time: 07:33
+Departure Time: 07:33
+Non-Stopping
+Non-Stopping
+KKDE
+Kurukshetra Jn
+157.0 Kms
+Arrival Time: 07:37
+Departure Time: 07:37
+Non-Stopping
+Non-Stopping
+DHKR
+Dhoda Khedi
+162.0 Kms
+Arrival Time: 07:40
+Departure Time: 07:40
+Non-Stopping
+Non-Stopping
+DPP
+Dhirpur
+168.0 Kms
+Arrival Time: 07:43
+Departure Time: 07:43
+Non-Stopping
+Non-Stopping
+DHMZ
+Dhola Mazra
+173.0 Kms
+Arrival Time: 07:46
+Departure Time: 07:46
+Non-Stopping
+Non-Stopping
+SHDM
+Shahbad Marknda
+179.0 Kms
+Arrival Time: 07:49
+Departure Time: 07:49
+Non-Stopping
+Non-Stopping
+MOY
+Mohri
+189.0 Kms
+Arrival Time: 07:54
+Departure Time: 07:54
+Non-Stopping
+Scheduled
+08:10 | 11-Sep
+Expected *
+08:10 | 11-Sep
+On Time
+UMB
+AMBALA CANTT
+PF7*
+198 Kms
+
+13 Non-Stopping Stations
+Scheduled
+08:12 | 11-Sep
+Expected *
+08:12 | 11-Sep
+On Time
+Non-Stopping
+UBC
+Ambala City
+206.0 Kms
+Arrival Time: 08:21
+Departure Time: 08:21
+Non-Stopping
+Non-Stopping
+SMU
+Sambhu
+215.0 Kms
+Arrival Time: 08:25
+Departure Time: 08:25
+Non-Stopping
+Non-Stopping
+RPJ
+Rajpura Jn
+226.0 Kms
+Arrival Time: 08:29
+Departure Time: 08:29
+Non-Stopping
+Non-Stopping
+SBJ
+Sarai Banjara
+236.0 Kms
+Arrival Time: 08:33
+Departure Time: 08:33
+Non-Stopping
+Non-Stopping
+SDY
+Sadhoo Garh
+244.0 Kms
+Arrival Time: 08:36
+Departure Time: 08:36
+Non-Stopping
+Non-Stopping
+SIR
+Sirhind Jn
+252.0 Kms
+Arrival Time: 08:39
+Departure Time: 08:39
+Non-Stopping
+Non-Stopping
+GVG
+Mandigovindgarh
+261.0 Kms
+Arrival Time: 08:44
+Departure Time: 08:44
+Non-Stopping
+Non-Stopping
+KNN
+Khanna
+269.0 Kms
+Arrival Time: 08:49
+Departure Time: 08:49
+Non-Stopping
+Non-Stopping
+CHA
+Chawapall
+280.0 Kms
+Arrival Time: 08:55
+Departure Time: 08:55
+Non-Stopping
+Non-Stopping
+DOA
+Doraha
+290.0 Kms
+Arrival Time: 09:00
+Departure Time: 09:00
+Non-Stopping
+Non-Stopping
+SNL
+Sanahwal
+297.0 Kms
+Arrival Time: 09:06
+Departure Time: 09:06
+Non-Stopping
+Non-Stopping
+DDL
+Dhandari Kalan
+305.0 Kms
+Arrival Time: 09:10
+Departure Time: 09:10
+Non-Stopping
+Non-Stopping
+BHOI
+Bhoi
+309.0 Kms
+Arrival Time: 09:12
+Departure Time: 09:12
+Non-Stopping
+Scheduled
+09:19 | 11-Sep
+Expected *
+09:19 | 11-Sep
+On Time
+LDH
+LUDHIANA JN
+PF2*
+312 Kms
+
+7 Non-Stopping Stations
+Scheduled
+09:21 | 11-Sep
+Expected *
+09:21 | 11-Sep
+On Time
+Non-Stopping
+LDW
+Ladhowal
+321.0 Kms
+Arrival Time: 09:32
+Departure Time: 09:32
+Non-Stopping
+Non-Stopping
+PHR
+Phillaur Jn
+325.0 Kms
+Arrival Time: 09:35
+Departure Time: 09:35
+Non-Stopping
+Non-Stopping
+BTTN
+Bttn
+332.0 Kms
+Arrival Time: 09:39
+Departure Time: 09:39
+Non-Stopping
+Non-Stopping
+GRY
+Goraya
+338.0 Kms
+Arrival Time: 09:43
+Departure Time: 09:43
+Non-Stopping
+Non-Stopping
+MAUL
+Maul
+342.0 Kms
+Arrival Time: 09:46
+Departure Time: 09:46
+Non-Stopping
+Non-Stopping
+PGW
+Phagwara Jn
+348.0 Kms
+Arrival Time: 09:50
+Departure Time: 09:50
+Non-Stopping
+Non-Stopping
+CEU
+Chiheru
+355.0 Kms
+Arrival Time: 09:55
+Departure Time: 09:55
+Non-Stopping
+Scheduled
+10:00 | 11-Sep
+Expected *
+10:00 | 11-Sep
+On Time
+JRC
+JALANDHAR CANT
+PF1*
+364 Kms
+
+15 Non-Stopping Stations
+Scheduled
+10:02 | 11-Sep
+Expected *
+10:02 | 11-Sep
+On Time
+Non-Stopping
+SCPD
+Scpd
+368.0 Kms
+Arrival Time: 10:12
+Departure Time: 10:12
+Non-Stopping
+Non-Stopping
+AWL
+Alawalpur
+379.0 Kms
+Arrival Time: 10:23
+Departure Time: 10:23
+Non-Stopping
+Non-Stopping
+KKL
+Kala Bakra
+385.0 Kms
+Arrival Time: 10:27
+Departure Time: 10:27
+Non-Stopping
+Non-Stopping
+BPRS
+Bhogpur Sirwal
+393.0 Kms
+Arrival Time: 10:34
+Departure Time: 10:34
+Non-Stopping
+Non-Stopping
+CGH
+Cholang
+401.0 Kms
+Arrival Time: 10:39
+Departure Time: 10:39
+Non-Stopping
+Non-Stopping
+TDO
+Tanda Urmar
+407.0 Kms
+Arrival Time: 10:43
+Departure Time: 10:43
+Non-Stopping
+Non-Stopping
+KZX
+Khudda Korala
+415.0 Kms
+Arrival Time: 10:49
+Departure Time: 10:49
+Non-Stopping
+Non-Stopping
+GSB
+Garna Sahib
+419.0 Kms
+Arrival Time: 10:53
+Departure Time: 10:53
+Non-Stopping
+Non-Stopping
+DZA
+Dasuya
+422.0 Kms
+Arrival Time: 10:54
+Departure Time: 10:54
+Non-Stopping
+Non-Stopping
+UCB
+Unchi Bassi
+428.0 Kms
+Arrival Time: 10:57
+Departure Time: 10:57
+Non-Stopping
+Non-Stopping
+MEX
+Mukerian
+437.0 Kms
+Arrival Time: 11:05
+Departure Time: 11:05
+Non-Stopping
+Non-Stopping
+BNGL
+Bhangala
+447.0 Kms
+Arrival Time: 11:11
+Departure Time: 11:11
+Non-Stopping
+Non-Stopping
+MRTL
+Mirthal
+457.0 Kms
+Arrival Time: 11:17
+Departure Time: 11:17
+Non-Stopping
+Non-Stopping
+GILA
+Ghiala
+463.0 Kms
+Arrival Time: 11:23
+Departure Time: 11:23
+Non-Stopping
+Non-Stopping
+KNDI
+Kandrori
+468.0 Kms
+Arrival Time: 11:24
+Departure Time: 11:24
+Non-Stopping
+Scheduled
+11:15 | 11-Sep
+Expected *
+11:15 | 11-Sep
+On Time
+PTKC
+PATHANKOT CANTT
+PF2*
+477 Kms
+
+12 Non-Stopping Stations
+Scheduled
+11:17 | 11-Sep
+Expected *
+11:17 | 11-Sep
+On Time
+Non-Stopping
+BHRL
+Bharoli
+480.0 Kms
+Arrival Time: 11:38
+Departure Time: 11:38
+Non-Stopping
+Non-Stopping
+SJNP
+Sujanpur
+485.0 Kms
+Arrival Time: 11:45
+Departure Time: 11:45
+Non-Stopping
+Non-Stopping
+MDPB
+Madhopur Punjab
+492.0 Kms
+Arrival Time: 11:51
+Departure Time: 11:51
+Non-Stopping
+Non-Stopping
+MSKT
+Mc Sunil Kathua
+501.0 Kms
+Arrival Time: 12:01
+Departure Time: 12:01
+Non-Stopping
+Non-Stopping
+BDHY
+Budhi
+513.0 Kms
+Arrival Time: 12:11
+Departure Time: 12:11
+Non-Stopping
+Non-Stopping
+CHNR
+Chhan Arorian
+520.0 Kms
+Arrival Time: 12:15
+Departure Time: 12:15
+Non-Stopping
+Non-Stopping
+CKDL
+Chakdayala
+526.0 Kms
+Arrival Time: 12:18
+Departure Time: 12:18
+Non-Stopping
+Non-Stopping
+HRNR
+Hira Nagar
+529.0 Kms
+Arrival Time: 12:20
+Departure Time: 12:20
+Non-Stopping
+Non-Stopping
+GHGL
+Ghagwal
+535.0 Kms
+Arrival Time: 12:24
+Departure Time: 12:24
+Non-Stopping
+Non-Stopping
+SMBX
+Samba
+544.0 Kms
+Arrival Time: 12:30
+Departure Time: 12:30
+Non-Stopping
+Non-Stopping
+VJPJ
+Vijiypur Jammu
+556.0 Kms
+Arrival Time: 12:40
+Departure Time: 12:40
+Non-Stopping
+Non-Stopping
+BBMN
+Bari Brahman
+568.0 Kms
+Arrival Time: 12:49
+Departure Time: 12:49
+Non-Stopping
+Scheduled
+12:43 | 11-Sep
+Expected *
+12:43 | 11-Sep
+On Time
+JAT
+JAMMUTAVI
+PF1*
+577 Kms
+
+6 Non-Stopping Stations
+Scheduled
+12:45 | 11-Sep
+Expected *
+12:45 | 11-Sep
+On Time
+Non-Stopping
+BLA
+Bajalta
+588.0 Kms
+Arrival Time: 13:16
+Departure Time: 13:16
+Non-Stopping
+Non-Stopping
+SGRR
+Sangar
+598.0 Kms
+Arrival Time: 13:25
+Departure Time: 13:25
+Non-Stopping
+Non-Stopping
+MNWL
+Mnwl
+608.0 Kms
+Arrival Time: 13:35
+Departure Time: 13:35
+Non-Stopping
+Non-Stopping
+RMJK
+Ram Nagar J K
+620.0 Kms
+Arrival Time: 13:45
+Departure Time: 13:45
+Non-Stopping
+Non-Stopping
+MCTM
+Mctm Udhampur
+630.0 Kms
+Arrival Time: 13:55
+Departure Time: 13:55
+Non-Stopping
+Non-Stopping
+CRWL
+Chak Rakhwal
+639.0 Kms
+Arrival Time: 14:05
+Departure Time: 14:05
+Non-Stopping
+Scheduled
+14:20 | 11-Sep
+Expected *
+14:20 | 11-Sep
+On Time
+SVDK
+SHRI MATA VAISHNO DEVI KATRA
+PF1*
+655 Kms
+DSTN

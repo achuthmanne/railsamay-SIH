@@ -4,7 +4,10 @@ from datetime import datetime
 
 def parse_data(input_file, output_file):
     with open(input_file, 'r', encoding='utf-8') as f:
-        lines = [l.strip() for l in f.readlines() if l.strip()]
+        raw_lines = [l.strip() for l in f.readlines() if l.strip()]
+    
+    # Filter out noise lines that can appear randomly
+    lines = [l for l in raw_lines if l not in ["Train current position", "Coach Position", "Upcoming Station"]]
 
     stations = []
     last_stopping_idx = -1
@@ -13,8 +16,8 @@ def parse_data(input_file, output_file):
     while i < len(lines):
         line = lines[i]
         
-        # Detect Source Station dynamically
-        if line == "Train current position":
+        # Detect Source Station dynamically using SRC
+        if line == "SRC":
             code = lines[i+1]
             name = lines[i+2]
             pf_str = lines[i+3].replace("*", "").strip()
@@ -27,7 +30,7 @@ def parse_data(input_file, output_file):
                 k += 1
             if k < len(lines):
                 sched_dep = lines[k+1]
-                if k + 2 < len(lines) and lines[k+2] == "Expected *":
+                if k + 2 < len(lines) and (lines[k+2] == "Expected *" or lines[k+2] == "Actual"):
                     exp_dep = lines[k+3]
                 else:
                     exp_dep = sched_dep
@@ -59,21 +62,28 @@ def parse_data(input_file, output_file):
             status = "On Time"
             
             offset = 2
-            if i + offset < len(lines) and lines[i+offset] == "Expected *":
+            if i + offset < len(lines) and (lines[i+offset] == "Expected *" or lines[i+offset] == "Actual"):
                 expected_time = lines[i+offset+1]
                 offset += 2
                 
             status = lines[i+offset]
             
+            # If the status is 'Delay: ...', keep it, else if it's 'On Time' keep it
+            # Sometime 'Train current position' gets in the way later, but 'status' should be grabbed here
+
+            
             # Look ahead to determine if it's an Arrival or Departure block
             j = i + offset + 1
-            is_departure_block = False
+            is_departure_block = True
             
-            while j < len(lines) and "Kms" not in lines[j] and j - i < 15:
-                if lines[j] == "Non-Stopping":
-                    is_departure_block = True
+            while j < len(lines):
+                # If we see Kms (of a stopping station) before another Scheduled/Non-Stopping, it's an Arrival block
+                if "Kms" in lines[j] and "Arrival Time" not in lines[j]:
+                    is_departure_block = False
                     break
-                if lines[j] == "DSTN":
+                # If we hit the next block marker, it must be a departure block
+                if lines[j] == "Scheduled" or lines[j] == "Non-Stopping" or "Arrival Time" in lines[j] or lines[j] == "DSTN" or lines[j] == "Upcoming Station":
+                    is_departure_block = True
                     break
                 j += 1
             
@@ -86,23 +96,36 @@ def parse_data(input_file, output_file):
                     arr_str = stations[last_stopping_idx]["scheduled_arrival"]
                     if arr_str != "Source":
                         try:
-                            arr_dt = datetime.strptime(arr_str, "%H:%M | %d-%b")
-                            dep_dt = datetime.strptime(sched_time, "%H:%M | %d-%b")
+                            # Use a fixed year (e.g. 2026) to avoid DeprecationWarning and handle leap years
+                            arr_dt = datetime.strptime(arr_str + " 2026", "%H:%M | %d-%b %Y")
+                            dep_dt = datetime.strptime(sched_time + " 2026", "%H:%M | %d-%b %Y")
                             stations[last_stopping_idx]["halt_duration_mins"] = int((dep_dt - arr_dt).total_seconds() / 60)
-                        except:
+                        except Exception as e:
                             stations[last_stopping_idx]["halt_duration_mins"] = 0
             else:
                 # This scheduled block gives the arrival time of a NEW stopping station
-                k = i
+                k = i + offset + 1
                 while k < len(lines) and "Kms" not in lines[k]:
                     k += 1
-                if k < len(lines) and k - i < 15:
+                if k < len(lines):
                     try:
                         dist = float(lines[k].replace("Kms", "").strip())
                         pf_str = lines[k-1].replace("*", "").strip()
-                        name = lines[k-2]
-                        code = lines[k-3]
+                        # Some names might have 'Upcoming Station' or 'Coach Position' injected
+                        name_idx = k - 2
+                        if lines[name_idx] == "Upcoming Station" or lines[name_idx] == "Coach Position":
+                            name_idx -= 1
+                            pf_str = lines[k-2].replace("*", "").strip()
+                        name = lines[name_idx]
+                        code = lines[name_idx - 1]
                         
+                        # Sometimes PF is missing entirely, check if code makes sense
+                        if not ("PF" in pf_str or pf_str.isdigit()):
+                            # It means pf_str is actually the name, and name is the code
+                            name = pf_str
+                            code = lines[name_idx]
+                            pf_str = "-"
+
                         stations.append({
                             "type": "stopping",
                             "code": code,
@@ -116,10 +139,10 @@ def parse_data(input_file, output_file):
                             "status": status
                         })
                         last_stopping_idx = len(stations) - 1
-                    except:
+                    except Exception as e:
                         pass
             
-            i += 1
+            i += offset + 1
             continue
 
         # Parse Non-Stopping Individual Station
