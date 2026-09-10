@@ -10,6 +10,11 @@ export default {
         railgreen: '#10B981',
         railorange: '#F59E0B',
         railred: '#EF4444',
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        montserrat: ['Montserrat', 'sans-serif'],
+        hindi: ['Mukta', 'sans-serif'],
       }
     },
   },

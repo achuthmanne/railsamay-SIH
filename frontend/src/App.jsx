@@ -38,6 +38,7 @@ const AnimatedCounter = ({ end, duration = 2000, suffix = "", decimals = 0, colo
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [language, setLanguage] = useState('en');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,16 +69,32 @@ function App() {
                 <span className={`font-montserrat font-extrabold text-[#1E3A8A] tracking-tight transition-all duration-500 ${isScrolled ? 'text-xl leading-none' : 'text-2xl leading-none'}`}>
                   RAIL <span className="text-[#F97316]">SAMAY</span>
                 </span>
-                <span className={`font-medium tracking-widest uppercase text-slate-500 transition-all duration-500 ease-in-out ${isScrolled ? 'text-[0.55rem] mt-0.5' : 'text-[0.65rem] mt-1'}`}>The Accurate Time of Indian Railways</span>
+                <span className={`font-medium tracking-widest uppercase text-slate-500 transition-all duration-500 ease-in-out ${language === 'hi' ? 'font-hindi text-[0.7rem] mt-0' : 'text-[0.65rem] mt-1'} ${isScrolled ? 'text-[0.55rem] mt-0.5' : ''}`}>
+                  {language === 'en' ? 'The Accurate Time of Indian Railways' : 'भारतीय रेलवे का सटीक समय'}
+                </span>
               </div>
             </div>
             <div className="flex items-center space-x-5">
-              <button className="text-slate-500 hover:text-[#1E3A8A] text-sm font-semibold transition-colors">A/अ</button>
-              <div className="h-6 w-px bg-slate-200"></div>
-              <button className="text-[#1E3A8A] font-semibold text-sm hover:underline">Passenger Login</button>
-              <button className={`bg-[#1E3A8A] text-white rounded font-semibold text-sm shadow hover:bg-blue-900 transition-all duration-300 ease-in-out flex items-center ${isScrolled ? 'px-4 py-1.5' : 'px-5 py-2'}`}>
+              
+              {/* Modern Language Toggle */}
+              <button 
+                onClick={() => setLanguage(lang => lang === 'en' ? 'hi' : 'en')}
+                className="flex items-center space-x-2 bg-slate-50 hover:bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200 transition-all shadow-sm"
+              >
+                <span className={`text-sm font-bold tracking-wide ${language === 'en' ? 'text-[#F97316]' : 'text-slate-400'}`}>EN</span>
+                <div className="w-px h-4 bg-slate-300"></div>
+                <span className={`font-hindi text-[1.1rem] font-bold leading-none ${language === 'hi' ? 'text-[#F97316]' : 'text-slate-400'}`}>हि</span>
+              </button>
+
+              <div className="h-6 w-px bg-slate-200 hidden sm:block"></div>
+              
+              <button className={`text-[#1E3A8A] font-semibold text-sm hover:underline hidden sm:block ${language === 'hi' ? 'font-hindi text-base' : ''}`}>
+                {language === 'en' ? 'Passenger Login' : 'यात्री लॉगिन'}
+              </button>
+              
+              <button className={`bg-[#1E3A8A] text-white rounded font-semibold shadow hover:bg-blue-900 transition-all duration-300 ease-in-out flex items-center ${isScrolled ? 'px-4 py-1.5 text-sm' : 'px-5 py-2 text-sm'} ${language === 'hi' ? 'font-hindi text-base tracking-wide' : ''}`}>
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                ATS Portal
+                {language === 'en' ? 'ATS Portal' : 'एटीएस पोर्टल'}
               </button>
             </div>
           </div>
@@ -93,20 +110,22 @@ function App() {
         
         <div className="w-full px-4 sm:px-8 lg:px-12 relative z-10 flex items-center h-full">
           <div className="max-w-3xl mt-16 lg:mt-28">
-            <h1 className="text-4xl lg:text-[4rem] font-montserrat font-extrabold leading-[1.15] mb-8 text-[#0f172a] uppercase tracking-tight drop-shadow-sm">
-              <span className="block mb-3">National Train</span>
-              <span className="block text-[#1E3A8A]">Tracking System</span>
+            <h1 className={`font-extrabold leading-[1.15] mb-8 text-[#0f172a] drop-shadow-sm ${language === 'en' ? 'text-4xl lg:text-[4rem] font-montserrat uppercase tracking-tight' : 'text-5xl lg:text-[4.5rem] font-hindi tracking-wide'}`}>
+              <span className="block mb-3">{language === 'en' ? 'National Train' : 'राष्ट्रीय ट्रेन'}</span>
+              <span className="block text-[#1E3A8A]">{language === 'en' ? 'Tracking System' : 'ट्रैकिंग प्रणाली'}</span>
             </h1>
-            <p className="text-lg lg:text-xl font-inter mb-12 text-slate-800 max-w-2xl leading-[1.8] font-medium drop-shadow-sm">
-              An advanced digital infrastructure for real-time fleet positioning, algorithmic delay forecasting, and centralized network oversight. Ensuring precision and transparency across all railway zones.
+            <p className={`mb-12 text-slate-800 max-w-2xl font-medium drop-shadow-sm ${language === 'en' ? 'text-lg lg:text-xl font-inter leading-[1.8]' : 'text-xl lg:text-2xl font-hindi leading-[1.6]'}`}>
+              {language === 'en' 
+                ? 'An advanced digital infrastructure for real-time fleet positioning, algorithmic delay forecasting, and centralized network oversight. Ensuring precision and transparency across all railway zones.'
+                : 'वास्तविक समय में फ्लीट पोजीशनिंग, एल्गोरिथम देरी पूर्वानुमान और केंद्रीकृत नेटवर्क निगरानी के लिए एक उन्नत डिजिटल बुनियादी ढांचा। सभी रेलवे जोनों में सटीकता और पारदर्शिता सुनिश्चित करना।'}
             </p>
             <div className="flex flex-col sm:flex-row gap-5">
-              <button className="bg-[#F97316] text-white font-bold py-4 px-8 rounded-sm shadow-md hover:bg-orange-700 transition-colors uppercase tracking-widest text-sm flex items-center justify-center">
-                Track Live Status
+              <button className={`bg-[#F97316] text-white font-bold py-4 px-8 rounded-sm shadow-md hover:bg-orange-700 transition-colors flex items-center justify-center ${language === 'en' ? 'uppercase tracking-widest text-sm' : 'font-hindi text-xl tracking-wide'}`}>
+                {language === 'en' ? 'Track Live Status' : 'लाइव स्थिति ट्रैक करें'}
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </button>
-              <button className="bg-white text-[#1E3A8A] font-bold py-4 px-8 rounded-sm shadow-md hover:shadow-lg hover:bg-slate-50 transition-all uppercase tracking-widest text-sm flex items-center justify-center">
-                ATS Control Room
+              <button className={`bg-white text-[#1E3A8A] font-bold py-4 px-8 rounded-sm shadow-md hover:shadow-lg hover:bg-slate-50 transition-all flex items-center justify-center ${language === 'en' ? 'uppercase tracking-widest text-sm' : 'font-hindi text-xl tracking-wide'}`}>
+                {language === 'en' ? 'ATS Control Room' : 'एटीएस कंट्रोल रूम'}
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
               </button>
             </div>
