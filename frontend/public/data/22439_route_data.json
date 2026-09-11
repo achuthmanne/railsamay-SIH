@@ -1,0 +1,779 @@
+[
+    {
+        "type": "stopping",
+        "code": "NDLS",
+        "name": "New Delhi",
+        "platform": "PF14",
+        "distance": 0.0,
+        "scheduled_arrival": "Source",
+        "scheduled_departure": "06:00 | 11-Sep",
+        "expected_arrival": "Source",
+        "expected_departure": "06:00 | 11-Sep",
+        "status": "On Time"
+    },
+    {
+        "type": "non-stopping",
+        "code": "DSB",
+        "name": "Sadar Bazar",
+        "distance": 2.0,
+        "arrival_time": "06:09",
+        "departure_time": "06:09"
+    },
+    {
+        "type": "non-stopping",
+        "code": "SZM",
+        "name": "Subzi Mandi",
+        "distance": 4.0,
+        "arrival_time": "06:15",
+        "departure_time": "06:15"
+    },
+    {
+        "type": "non-stopping",
+        "code": "DAZ",
+        "name": "Delhi Azadpur",
+        "distance": 8.0,
+        "arrival_time": "06:18",
+        "departure_time": "06:18"
+    },
+    {
+        "type": "non-stopping",
+        "code": "ANDI",
+        "name": "Adrsh Ngr Delhi",
+        "distance": 10.0,
+        "arrival_time": "06:21",
+        "departure_time": "06:21"
+    },
+    {
+        "type": "non-stopping",
+        "code": "BHD",
+        "name": "Badli",
+        "distance": 15.0,
+        "arrival_time": "06:24",
+        "departure_time": "06:24"
+    },
+    {
+        "type": "non-stopping",
+        "code": "KHKN",
+        "name": "Khera Kalan",
+        "distance": 18.0,
+        "arrival_time": "06:26",
+        "departure_time": "06:26"
+    },
+    {
+        "type": "non-stopping",
+        "code": "HUK",
+        "name": "Holambi Kalan",
+        "distance": 22.0,
+        "arrival_time": "06:28",
+        "departure_time": "06:28"
+    },
+    {
+        "type": "non-stopping",
+        "code": "NUR",
+        "name": "Narela",
+        "distance": 27.0,
+        "arrival_time": "06:31",
+        "departure_time": "06:31"
+    },
+    {
+        "type": "non-stopping",
+        "code": "RDDE",
+        "name": "Rathdhana",
+        "distance": 34.0,
+        "arrival_time": "06:35",
+        "departure_time": "06:35"
+    },
+    {
+        "type": "non-stopping",
+        "code": "HNN",
+        "name": "Harana Kalan",
+        "distance": 39.0,
+        "arrival_time": "06:38",
+        "departure_time": "06:38"
+    },
+    {
+        "type": "non-stopping",
+        "code": "SNP",
+        "name": "Sonipat",
+        "distance": 44.0,
+        "arrival_time": "06:40",
+        "departure_time": "06:40"
+    },
+    {
+        "type": "non-stopping",
+        "code": "SLKN",
+        "name": "Sandal Kalan",
+        "distance": 53.0,
+        "arrival_time": "06:44",
+        "departure_time": "06:44"
+    },
+    {
+        "type": "non-stopping",
+        "code": "RUG",
+        "name": "Rajlu Garhi",
+        "distance": 56.0,
+        "arrival_time": "06:46",
+        "departure_time": "06:46"
+    },
+    {
+        "type": "non-stopping",
+        "code": "GNU",
+        "name": "Ganaur",
+        "distance": 60.0,
+        "arrival_time": "06:48",
+        "departure_time": "06:48"
+    },
+    {
+        "type": "non-stopping",
+        "code": "BDMJ",
+        "name": "Bhodwal Majri",
+        "distance": 66.0,
+        "arrival_time": "06:51",
+        "departure_time": "06:51"
+    },
+    {
+        "type": "non-stopping",
+        "code": "SMK",
+        "name": "Samalkha",
+        "distance": 72.0,
+        "arrival_time": "06:54",
+        "departure_time": "06:54"
+    },
+    {
+        "type": "non-stopping",
+        "code": "DWNA",
+        "name": "Diwana",
+        "distance": 81.0,
+        "arrival_time": "06:58",
+        "departure_time": "06:58"
+    },
+    {
+        "type": "non-stopping",
+        "code": "PNP",
+        "name": "Panipat Jn",
+        "distance": 89.0,
+        "arrival_time": "07:03",
+        "departure_time": "07:03"
+    },
+    {
+        "type": "non-stopping",
+        "code": "BBDE",
+        "name": "Babarpur",
+        "distance": 96.0,
+        "arrival_time": "07:06",
+        "departure_time": "07:06"
+    },
+    {
+        "type": "non-stopping",
+        "code": "KFU",
+        "name": "Kohand",
+        "distance": 101.0,
+        "arrival_time": "07:09",
+        "departure_time": "07:09"
+    },
+    {
+        "type": "non-stopping",
+        "code": "GRA",
+        "name": "Gharaunda",
+        "distance": 106.0,
+        "arrival_time": "07:11",
+        "departure_time": "07:11"
+    },
+    {
+        "type": "non-stopping",
+        "code": "BZJT",
+        "name": "Bazida Jatan",
+        "distance": 114.0,
+        "arrival_time": "07:15",
+        "departure_time": "07:15"
+    },
+    {
+        "type": "non-stopping",
+        "code": "KUN",
+        "name": "Karnal",
+        "distance": 124.0,
+        "arrival_time": "07:20",
+        "departure_time": "07:20"
+    },
+    {
+        "type": "non-stopping",
+        "code": "BZK",
+        "name": "Bhaini Khurd",
+        "distance": 131.0,
+        "arrival_time": "07:24",
+        "departure_time": "07:24"
+    },
+    {
+        "type": "non-stopping",
+        "code": "TRR",
+        "name": "Taraori",
+        "distance": 136.0,
+        "arrival_time": "07:27",
+        "departure_time": "07:27"
+    },
+    {
+        "type": "non-stopping",
+        "code": "NLKR",
+        "name": "Nilokheri",
+        "distance": 140.0,
+        "arrival_time": "07:29",
+        "departure_time": "07:29"
+    },
+    {
+        "type": "non-stopping",
+        "code": "AMIN",
+        "name": "Amin",
+        "distance": 148.0,
+        "arrival_time": "07:33",
+        "departure_time": "07:33"
+    },
+    {
+        "type": "non-stopping",
+        "code": "KKDE",
+        "name": "Kurukshetra Jn",
+        "distance": 157.0,
+        "arrival_time": "07:37",
+        "departure_time": "07:37"
+    },
+    {
+        "type": "non-stopping",
+        "code": "DHKR",
+        "name": "Dhoda Khedi",
+        "distance": 162.0,
+        "arrival_time": "07:40",
+        "departure_time": "07:40"
+    },
+    {
+        "type": "non-stopping",
+        "code": "DPP",
+        "name": "Dhirpur",
+        "distance": 168.0,
+        "arrival_time": "07:43",
+        "departure_time": "07:43"
+    },
+    {
+        "type": "non-stopping",
+        "code": "DHMZ",
+        "name": "Dhola Mazra",
+        "distance": 173.0,
+        "arrival_time": "07:46",
+        "departure_time": "07:46"
+    },
+    {
+        "type": "non-stopping",
+        "code": "SHDM",
+        "name": "Shahbad Marknda",
+        "distance": 179.0,
+        "arrival_time": "07:49",
+        "departure_time": "07:49"
+    },
+    {
+        "type": "non-stopping",
+        "code": "MOY",
+        "name": "Mohri",
+        "distance": 189.0,
+        "arrival_time": "07:54",
+        "departure_time": "07:54"
+    },
+    {
+        "type": "stopping",
+        "code": "UMB",
+        "name": "Ambala Cantt",
+        "platform": "PF7",
+        "distance": 198.0,
+        "scheduled_arrival": "08:10 | 11-Sep",
+        "scheduled_departure": "08:12 | 11-Sep",
+        "expected_arrival": "08:10 | 11-Sep",
+        "expected_departure": "08:12 | 11-Sep",
+        "status": "On Time",
+        "halt_duration_mins": 2
+    },
+    {
+        "type": "non-stopping",
+        "code": "UBC",
+        "name": "Ambala City",
+        "distance": 206.0,
+        "arrival_time": "08:21",
+        "departure_time": "08:21"
+    },
+    {
+        "type": "non-stopping",
+        "code": "SMU",
+        "name": "Sambhu",
+        "distance": 215.0,
+        "arrival_time": "08:25",
+        "departure_time": "08:25"
+    },
+    {
+        "type": "non-stopping",
+        "code": "RPJ",
+        "name": "Rajpura Jn",
+        "distance": 226.0,
+        "arrival_time": "08:29",
+        "departure_time": "08:29"
+    },
+    {
+        "type": "non-stopping",
+        "code": "SBJ",
+        "name": "Sarai Banjara",
+        "distance": 236.0,
+        "arrival_time": "08:33",
+        "departure_time": "08:33"
+    },
+    {
+        "type": "non-stopping",
+        "code": "SDY",
+        "name": "Sadhoo Garh",
+        "distance": 244.0,
+        "arrival_time": "08:36",
+        "departure_time": "08:36"
+    },
+    {
+        "type": "non-stopping",
+        "code": "SIR",
+        "name": "Sirhind Jn",
+        "distance": 252.0,
+        "arrival_time": "08:39",
+        "departure_time": "08:39"
+    },
+    {
+        "type": "non-stopping",
+        "code": "GVG",
+        "name": "Mandigovindgarh",
+        "distance": 261.0,
+        "arrival_time": "08:44",
+        "departure_time": "08:44"
+    },
+    {
+        "type": "non-stopping",
+        "code": "KNN",
+        "name": "Khanna",
+        "distance": 269.0,
+        "arrival_time": "08:49",
+        "departure_time": "08:49"
+    },
+    {
+        "type": "non-stopping",
+        "code": "CHA",
+        "name": "Chawapall",
+        "distance": 280.0,
+        "arrival_time": "08:55",
+        "departure_time": "08:55"
+    },
+    {
+        "type": "non-stopping",
+        "code": "DOA",
+        "name": "Doraha",
+        "distance": 290.0,
+        "arrival_time": "09:00",
+        "departure_time": "09:00"
+    },
+    {
+        "type": "non-stopping",
+        "code": "SNL",
+        "name": "Sanahwal",
+        "distance": 297.0,
+        "arrival_time": "09:06",
+        "departure_time": "09:06"
+    },
+    {
+        "type": "non-stopping",
+        "code": "DDL",
+        "name": "Dhandari Kalan",
+        "distance": 305.0,
+        "arrival_time": "09:10",
+        "departure_time": "09:10"
+    },
+    {
+        "type": "non-stopping",
+        "code": "BHOI",
+        "name": "Bhoi",
+        "distance": 309.0,
+        "arrival_time": "09:12",
+        "departure_time": "09:12"
+    },
+    {
+        "type": "stopping",
+        "code": "LDH",
+        "name": "Ludhiana Jn",
+        "platform": "PF2",
+        "distance": 312.0,
+        "scheduled_arrival": "09:19 | 11-Sep",
+        "scheduled_departure": "09:21 | 11-Sep",
+        "expected_arrival": "09:19 | 11-Sep",
+        "expected_departure": "09:21 | 11-Sep",
+        "status": "On Time",
+        "halt_duration_mins": 2
+    },
+    {
+        "type": "non-stopping",
+        "code": "LDW",
+        "name": "Ladhowal",
+        "distance": 321.0,
+        "arrival_time": "09:32",
+        "departure_time": "09:32"
+    },
+    {
+        "type": "non-stopping",
+        "code": "PHR",
+        "name": "Phillaur Jn",
+        "distance": 325.0,
+        "arrival_time": "09:35",
+        "departure_time": "09:35"
+    },
+    {
+        "type": "non-stopping",
+        "code": "BTTN",
+        "name": "Bttn",
+        "distance": 332.0,
+        "arrival_time": "09:39",
+        "departure_time": "09:39"
+    },
+    {
+        "type": "non-stopping",
+        "code": "GRY",
+        "name": "Goraya",
+        "distance": 338.0,
+        "arrival_time": "09:43",
+        "departure_time": "09:43"
+    },
+    {
+        "type": "non-stopping",
+        "code": "MAUL",
+        "name": "Maul",
+        "distance": 342.0,
+        "arrival_time": "09:46",
+        "departure_time": "09:46"
+    },
+    {
+        "type": "non-stopping",
+        "code": "PGW",
+        "name": "Phagwara Jn",
+        "distance": 348.0,
+        "arrival_time": "09:50",
+        "departure_time": "09:50"
+    },
+    {
+        "type": "non-stopping",
+        "code": "CEU",
+        "name": "Chiheru",
+        "distance": 355.0,
+        "arrival_time": "09:55",
+        "departure_time": "09:55"
+    },
+    {
+        "type": "stopping",
+        "code": "JRC",
+        "name": "Jalandhar Cant",
+        "platform": "PF1",
+        "distance": 364.0,
+        "scheduled_arrival": "10:00 | 11-Sep",
+        "scheduled_departure": "10:02 | 11-Sep",
+        "expected_arrival": "10:00 | 11-Sep",
+        "expected_departure": "10:02 | 11-Sep",
+        "status": "On Time",
+        "halt_duration_mins": 2
+    },
+    {
+        "type": "non-stopping",
+        "code": "SCPD",
+        "name": "Scpd",
+        "distance": 368.0,
+        "arrival_time": "10:12",
+        "departure_time": "10:12"
+    },
+    {
+        "type": "non-stopping",
+        "code": "AWL",
+        "name": "Alawalpur",
+        "distance": 379.0,
+        "arrival_time": "10:23",
+        "departure_time": "10:23"
+    },
+    {
+        "type": "non-stopping",
+        "code": "KKL",
+        "name": "Kala Bakra",
+        "distance": 385.0,
+        "arrival_time": "10:27",
+        "departure_time": "10:27"
+    },
+    {
+        "type": "non-stopping",
+        "code": "BPRS",
+        "name": "Bhogpur Sirwal",
+        "distance": 393.0,
+        "arrival_time": "10:34",
+        "departure_time": "10:34"
+    },
+    {
+        "type": "non-stopping",
+        "code": "CGH",
+        "name": "Cholang",
+        "distance": 401.0,
+        "arrival_time": "10:39",
+        "departure_time": "10:39"
+    },
+    {
+        "type": "non-stopping",
+        "code": "TDO",
+        "name": "Tanda Urmar",
+        "distance": 407.0,
+        "arrival_time": "10:43",
+        "departure_time": "10:43"
+    },
+    {
+        "type": "non-stopping",
+        "code": "KZX",
+        "name": "Khudda Korala",
+        "distance": 415.0,
+        "arrival_time": "10:49",
+        "departure_time": "10:49"
+    },
+    {
+        "type": "non-stopping",
+        "code": "GSB",
+        "name": "Garna Sahib",
+        "distance": 419.0,
+        "arrival_time": "10:53",
+        "departure_time": "10:53"
+    },
+    {
+        "type": "non-stopping",
+        "code": "DZA",
+        "name": "Dasuya",
+        "distance": 422.0,
+        "arrival_time": "10:54",
+        "departure_time": "10:54"
+    },
+    {
+        "type": "non-stopping",
+        "code": "UCB",
+        "name": "Unchi Bassi",
+        "distance": 428.0,
+        "arrival_time": "10:57",
+        "departure_time": "10:57"
+    },
+    {
+        "type": "non-stopping",
+        "code": "MEX",
+        "name": "Mukerian",
+        "distance": 437.0,
+        "arrival_time": "11:05",
+        "departure_time": "11:05"
+    },
+    {
+        "type": "non-stopping",
+        "code": "BNGL",
+        "name": "Bhangala",
+        "distance": 447.0,
+        "arrival_time": "11:11",
+        "departure_time": "11:11"
+    },
+    {
+        "type": "non-stopping",
+        "code": "MRTL",
+        "name": "Mirthal",
+        "distance": 457.0,
+        "arrival_time": "11:17",
+        "departure_time": "11:17"
+    },
+    {
+        "type": "non-stopping",
+        "code": "GILA",
+        "name": "Ghiala",
+        "distance": 463.0,
+        "arrival_time": "11:23",
+        "departure_time": "11:23"
+    },
+    {
+        "type": "non-stopping",
+        "code": "KNDI",
+        "name": "Kandrori",
+        "distance": 468.0,
+        "arrival_time": "11:24",
+        "departure_time": "11:24"
+    },
+    {
+        "type": "stopping",
+        "code": "PTKC",
+        "name": "Pathankot Cantt",
+        "platform": "PF2",
+        "distance": 477.0,
+        "scheduled_arrival": "11:15 | 11-Sep",
+        "scheduled_departure": "11:17 | 11-Sep",
+        "expected_arrival": "11:15 | 11-Sep",
+        "expected_departure": "11:17 | 11-Sep",
+        "status": "On Time",
+        "halt_duration_mins": 2
+    },
+    {
+        "type": "non-stopping",
+        "code": "BHRL",
+        "name": "Bharoli",
+        "distance": 480.0,
+        "arrival_time": "11:38",
+        "departure_time": "11:38"
+    },
+    {
+        "type": "non-stopping",
+        "code": "SJNP",
+        "name": "Sujanpur",
+        "distance": 485.0,
+        "arrival_time": "11:45",
+        "departure_time": "11:45"
+    },
+    {
+        "type": "non-stopping",
+        "code": "MDPB",
+        "name": "Madhopur Punjab",
+        "distance": 492.0,
+        "arrival_time": "11:51",
+        "departure_time": "11:51"
+    },
+    {
+        "type": "non-stopping",
+        "code": "MSKT",
+        "name": "Mc Sunil Kathua",
+        "distance": 501.0,
+        "arrival_time": "12:01",
+        "departure_time": "12:01"
+    },
+    {
+        "type": "non-stopping",
+        "code": "BDHY",
+        "name": "Budhi",
+        "distance": 513.0,
+        "arrival_time": "12:11",
+        "departure_time": "12:11"
+    },
+    {
+        "type": "non-stopping",
+        "code": "CHNR",
+        "name": "Chhan Arorian",
+        "distance": 520.0,
+        "arrival_time": "12:15",
+        "departure_time": "12:15"
+    },
+    {
+        "type": "non-stopping",
+        "code": "CKDL",
+        "name": "Chakdayala",
+        "distance": 526.0,
+        "arrival_time": "12:18",
+        "departure_time": "12:18"
+    },
+    {
+        "type": "non-stopping",
+        "code": "HRNR",
+        "name": "Hira Nagar",
+        "distance": 529.0,
+        "arrival_time": "12:20",
+        "departure_time": "12:20"
+    },
+    {
+        "type": "non-stopping",
+        "code": "GHGL",
+        "name": "Ghagwal",
+        "distance": 535.0,
+        "arrival_time": "12:24",
+        "departure_time": "12:24"
+    },
+    {
+        "type": "non-stopping",
+        "code": "SMBX",
+        "name": "Samba",
+        "distance": 544.0,
+        "arrival_time": "12:30",
+        "departure_time": "12:30"
+    },
+    {
+        "type": "non-stopping",
+        "code": "VJPJ",
+        "name": "Vijiypur Jammu",
+        "distance": 556.0,
+        "arrival_time": "12:40",
+        "departure_time": "12:40"
+    },
+    {
+        "type": "non-stopping",
+        "code": "BBMN",
+        "name": "Bari Brahman",
+        "distance": 568.0,
+        "arrival_time": "12:49",
+        "departure_time": "12:49"
+    },
+    {
+        "type": "stopping",
+        "code": "JAT",
+        "name": "Jammutavi",
+        "platform": "PF1",
+        "distance": 577.0,
+        "scheduled_arrival": "12:43 | 11-Sep",
+        "scheduled_departure": "12:45 | 11-Sep",
+        "expected_arrival": "12:43 | 11-Sep",
+        "expected_departure": "12:45 | 11-Sep",
+        "status": "On Time",
+        "halt_duration_mins": 2
+    },
+    {
+        "type": "non-stopping",
+        "code": "BLA",
+        "name": "Bajalta",
+        "distance": 588.0,
+        "arrival_time": "13:16",
+        "departure_time": "13:16"
+    },
+    {
+        "type": "non-stopping",
+        "code": "SGRR",
+        "name": "Sangar",
+        "distance": 598.0,
+        "arrival_time": "13:25",
+        "departure_time": "13:25"
+    },
+    {
+        "type": "non-stopping",
+        "code": "MNWL",
+        "name": "Mnwl",
+        "distance": 608.0,
+        "arrival_time": "13:35",
+        "departure_time": "13:35"
+    },
+    {
+        "type": "non-stopping",
+        "code": "RMJK",
+        "name": "Ram Nagar J K",
+        "distance": 620.0,
+        "arrival_time": "13:45",
+        "departure_time": "13:45"
+    },
+    {
+        "type": "non-stopping",
+        "code": "MCTM",
+        "name": "Mctm Udhampur",
+        "distance": 630.0,
+        "arrival_time": "13:55",
+        "departure_time": "13:55"
+    },
+    {
+        "type": "non-stopping",
+        "code": "CRWL",
+        "name": "Chak Rakhwal",
+        "distance": 639.0,
+        "arrival_time": "14:05",
+        "departure_time": "14:05"
+    },
+    {
+        "type": "stopping",
+        "code": "SVDK",
+        "name": "Shri Mata Vaishno Devi Katra",
+        "platform": "PF1",
+        "distance": 655.0,
+        "scheduled_arrival": "14:20 | 11-Sep",
+        "scheduled_departure": "",
+        "expected_arrival": "14:20 | 11-Sep",
+        "expected_departure": "",
+        "status": "On Time"
+    }
+]

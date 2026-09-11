@@ -20,12 +20,15 @@ async def login(credentials: UserLogin, db=Depends(get_database)):
     
     if not user:
         # HACKATHON SEEDING LOGIC: Auto-create official ATS user if it doesn't exist yet for smooth demo
-        if credentials.role == "ats" and credentials.username == "ATS-NGP-4012":
+        if credentials.role == "ats":
+            # For hackathon demo, allow auto-creation of any ATS user provided
             new_user = {
                 "username": credentials.username,
                 "password": hashed_pwd,
                 "role": credentials.role,
-                "station": "Nagpur (NGP)",
+                "zone": credentials.zone or "South Central Railway (SCR)",
+                "division": credentials.division or "Vijayawada",
+                "control_office": credentials.controlOffice or "Vijayawada Control",
                 "clearance_level": "LEVEL_4"
             }
             await users_collection.insert_one(new_user)

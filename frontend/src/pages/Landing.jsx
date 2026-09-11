@@ -108,11 +108,11 @@ function Landing() {
               An advanced digital infrastructure for real-time fleet positioning, algorithmic delay forecasting, and centralized network oversight. Ensuring precision and transparency across all railway zones.
             </p>
             <div className="flex flex-col sm:flex-row gap-5">
-              <button className="bg-[#F97316] text-white font-bold py-4 px-8 rounded-sm shadow-md hover:bg-orange-700 transition-colors uppercase tracking-widest text-sm flex items-center justify-center">
+              <button onClick={() => setAuthModalType('passenger')} className="bg-[#F97316] text-white font-bold py-4 px-8 rounded-sm shadow-md hover:bg-orange-700 transition-colors uppercase tracking-widest text-sm flex items-center justify-center">
                 Track Live Status
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </button>
-              <button className="bg-white text-[#1E3A8A] font-bold py-4 px-8 rounded-sm shadow-md hover:shadow-lg hover:bg-slate-50 transition-all uppercase tracking-widest text-sm flex items-center justify-center">
+              <button onClick={() => setAuthModalType('ats')} className="bg-white text-[#1E3A8A] font-bold py-4 px-8 rounded-sm shadow-md hover:shadow-lg hover:bg-slate-50 transition-all uppercase tracking-widest text-sm flex items-center justify-center">
                 ATS Control Room
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
               </button>
