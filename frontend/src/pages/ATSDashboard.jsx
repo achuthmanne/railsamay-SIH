@@ -46,6 +46,7 @@ const ATSDashboard = () => {
   const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [liveTrains, setLiveTrains] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState('Division');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -65,6 +66,17 @@ const ATSDashboard = () => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  const filteredTrains = liveTrains.filter(t => {
+    const q = searchQuery.toLowerCase();
+    return (
+      t.no.toLowerCase().includes(q) ||
+      t.name.toLowerCase().includes(q) ||
+      t.currentLocation.toLowerCase().includes(q) ||
+      t.source.toLowerCase().includes(q) ||
+      t.dest.toLowerCase().includes(q)
+    );
+  });
 
   const getNetworkState = () => {
     if (!liveTrains || liveTrains.length === 0) return { text: 'NORMAL', color: 'text-emerald-600', border: 'border-l-emerald-500', icon: 'text-emerald-600' };
@@ -145,14 +157,18 @@ const ATSDashboard = () => {
             {/* Search Bar */}
             <div className="relative">
               <svg className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-              <input type="text" placeholder="Search train, station or route..." className="pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-sm text-sm w-64 focus:outline-none focus:bg-white focus:border-[#1E3A8A] transition-colors font-inter text-slate-800 placeholder-slate-400 font-medium" />
+              <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search train, station or route..." className="pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-sm text-sm w-64 focus:outline-none focus:bg-white focus:border-[#1E3A8A] transition-colors text-slate-800 font-semibold placeholder:font-normal placeholder:text-slate-400" />
             </div>
             
             {/* Notifications */}
-            <button className="relative text-slate-400 hover:text-slate-600">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-              <span className="absolute 1 top-0 right-0 w-2.5 h-2.5 bg-orange-500 rounded-full border-2 border-white"></span>
-            </button>
+            <button className="relative text-slate-600 hover:text-slate-800 transition-colors">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                {liveTrains.filter(t => t.scenarioFlags && t.scenarioFlags.includes('CONFLICT_SOURCE')).length > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] font-black px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm leading-none flex items-center justify-center">
+                    {liveTrains.filter(t => t.scenarioFlags && t.scenarioFlags.includes('CONFLICT_SOURCE')).length}
+                  </span>
+                )}
+              </button>
             
             {/* Profile */}
             <div className="flex items-center space-x-3 border-l border-slate-200 pl-6">
@@ -161,7 +177,7 @@ const ATSDashboard = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-sm font-bold text-slate-800">{office}</span>
-                <span className="text-[10px] font-bold text-green-600 flex items-center"><div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1"></div> Session Active</span>
+                <span className="text-[10px] font-bold text-green-600 flex items-center">Session Active</span>
               </div>
             </div>
 
@@ -199,11 +215,11 @@ const ATSDashboard = () => {
 
             {/* Date & Time Sharp Display */}
             <div className="flex items-center space-x-4">
-              <div className="bg-white border border-slate-300 border-l-4 border-l-[#F97316] shadow-sm rounded-sm px-4 py-2 flex items-center text-[11px] font-bold text-slate-700 font-inter tracking-wider uppercase">
+              <div className="bg-white border border-slate-300 border-l-4 border-l-[#F97316] shadow-sm rounded-sm px-4 py-2 flex items-center text-xs font-bold text-slate-700 uppercase tracking-widest">
                 <svg className="w-4 h-4 mr-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> 
                 {currentTime.toLocaleDateString('en-US', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric'})}
               </div>
-              <div className="bg-white border border-slate-300 border-l-4 border-l-[#1E3A8A] shadow-sm rounded-sm px-4 py-2 flex items-center text-[11px] font-black text-slate-800 font-inter tracking-widest">
+              <div className="bg-white border border-slate-300 border-l-4 border-l-[#1E3A8A] shadow-sm rounded-sm px-4 py-2 flex items-center text-xs font-bold text-slate-700 uppercase tracking-widest tabular-nums">
                 <svg className="w-4 h-4 mr-2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> 
                 {currentTime.toLocaleTimeString('en-US', { hour12: false })}
               </div>
@@ -219,7 +235,7 @@ const ATSDashboard = () => {
               
               {/* Real-time Dynamic Map */}
               <div className="flex-1 bg-slate-50 relative border-b border-slate-200 z-0">
-                <LiveNetworkMap trains={liveTrains} division={division} viewMode={viewMode} />
+                <LiveNetworkMap trains={filteredTrains} division={division} viewMode={viewMode} />
               </div>
 
               {/* Map Legend */}
@@ -248,13 +264,13 @@ const ATSDashboard = () => {
                 <div className="flex flex-col shadow-sm rounded-sm overflow-hidden">
                   <div className="bg-[#1E3A8A] px-4 py-3 border border-[#1E3A8A]">
                     <h3 className="text-xs font-black text-white uppercase tracking-widest flex items-center">
-                      Rail Samay AI Engine
+                      Rail Samay Engine
                     </h3>
                   </div>
-                  <div className="bg-white p-5 border border-slate-300 border-t-0 h-[220px] overflow-y-auto">
+                  <div className="bg-white p-5 border border-slate-300 border-t-0 h-[220px] overflow-y-auto custom-scrollbar">
                     <div className="mb-5 border-b border-slate-100 pb-4">
                       
-                      <h4 className="text-[11px] font-black text-[#1E3A8A] uppercase tracking-wide mb-1">Scenario 1: NGP Conflict</h4>
+                      <h4 className="text-[11px] font-black text-slate-800 uppercase tracking-wide mb-1">Scenario 1: NGP Conflict</h4>
                       <p className="text-[11px] text-slate-600 leading-relaxed font-medium">
                         Tests AI detection when <span className="font-bold text-slate-800">12626 Kerala Exp</span> incurs a +120m delay, causing a simultaneous arrival convergence with the on-time <span className="font-bold text-slate-800">12621 TN Exp</span> at Nagpur Junction.
                       </p>
@@ -263,10 +279,25 @@ const ATSDashboard = () => {
                     <div className="space-y-3">
                       <button 
                         onClick={() => {
-                          const engine = new SimulationEngine(division);
-                          engine.liveData = liveTrains;
-                          setLiveTrains(engine.injectScenario(1)); // Trigger Scenario 1
-                        }}
+                            // The Dramatic Hackathon Pitch Sequence
+                            
+                            // Step 1: Delay injected early (At ET station, no conflict yet)
+                            setTimeout(() => {
+                              setLiveTrains(prev => prev.map(t => {
+                                if (t.no === '12626') return { ...t, delayMinutes: 120, delayStr: '+ 02:00', status: 'Delayed', currentLocation: 'Departing ET (Itarsi)' };
+                                return t;
+                              }));
+                            }, 1500);
+
+                            // Step 2: Trains approach NGP, AI detects Convergence, Red Alerts Fire!
+                            setTimeout(() => {
+                              setLiveTrains(prev => prev.map(t => {
+                                if (t.no === '12626') return { ...t, currentLocation: 'Approaching NGP', scenarioFlags: ['CONFLICT_SOURCE'] };
+                                if (t.no === '12621') return { ...t, currentLocation: 'Approaching NGP', scenarioFlags: ['CONFLICT_TARGET'] };
+                                return t;
+                              }));
+                            }, 4500);
+                          }}
                         className="w-full bg-[#F97316] hover:bg-[#EA580C] text-white font-black text-[11px] uppercase tracking-widest py-3 rounded-sm border border-[#EA580C] transition-colors shadow-sm"
                       >
                         Trigger Scenario 1 (NGP)
@@ -288,27 +319,49 @@ const ATSDashboard = () => {
                 <div className="flex flex-col shadow-sm rounded-sm overflow-hidden flex-1">
                   <div className="bg-slate-800 px-4 py-3 border border-slate-800">
                     <h3 className="text-xs font-black text-white uppercase tracking-widest flex items-center">
-                      Live AI Conflict Logs
+                      Live Conflict Logs
                     </h3>
                   </div>
                   
-                  <div className="bg-white p-5 border border-slate-300 border-t-0 flex-1 overflow-y-auto space-y-4">
+                  <div className="bg-white p-5 border border-slate-300 border-t-0 flex-1 overflow-y-auto custom-scrollbar space-y-4">
                     {liveTrains.some(t => t.scenarioFlags.includes('CONFLICT_SOURCE')) ? (
                       <div className="bg-white border border-slate-200 border-l-4 border-l-red-600 p-4 shadow-sm">
-                        <div className="text-[10px] font-black text-red-600 mb-1.5 uppercase tracking-widest flex items-center">
-                          <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse mr-2"></span>
-                          Critical Conflict Detected
+                          <div className="text-[10px] font-black text-red-600 mb-1.5 uppercase tracking-widest flex items-center">
+                            <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse mr-2"></span>
+                            Critical Conflict Detected
+                          </div>
+                          
+                          <div className="text-xs font-bold text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2 mb-2">
+                            Route Convergence at NGP (13:45)
+                          </div>
+                          
+                          <p className="text-[11px] text-slate-600 leading-relaxed font-medium mb-3">
+                            <span className="font-black text-slate-800">12626 Kerala Exp</span> delayed by +120m (New ETA: 13:45). 
+                            Conflicts with on-time <span className="font-black text-slate-800">12621 TN Exp</span> (ETA: 13:45).
+                          </p>
+
+                          <div className="bg-red-50 border border-red-100 rounded-sm p-3 space-y-2 mb-3">
+                            <div className="flex justify-between items-center text-xs">
+                              <span className="text-slate-600 font-bold">Est. Time to Impact:</span>
+                              <span className="font-black text-red-700">~42 Mins</span>
+                            </div>
+                            <div className="flex justify-between items-center text-xs">
+                              <span className="text-slate-600 font-bold">Current Separation:</span>
+                              <span className="font-black text-red-700">38.4 km</span>
+                            </div>
+                          </div>
+
+                          <div className="mt-4 flex flex-col space-y-2">
+                            <div className="flex space-x-2">
+                              <button className="flex-1 bg-red-600 text-white text-[10px] uppercase tracking-widest px-3 py-2.5 rounded-sm font-bold shadow-sm hover:bg-red-700 transition-colors">Hold 12626</button>
+                              <button className="flex-1 bg-slate-100 border border-slate-300 text-slate-700 text-[10px] uppercase tracking-widest px-3 py-2.5 rounded-sm font-bold shadow-sm hover:bg-slate-200 transition-colors">Route via PF2</button>
+                            </div>
+                            <button className="w-full bg-slate-800 text-slate-100 text-[10px] uppercase tracking-widest px-4 py-2 rounded-sm font-bold shadow-sm hover:bg-slate-700 transition-colors flex items-center justify-center">
+                              <svg className="w-3.5 h-3.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                              Manual ATS Override / More Options
+                            </button>
+                          </div>
                         </div>
-                        <div className="text-xs font-bold text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2 mb-2">Route Convergence at NGP (13:45)</div>
-                        <p className="text-[11px] text-slate-600 leading-relaxed font-medium">
-                          <span className="font-black text-slate-800">12626 Kerala Exp</span> delayed by +120m (New ETA: 13:45). 
-                          Conflicts with on-time <span className="font-black text-slate-800">12621 TN Exp</span> (ETA: 13:45).
-                        </p>
-                        <div className="mt-4 flex space-x-3">
-                          <button className="flex-1 bg-red-600 text-white text-[10px] uppercase tracking-widest px-4 py-2.5 rounded-sm font-bold shadow-sm hover:bg-red-700 transition-colors">Hold 12626</button>
-                          <button className="flex-1 bg-slate-100 border border-slate-300 text-slate-700 text-[10px] uppercase tracking-widest px-4 py-2.5 rounded-sm font-bold shadow-sm hover:bg-slate-200 transition-colors">Route via PF2</button>
-                        </div>
-                      </div>
                     ) : (
                       <div className="flex flex-col items-center justify-center h-full text-slate-400 opacity-50 py-10">
                         <svg className="w-10 h-10 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -368,7 +421,7 @@ const ATSDashboard = () => {
                 <svg className="w-4 h-4 text-red-600 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
               </div>
               <div className="flex items-center space-x-2 mt-1">
-                <div className="text-2xl font-black text-red-600 leading-none">{isLoading ? '...' : liveTrains.filter(t => t.scenarioFlags && t.scenarioFlags.length > 0).length}</div>
+                <div className="text-2xl font-black text-red-600 leading-none">{isLoading ? '...' : liveTrains.filter(t => t.scenarioFlags && t.scenarioFlags.includes('CONFLICT_SOURCE')).length}</div>
                 <div className="text-[9px] font-bold text-red-600 uppercase tracking-wider bg-red-50 px-2 py-0.5 rounded-sm border border-red-200">Triggered</div>
               </div>
             </div>
@@ -386,7 +439,7 @@ const ATSDashboard = () => {
               <table className="w-full text-left border-collapse whitespace-nowrap">
                 <thead>
                   <tr className="bg-slate-100 text-xs text-slate-700 font-bold border-b border-slate-300">
-                    <th className="p-3 pl-5 border-r border-slate-200">#</th>
+                    <th className="p-3 pl-5 border-r border-slate-200">S.NO.</th>
                     <th className="p-3 border-r border-slate-200">Train Details</th>
                     <th className="p-3 border-r border-slate-200">Route</th>
                     <th className="p-3 border-r border-slate-200">Current Station</th>
@@ -404,7 +457,7 @@ const ATSDashboard = () => {
                       </td>
                     </tr>
                   ) : (
-                    liveTrains.map((train, idx) => {
+                    filteredTrains.map((train, idx) => {
                       // Calculate ETA dynamically
                       let eta = train.scheduleTime;
                       if (train.scheduleTime && train.delayMinutes > 0) {

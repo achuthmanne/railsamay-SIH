@@ -12,3 +12,18 @@ body {
 .font-montserrat {
   font-family: 'Montserrat', sans-serif;
 }
+
+/* Sleek Custom Scrollbars for Dashboards */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
