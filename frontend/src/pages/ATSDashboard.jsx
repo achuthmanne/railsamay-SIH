@@ -284,49 +284,60 @@ const ATSDashboard = () => {
                       <button 
                         onClick={() => {
                               setIsSimulating(true);
-                            // The Dramatic Hackathon Pitch Sequence
-                            
-                            // Step 1: Initial State (TN Express is 10m delayed, Kerala is On Time)
-                            setLiveTrains(prev => prev.map(t => {
-                              if (t.no === '12621') return { ...t, delayMinutes: 10, delayStr: '+ 10m', status: 'Delayed', currentLocation: 'Passing CD (Chandrapur)' };
-                              if (t.no === '12626') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Departing ET (Itarsi)' };
-                              return t;
-                            }));
-
-                            // Step 2: Kerala gets a 60m delay mid-journey
-                            setTimeout(() => {
+                              // The Dramatic Hackathon Pitch Sequence - Progressive Real-time Simulation
+                              
+                              // T=0s: Baseline - Early stations
                               setLiveTrains(prev => prev.map(t => {
-                                if (t.no === '12626') return { ...t, delayMinutes: 60, delayStr: '+ 60m', status: 'Severely Delayed', currentLocation: 'Near Betul (BZU)' };
+                                if (t.no === '12626') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Departed BPL (Bhopal)' };
+                                if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Departed BPQ (Balharshah)' };
                                 return t;
                               }));
-                            }, 3500);
 
-                            // Step 3: TN Express recovers its delay! Kerala delay worsens to 120m.
-                            setTimeout(() => {
-                              setLiveTrains(prev => prev.map(t => {
-                                if (t.no === '12626') return { ...t, delayMinutes: 120, delayStr: '+ 120m', status: 'Severely Delayed', currentLocation: 'Passing PAR (Pandhurna)' };
-                                if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'Delay Covered', currentLocation: 'Approaching SEGM' };
-                                return t;
-                              }));
-                            }, 7500);
+                              // T=4s: 12626 arrives at Itarsi, 12621 picks up minor delay
+                              setTimeout(() => {
+                                setLiveTrains(prev => prev.map(t => {
+                                  if (t.no === '12626') return { ...t, currentLocation: 'Arrived ET (Itarsi)' };
+                                  if (t.no === '12621') return { ...t, delayMinutes: 10, delayStr: '+ 10m', status: 'Delayed', currentLocation: 'Passing CD (Chandrapur)' };
+                                  return t;
+                                }));
+                              }, 4000);
 
-                            // Step 3.5: TN Express status settles back to "On Time"
-                            setTimeout(() => {
-                              setLiveTrains(prev => prev.map(t => {
-                                if (t.no === '12621') return { ...t, status: 'On Time' };
-                                return t;
-                              }));
-                            }, 9500);
+                              // T=8s: 12626 is held at Itarsi, delay begins. 12621 approaches Sevagram
+                              setTimeout(() => {
+                                setLiveTrains(prev => prev.map(t => {
+                                  if (t.no === '12626') return { ...t, delayMinutes: 30, delayStr: '+ 30m', status: 'Delayed', currentLocation: 'Departed ET (Itarsi)' };
+                                  if (t.no === '12621') return { ...t, currentLocation: 'Approaching SEGM (Sevagram)' };
+                                  return t;
+                                }));
+                              }, 8000);
 
-                            // Step 4: Both approaching NGP. AI Predicts the collision and fires Red Alerts!
-                            setTimeout(() => {
-                              setLiveTrains(prev => prev.map(t => {
-                                if (t.no === '12626') return { ...t, currentLocation: 'Approaching NGP', scenarioFlags: ['CONFLICT_SOURCE'] };
-                                if (t.no === '12621') return { ...t, currentLocation: 'Approaching NGP', scenarioFlags: ['CONFLICT_TARGET'] };
-                                return t;
+                              // T=12s: 12626 delay severely worsens. 12621 recovers its delay.
+                              setTimeout(() => {
+                                setLiveTrains(prev => prev.map(t => {
+                                  if (t.no === '12626') return { ...t, delayMinutes: 60, delayStr: '+ 60m', status: 'Severely Delayed', currentLocation: 'Near BZU (Betul)' };
+                                  if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'Delay Covered', currentLocation: 'Arrived SEGM (Sevagram)' };
+                                  return t;
+                                }));
+                              }, 12000);
+
+                              // T=16s: 12626 ETA intersects with 12621 at NGP
+                              setTimeout(() => {
+                                setLiveTrains(prev => prev.map(t => {
+                                  if (t.no === '12626') return { ...t, delayMinutes: 120, delayStr: '+ 120m', status: 'Severely Delayed', currentLocation: 'Departed PAR (Pandhurna)' };
+                                  if (t.no === '12621') return { ...t, status: 'On Time', currentLocation: 'Departed SEGM (Sevagram)' };
+                                  return t;
+                                }));
+                              }, 16000);
+
+                              // T=20s: Final Conflict Alert!
+                              setTimeout(() => {
+                                setLiveTrains(prev => prev.map(t => {
+                                  if (t.no === '12626') return { ...t, currentLocation: 'Approaching NGP', scenarioFlags: ['CONFLICT_SOURCE'] };
+                                  if (t.no === '12621') return { ...t, currentLocation: 'Approaching NGP', scenarioFlags: ['CONFLICT_TARGET'] };
+                                  return t;
                                 }));
                                 setIsSimulating(false);
-                              }, 11500);
+                              }, 20000);
                           }}
                         disabled={isSimulating}
                           className={`w-full font-black text-[11px] uppercase tracking-widest py-3 rounded-sm border transition-colors shadow-sm ${isSimulating ? 'bg-slate-300 border-slate-300 text-slate-500 cursor-not-allowed' : 'bg-[#F97316] hover:bg-[#EA580C] text-white border-[#EA580C]'}`}

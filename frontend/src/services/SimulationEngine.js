@@ -28,6 +28,7 @@ export class SimulationEngine {
         if (train.no === '22439') { currentLocation = 'Jalandhar Cantt (JRC)'; scheduleTime = '11:15'; }
         if (train.no === '20833') { currentLocation = 'Khammam (KMT)'; scheduleTime = '10:00'; }
         if (train.no === '12615') { currentLocation = 'Tenali Jn (TEL)'; scheduleTime = '00:45'; }
+        if (train.no === '20805') { currentLocation = 'Visakhapatnam (VSKP)'; scheduleTime = '--:--'; status = 'Not Started'; delayStr = '--'; }
 
         this.liveData.push({
           ...train,
