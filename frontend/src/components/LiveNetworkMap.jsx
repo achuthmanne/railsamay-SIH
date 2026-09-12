@@ -78,8 +78,9 @@ const LiveNetworkMap = ({ trains, division, zone, viewMode }) => {
 
   // Create custom sharp SVG pins
   const createIcon = (status, isConflict) => {
-    const isRed = status !== 'On Time' || isConflict;
-    const fillColor = isRed ? '#EF4444' : '#10B981'; // Tailwind red-500 or green-500
+    const isRed = (status !== 'On Time' && status !== 'Not Started' && status !== 'Delay Covered') || isConflict;
+    const isGray = status === 'Not Started';
+    const fillColor = isRed ? '#EF4444' : isGray ? '#64748B' : '#10B981'; // Tailwind red-500, slate-500, green-500
     const pingHtml = isRed ? `<div class="absolute -top-1 -left-1 w-8 h-8 bg-red-500 rounded-full opacity-40 animate-ping"></div>` : '';
     
     return L.divIcon({

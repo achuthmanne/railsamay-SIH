@@ -430,9 +430,9 @@ const ATSDashboard = () => {
                 <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Delayed / Hold</div>
                 <svg className="w-4 h-4 text-orange-500 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
               </div>
-              <div className="flex items-center space-x-2 mt-1">
-                <div className="text-2xl font-black text-slate-800 leading-none">{isLoading ? '...' : liveTrains.filter(t => t.status !== 'On Time').length}</div>
-                <div className="text-[9px] font-bold text-orange-600 uppercase tracking-wider bg-orange-50 px-2 py-0.5 rounded-sm border border-orange-200">Trains</div>
+                <div className="flex items-center space-x-2 mt-1">
+                  <div className="text-2xl font-black text-slate-800 leading-none">{isLoading ? '...' : liveTrains.filter(t => t.status !== 'On Time' && t.status !== 'Not Started' && t.status !== 'Delay Covered').length}</div>
+                  <div className="text-[9px] font-bold text-orange-600 uppercase tracking-wider bg-orange-50 px-2 py-0.5 rounded-sm border border-orange-200">Trains</div>
               </div>
             </div>
 
