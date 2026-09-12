@@ -509,7 +509,7 @@ const ATSDashboard = () => {
                           </td>
                           <td className="p-3 border-r border-slate-200">
                             <div className="flex items-center space-x-2">
-                              <span className={`text-sm font-bold ${train.delayMinutes > 45 ? 'text-red-600' : train.delayMinutes > 0 ? 'text-orange-600' : 'text-emerald-600'}`}>
+                              <span className={`text-sm font-bold ${train.status === 'Not Started' ? 'text-slate-400' : train.delayMinutes > 45 ? 'text-red-600' : train.delayMinutes > 0 ? 'text-orange-600' : 'text-emerald-600'}`}>
                                 {eta}
                               </span>
                               {train.delayMinutes > 0 && (

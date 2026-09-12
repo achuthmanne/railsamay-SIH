@@ -21,6 +21,17 @@ const COORDINATES = {
   'Vijayawada': [16.5062, 80.6200],
   
   // Specific Scenario Stations
+  'Visakhapatnam (VSKP)': [17.7292, 83.2974],
+  'Departed BPL (Bhopal)': [23.2599, 77.4126],
+  'Departed BPQ (Balharshah)': [19.8488, 79.3565],
+  'Arrived ET (Itarsi)': [22.6111, 77.7619],
+  'Passing CD (Chandrapur)': [19.9482, 79.2982],
+  'Departed ET (Itarsi)': [22.6111, 77.7619],
+  'Approaching SEGM (Sevagram)': [20.7303, 78.6015],
+  'Near BZU (Betul)': [21.9022, 77.9042],
+  'Arrived SEGM (Sevagram)': [20.7303, 78.6015],
+  'Departed SEGM (Sevagram)': [20.7303, 78.6015],
+  'Departed PAR (Pandhurna)': [21.5975, 78.5284],
   'Balharshah (BPQ)': [19.8488, 79.3565],
   'Itarsi Jn (ET)': [22.6111, 77.7619],
   'Approaching NGP': [21.3, 78.9], 
@@ -125,8 +136,8 @@ const LiveNetworkMap = ({ trains, division, zone, viewMode }) => {
               <div className="font-sans">
                 <div className="font-bold text-slate-900 text-sm">{train.no} {train.name}</div>
                 <div className="text-slate-600 text-xs mb-1">{train.currentLocation}</div>
-                <div className={`text-xs font-bold ${train.status === 'On Time' ? 'text-green-600' : 'text-red-600'}`}>
-                  {train.delayStr}
+                <div className={`text-xs font-bold ${train.status === 'On Time' ? 'text-green-600' : train.status === 'Not Started' ? 'text-slate-500' : 'text-red-600'}`}>
+                  {train.status === 'Not Started' ? 'Train Not Started' : train.delayStr}
                 </div>
               </div>
             </Popup>
