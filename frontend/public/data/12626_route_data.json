@@ -459,19 +459,6 @@
         "departure_time": "01:25"
     },
     {
-        "type": "stopping",
-        "code": "On Time",
-        "name": "Vglj",
-        "platform": "-",
-        "distance": 411.0,
-        "scheduled_arrival": "01:30 | 11-Sep",
-        "scheduled_departure": "01:38 | 11-Sep",
-        "expected_arrival": "01:30 | 11-Sep",
-        "expected_departure": "01:38 | 11-Sep",
-        "status": "On Time",
-        "halt_duration_mins": 8
-    },
-    {
         "type": "non-stopping",
         "code": "BJI",
         "name": "Bijauli",
@@ -1883,18 +1870,6 @@
         "name": "Nellore",
         "platform": "PF3",
         "distance": 2003.0,
-        "scheduled_arrival": "22:25 | 11-Sep",
-        "scheduled_departure": "",
-        "expected_arrival": "22:25 | 11-Sep",
-        "expected_departure": "",
-        "status": "On Time"
-    },
-    {
-        "type": "stopping",
-        "code": "NLR",
-        "name": "Nellore",
-        "platform": "PF3",
-        "distance": 2003.0,
         "scheduled_arrival": "01:53 | 12-Sep",
         "scheduled_departure": "01:55 | 12-Sep",
         "expected_arrival": "01:53 | 12-Sep",
@@ -2466,19 +2441,6 @@
         "departure_time": "10:37"
     },
     {
-        "type": "stopping",
-        "code": "On Time",
-        "name": "Ed",
-        "platform": "-",
-        "distance": 2506.0,
-        "scheduled_arrival": "10:45 | 12-Sep",
-        "scheduled_departure": "10:55 | 12-Sep",
-        "expected_arrival": "10:45 | 12-Sep",
-        "expected_departure": "10:55 | 12-Sep",
-        "status": "On Time",
-        "halt_duration_mins": 10
-    },
-    {
         "type": "non-stopping",
         "code": "TPM",
         "name": "Totiyapalayam",
@@ -3045,33 +3007,9 @@
         "name": "Tiruvalla",
         "platform": "PF3",
         "distance": 2895.0,
-        "scheduled_arrival": "18:14 | 12-Sep",
-        "scheduled_departure": "",
-        "expected_arrival": "18:14 | 12-Sep",
-        "expected_departure": "",
-        "status": "On Time"
-    },
-    {
-        "type": "stopping",
-        "code": "TRVL",
-        "name": "Tiruvalla",
-        "platform": "PF3",
-        "distance": 2895.0,
         "scheduled_arrival": "18:23 | 12-Sep",
         "scheduled_departure": "",
         "expected_arrival": "18:23 | 12-Sep",
-        "expected_departure": "",
-        "status": "On Time"
-    },
-    {
-        "type": "stopping",
-        "code": "CNGR",
-        "name": "Chengannur",
-        "platform": "PF1",
-        "distance": 2904.0,
-        "scheduled_arrival": "18:24 | 12-Sep",
-        "scheduled_departure": "",
-        "expected_arrival": "18:24 | 12-Sep",
         "expected_departure": "",
         "status": "On Time"
     },
@@ -3105,18 +3043,6 @@
         "scheduled_arrival": "18:49 | 12-Sep",
         "scheduled_departure": "",
         "expected_arrival": "18:49 | 12-Sep",
-        "expected_departure": "",
-        "status": "On Time"
-    },
-    {
-        "type": "stopping",
-        "code": "KYJ",
-        "name": "Kayankulam Jn",
-        "platform": "PF4",
-        "distance": 2925.0,
-        "scheduled_arrival": "18:50 | 12-Sep",
-        "scheduled_departure": "",
-        "expected_arrival": "18:50 | 12-Sep",
         "expected_departure": "",
         "status": "On Time"
     },
@@ -3318,27 +3244,15 @@
         "platform": "PF1",
         "distance": 3027.0,
         "scheduled_arrival": "20:59 | 12-Sep",
-        "scheduled_departure": "",
+        "scheduled_departure": "21:00 | 12-Sep",
         "expected_arrival": "20:59 | 12-Sep",
-        "expected_departure": "",
+        "expected_departure": "21:00 | 12-Sep",
         "status": "On Time"
     },
     {
         "type": "stopping",
-        "code": "On Time",
-        "name": "Tvc",
-        "platform": "-",
-        "distance": 3030.0,
-        "scheduled_arrival": "21:00 | 12-Sep",
-        "scheduled_departure": "",
-        "expected_arrival": "21:00 | 12-Sep",
-        "expected_departure": "",
-        "status": "On Time"
-    },
-    {
-        "type": "stopping",
-        "code": "On Time",
-        "name": "Tvc",
+        "code": "TVC",
+        "name": "Thiruvananthapuram Central",
         "platform": "-",
         "distance": 3030.0,
         "scheduled_arrival": "21:50 | 12-Sep",

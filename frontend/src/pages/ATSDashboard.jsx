@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SimulationEngine } from '../services/SimulationEngine';
 import LiveNetworkMap from '../components/LiveNetworkMap';
+
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 const delayData = [
@@ -47,6 +48,7 @@ const ATSDashboard = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [liveTrains, setLiveTrains] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedForecast, setSelectedForecast] = useState(null);
   const [viewMode, setViewMode] = useState('Division');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -281,22 +283,46 @@ const ATSDashboard = () => {
                         onClick={() => {
                             // The Dramatic Hackathon Pitch Sequence
                             
-                            // Step 1: Delay injected early (At ET station, no conflict yet)
+                            // Step 1: Initial State (TN Express is 10m delayed, Kerala is On Time)
+                            setLiveTrains(prev => prev.map(t => {
+                              if (t.no === '12621') return { ...t, delayMinutes: 10, delayStr: '+ 10m', status: 'Delayed', currentLocation: 'Passing CD (Chandrapur)' };
+                              if (t.no === '12626') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Departing ET (Itarsi)' };
+                              return t;
+                            }));
+
+                            // Step 2: Kerala gets a 60m delay mid-journey
                             setTimeout(() => {
                               setLiveTrains(prev => prev.map(t => {
-                                if (t.no === '12626') return { ...t, delayMinutes: 120, delayStr: '+ 02:00', status: 'Delayed', currentLocation: 'Departing ET (Itarsi)' };
+                                if (t.no === '12626') return { ...t, delayMinutes: 60, delayStr: '+ 60m', status: 'Severely Delayed', currentLocation: 'Near Betul (BZU)' };
                                 return t;
                               }));
-                            }, 1500);
+                            }, 3500);
 
-                            // Step 2: Trains approach NGP, AI detects Convergence, Red Alerts Fire!
+                            // Step 3: TN Express recovers its delay! Kerala delay worsens to 120m.
+                            setTimeout(() => {
+                              setLiveTrains(prev => prev.map(t => {
+                                if (t.no === '12626') return { ...t, delayMinutes: 120, delayStr: '+ 120m', status: 'Severely Delayed', currentLocation: 'Passing PAR (Pandhurna)' };
+                                if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'Delay Covered', currentLocation: 'Approaching SEGM' };
+                                return t;
+                              }));
+                            }, 7500);
+
+                            // Step 3.5: TN Express status settles back to "On Time"
+                            setTimeout(() => {
+                              setLiveTrains(prev => prev.map(t => {
+                                if (t.no === '12621') return { ...t, status: 'On Time' };
+                                return t;
+                              }));
+                            }, 9500);
+
+                            // Step 4: Both approaching NGP. AI Predicts the collision and fires Red Alerts!
                             setTimeout(() => {
                               setLiveTrains(prev => prev.map(t => {
                                 if (t.no === '12626') return { ...t, currentLocation: 'Approaching NGP', scenarioFlags: ['CONFLICT_SOURCE'] };
                                 if (t.no === '12621') return { ...t, currentLocation: 'Approaching NGP', scenarioFlags: ['CONFLICT_TARGET'] };
                                 return t;
                               }));
-                            }, 4500);
+                            }, 11500);
                           }}
                         className="w-full bg-[#F97316] hover:bg-[#EA580C] text-white font-black text-[11px] uppercase tracking-widest py-3 rounded-sm border border-[#EA580C] transition-colors shadow-sm"
                       >
@@ -487,7 +513,7 @@ const ATSDashboard = () => {
                           </td>
                           <td className="p-3 border-r border-slate-200">
                             <div className="flex items-center space-x-2">
-                              <span className={`text-sm font-bold ${train.delayMinutes > 0 ? 'text-red-600' : 'text-emerald-600'}`}>
+                              <span className={`text-sm font-bold ${train.delayMinutes > 45 ? 'text-red-600' : train.delayMinutes > 0 ? 'text-orange-600' : 'text-emerald-600'}`}>
                                 {eta}
                               </span>
                               {train.delayMinutes > 0 && (
@@ -500,14 +526,16 @@ const ATSDashboard = () => {
                           <td className="p-3 border-r border-slate-200">
                             <span className={`inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-bold border ${
                               train.status === 'On Time' ? 'bg-green-50 text-green-700 border-green-200' :
-                              train.status === 'Hold' ? 'bg-red-50 text-red-700 border-red-200' :
-                              'bg-orange-50 text-orange-700 border-orange-200'
+                              train.status === 'Delay Covered' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                              train.status === 'Delayed' ? 'bg-orange-50 text-orange-700 border-orange-200' :
+                              (train.status === 'Severely Delayed' || train.status === 'Hold') ? 'bg-red-50 text-red-700 border-red-200' :
+                              'bg-slate-50 text-slate-700 border-slate-200'
                             }`}>
                               {train.status}
                             </span>
                           </td>
                           <td className="p-3 pr-5 text-right">
-                            <button className="bg-white border border-[#1E3A8A] text-[#1E3A8A] hover:bg-[#1E3A8A] hover:text-white transition-colors text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-sm shadow-sm">
+                            <button onClick={() => navigate(`/forecast/${train.no}`, { state: { trainName: train.name, currentLocation: train.currentLocation } })} className="bg-white border border-[#1E3A8A] text-[#1E3A8A] hover:bg-[#1E3A8A] hover:text-white transition-colors text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-sm shadow-sm">
                               SEE FORECAST
                             </button>
                           </td>
@@ -521,6 +549,7 @@ const ATSDashboard = () => {
           </div>
         </div>
       </div>
+      
     </div>
   );
 };
