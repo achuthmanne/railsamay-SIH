@@ -358,7 +358,7 @@ const ATSDashboard = () => {
                                 <h3 className="text-[13px] font-bold text-slate-800 leading-none">Critical Operational Conflict</h3>
                               </div>
                               <p className="text-xs font-semibold text-slate-500 ml-6 mb-4">
-                                Platform 2 Occupancy Conflict — NGP
+                                Surface Crossover Interlocking Conflict at NGP Yard Throat
                               </p>
                               
                               <button 
@@ -544,7 +544,7 @@ const ATSDashboard = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-slate-900 tracking-tight mb-0.5">Critical Operational Conflict</h3>
-                  <p className="text-sm font-medium text-slate-500">Platform 2 Occupancy Conflict — NGP</p>
+                  <p className="text-sm font-medium text-slate-500">Surface Crossover Interlocking Conflict at NGP Yard Throat</p>
                 </div>
               </div>
               <button 
@@ -578,22 +578,22 @@ const ATSDashboard = () => {
               </div>
 
               {/* Stats */}
-              <div className="grid grid-cols-4 gap-0 border border-slate-200 rounded-none bg-slate-50 mb-6">
-                <div className="p-3 border-r border-slate-200 bg-white">
-                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Platform</div>
-                  <div className="text-[13px] font-bold text-slate-800">PF 2</div>
-                </div>
+              <div className="grid grid-cols-4 gap-0 border border-slate-200 rounded-none bg-slate-50">
                 <div className="p-3 border-r border-slate-200 bg-white">
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Conflict Window</div>
-                  <div className="text-[13px] font-bold text-slate-800">13:45 – 13:52</div>
+                  <div className="text-xs font-bold text-slate-800">13:45 – 13:52</div>
+                </div>
+                <div className="p-3 border-r border-slate-200 bg-white">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Conflict Point</div>
+                  <div className="text-xs font-bold text-slate-800">Yard Crossover 44B</div>
                 </div>
                 <div className="p-3 border-r border-slate-200 bg-white">
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Conflict Type</div>
-                  <div className="text-[12px] font-bold text-red-600">Arrival Sequence Overlap</div>
+                  <div className="text-[11px] font-bold text-red-600">Surface Crossing</div>
                 </div>
                 <div className="p-3 bg-white">
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">AI Confidence</div>
-                  <div className="text-[13px] font-bold text-blue-700 flex items-center">
+                  <div className="text-xs font-bold text-blue-700 flex items-center">
                     <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
                     94% Validated
                   </div>
@@ -619,8 +619,7 @@ const ATSDashboard = () => {
                       <span className="text-slate-500">12626</span>
                     </div>
                     <p className="text-xs font-medium text-slate-500 mb-5 leading-relaxed">
-                      Admit the on-time TN Express to PF 2 first. Regulate Kerala Express at the approach until PF 2 is cleared.<br/>
-                      <span className="inline-block mt-3 font-bold text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded-none border border-slate-200">Est. Network Impact: +6 min</span>
+                      Network Impact: <span className="font-bold text-slate-900 bg-slate-100 px-1 py-0.5 rounded-none">+6 min</span>
                     </p>
                     <div className="mt-auto">
                       <button onClick={() => setIsConflictModalOpen(false)} className="w-full bg-[#1E3A8A] text-white text-xs font-bold py-2.5 rounded-none hover:bg-blue-900 transition-colors flex items-center justify-center uppercase tracking-wider">
@@ -640,8 +639,7 @@ const ATSDashboard = () => {
                       <span className="text-slate-500">12621</span>
                     </div>
                     <p className="text-xs font-medium text-slate-500 mb-5 leading-relaxed">
-                      Admit Kerala Express to PF 2 first and regulate Tamil Nadu Express at the approach.<br/>
-                      <span className="inline-block mt-3 font-bold text-orange-800 bg-orange-50 px-1.5 py-0.5 border border-orange-200 rounded-none">Est. Network Impact: +9 min</span>
+                      Network Impact: <span className="font-bold text-orange-800 bg-orange-50 px-1 py-0.5 border border-orange-200 rounded-none">+9 min</span>
                     </p>
                     <div className="mt-auto">
                       <button onClick={() => setIsConflictModalOpen(false)} className="w-full bg-white border border-slate-300 text-slate-700 text-xs font-bold py-2.5 rounded-none hover:bg-slate-50 transition-colors flex items-center justify-center uppercase tracking-wider">
