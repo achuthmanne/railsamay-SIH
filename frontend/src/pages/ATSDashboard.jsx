@@ -460,17 +460,16 @@ const ATSDashboard = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse whitespace-nowrap">
                 <thead>
-                  <tr className="bg-slate-100 text-xs text-slate-700 font-bold border-b border-slate-300">
-                    <th className="p-3 pl-5 border-r border-slate-200">S.NO.</th>
-                    <th className="p-3 border-r border-slate-200">Train Details</th>
-                    <th className="p-3 border-r border-slate-200">Route</th>
-                    <th className="p-3 border-r border-slate-200">Current Station</th>
-                    <th className="p-3 border-r border-slate-200">Scheduled Time</th>
-                    <th className="p-3 border-r border-slate-200">Actual ETA</th>
-                    <th className="p-3 border-r border-slate-200">Live Status</th>
-                    <th className="p-3 pr-5 text-right">Action</th>
-                  </tr>
-                </thead>
+                    <tr className="bg-slate-100 text-xs text-slate-700 font-bold border-b border-slate-300">
+                      <th className="p-3 pl-5 border-r border-slate-200">S.NO.</th>
+                      <th className="p-3 border-r border-slate-200">Train Details</th>
+                      <th className="p-3 border-r border-slate-200">Route</th>
+                      <th className="p-3 border-r border-slate-200">Current Station</th>
+                      <th className="p-3 border-r border-slate-200">Next Halt</th>
+                      <th className="p-3 border-r border-slate-200">Live Status</th>
+                      <th className="p-3 pr-5 text-right">Action</th>
+                    </tr>
+                  </thead>
                 <tbody className="text-sm">
                   {isLoading ? (
                     <tr>
@@ -480,64 +479,103 @@ const ATSDashboard = () => {
                     </tr>
                   ) : (
                     filteredTrains.map((train, idx) => {
-                      // Calculate ETA dynamically
-                      let eta = train.scheduleTime;
-                      if (train.scheduleTime && train.delayMinutes > 0) {
-                        const [h, m] = train.scheduleTime.split(':').map(Number);
-                        const date = new Date(2024, 0, 1, h, m);
-                        date.setMinutes(date.getMinutes() + train.delayMinutes);
-                        eta = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-                      }
+                        // Helper to safely add minutes to a HH:MM string
+                        const calcETA = (timeStr, delayMins) => {
+                          if (!timeStr || timeStr === '--:--' || timeStr.includes('Source') || timeStr.includes('Destination')) return timeStr;
+                          const t = timeStr.split(' | ')[0];
+                          if (!t.includes(':')) return timeStr;
+                          const [h, m] = t.split(':').map(Number);
+                          if (isNaN(h) || isNaN(m)) return timeStr;
+                          const d = new Date(2024, 0, 1, h, m);
+                          d.setMinutes(d.getMinutes() + (delayMins || 0));
+                          return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+                        };
 
-                      return (
-                        <tr key={train.no} className="border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                          <td className="p-3 pl-5 font-bold text-slate-500 border-r border-slate-200">{idx + 1}</td>
-                          <td className="p-3 border-r border-slate-200">
-                            <div className="font-bold text-slate-800 text-sm">{train.no}</div>
-                            <div className="text-xs text-slate-500">{train.name}</div>
-                          </td>
-                          <td className="p-3 border-r border-slate-200 text-sm font-semibold text-slate-800">
-                            {train.source} <span className="text-[#1E3A8A] font-black mx-2">➔</span> {train.dest}
-                          </td>
-                          <td className="p-3 border-r border-slate-200">
-                            <div className="flex items-center text-sm font-bold text-[#1E3A8A]">
-                              {train.currentLocation}
-                            </div>
-                          </td>
-                          <td className="p-3 border-r border-slate-200 text-sm font-bold text-slate-600">
-                            {train.scheduleTime}
-                          </td>
-                          <td className="p-3 border-r border-slate-200">
-                            <div className="flex items-center space-x-2">
-                              <span className={`text-sm font-bold ${train.status === 'Not Started' ? 'text-slate-400' : train.delayMinutes > 45 ? 'text-red-600' : train.delayMinutes > 0 ? 'text-orange-600' : 'text-emerald-600'}`}>
-                                {eta}
-                              </span>
-                              {train.delayMinutes > 0 && (
-                                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-50 text-red-700 border border-red-200">
-                                  +{train.delayMinutes}m
+                        // Extract logic for Current & Next Station
+                        let currCodeMatch = train.currentLocation.match(/\(([A-Z]+)\)/);
+                        let currCode = currCodeMatch ? currCodeMatch[1] : null;
+                        
+                        let currentStation = null;
+                        let nextStation = null;
+                        
+                        if (train.route && train.route.length > 0) {
+                           let cIndex = 0;
+                           if (currCode) {
+                             cIndex = train.route.findIndex(s => s.code === currCode);
+                             if (cIndex === -1) cIndex = 0;
+                           }
+                           currentStation = train.route[cIndex];
+                           
+                           for (let i = cIndex + 1; i < train.route.length; i++) {
+                             if (train.route[i].type === 'stopping') {
+                               nextStation = train.route[i];
+                               break;
+                             }
+                           }
+                        }
+
+                        let currSch = currentStation ? (currentStation.arrival_time || currentStation.scheduled_arrival || '--:--') : '--:--';
+                        let currETA = train.status === 'Not Started' ? '--:--' : calcETA(currSch, train.delayMinutes);
+                        currSch = currSch.split(' | ')[0];
+
+                        let nextSch = nextStation ? (nextStation.arrival_time || nextStation.scheduled_arrival || '--:--') : '--:--';
+                        let nextETA = train.status === 'Not Started' ? '--:--' : calcETA(nextSch, train.delayMinutes);
+                        nextSch = nextSch.split(' | ')[0];
+
+                        const delayColor = train.status === 'Not Started' ? 'text-slate-400' : train.delayMinutes > 45 ? 'text-red-600' : train.delayMinutes > 0 ? 'text-orange-600' : 'text-emerald-600';
+
+                        return (
+                          <tr key={train.no} className="border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                            <td className="p-3 pl-5 font-bold text-slate-500 border-r border-slate-200">{idx + 1}</td>
+                            <td className="p-3 border-r border-slate-200">
+                              <div className="font-bold text-slate-800 text-sm">{train.no}</div>
+                              <div className="text-xs text-slate-500">{train.name}</div>
+                            </td>
+                            <td className="p-3 border-r border-slate-200 text-sm font-semibold text-slate-800 whitespace-nowrap">
+                              {train.source} <span className="text-[#1E3A8A] font-black mx-1">→</span> {train.dest}
+                            </td>
+                            <td className="p-3 border-r border-slate-200">
+                              <div className="text-sm font-bold text-[#1E3A8A] mb-0.5">{train.currentLocation}</div>
+                              <div className="flex items-center text-[10px] font-bold text-slate-500 uppercase tracking-wider space-x-2">
+                                <span>STA: {currSch}</span>
+                                <span>•</span>
+                                <span className={delayColor}>ETA: {currETA}</span>
+                              </div>
+                            </td>
+                            <td className="p-3 border-r border-slate-200">
+                              <div className="text-sm font-bold text-slate-700 mb-0.5">{nextStation ? `${nextStation.name} (${nextStation.code})` : '--'}</div>
+                              <div className="flex items-center text-[10px] font-bold text-slate-500 uppercase tracking-wider space-x-2">
+                                <span>STA: {nextSch}</span>
+                                <span>•</span>
+                                <span className={delayColor}>ETA: {nextETA}</span>
+                              </div>
+                            </td>
+                            <td className="p-3 border-r border-slate-200">
+                              <div className="flex flex-col items-start gap-1.5">
+                                <span className={`inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-bold border ${
+                                  train.status === 'On Time' ? 'bg-green-50 text-green-700 border-green-200' :
+                                  train.status === 'Delay Covered' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                                  train.status === 'Delayed' ? 'bg-orange-50 text-orange-700 border-orange-200' :
+                                  (train.status === 'Severely Delayed' || train.status === 'Hold') ? 'bg-red-50 text-red-700 border-red-200' :
+                                  'bg-slate-50 text-slate-700 border-slate-200'
+                                }`}>
+                                  {train.status}
                                 </span>
-                              )}
-                            </div>
-                          </td>
-                          <td className="p-3 border-r border-slate-200">
-                            <span className={`inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-bold border ${
-                              train.status === 'On Time' ? 'bg-green-50 text-green-700 border-green-200' :
-                              train.status === 'Delay Covered' ? 'bg-blue-50 text-blue-700 border-blue-200' :
-                              train.status === 'Delayed' ? 'bg-orange-50 text-orange-700 border-orange-200' :
-                              (train.status === 'Severely Delayed' || train.status === 'Hold') ? 'bg-red-50 text-red-700 border-red-200' :
-                              'bg-slate-50 text-slate-700 border-slate-200'
-                            }`}>
-                              {train.status}
-                            </span>
-                          </td>
-                          <td className="p-3 pr-5 text-right">
-                            <button onClick={() => navigate(`/forecast/${train.no}`, { state: { trainName: train.name, currentLocation: train.currentLocation } })} className="bg-white border border-[#1E3A8A] text-[#1E3A8A] hover:bg-[#1E3A8A] hover:text-white transition-colors text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-sm shadow-sm">
-                              SEE FORECAST
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })
+                                {train.delayMinutes > 0 && (
+                                  <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-black text-red-600 bg-red-50 border border-red-200">
+                                    +{train.delayMinutes}m
+                                  </span>
+                                )}
+                              </div>
+                            </td>
+                            <td className="p-3 pr-5 text-right">
+                              <button onClick={() => navigate(`/forecast/${train.no}`, { state: { trainName: train.name, currentLocation: train.currentLocation } })} className="bg-white border border-[#1E3A8A] text-[#1E3A8A] hover:bg-[#1E3A8A] hover:text-white transition-colors text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-sm shadow-sm">
+                                SEE FORECAST
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })
                   )}
                 </tbody>
               </table>
