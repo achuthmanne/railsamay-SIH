@@ -569,7 +569,7 @@ const ATSDashboard = () => {
                                   {train.status}
                                 </span>
                                 {train.delayMinutes > 0 && (
-                                  <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-black text-red-600 bg-red-50 border border-red-200">
+                                  <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium text-red-600 bg-red-50 border border-red-200">
                                     +{train.delayMinutes}m
                                   </span>
                                 )}
