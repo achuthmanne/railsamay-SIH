@@ -358,7 +358,7 @@ const ATSDashboard = () => {
                                 <h3 className="text-[13px] font-bold text-slate-800 leading-none">Critical Operational Conflict</h3>
                               </div>
                               <p className="text-xs font-semibold text-slate-500 ml-6 mb-4">
-                                Route / Section Conflict Detected at Nagpur Junction (NGP)
+                                Surface Crossover Interlocking Conflict at NGP Yard Throat
                               </p>
                               
                               <button 
@@ -544,7 +544,7 @@ const ATSDashboard = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-slate-900 tracking-tight mb-0.5">Critical Operational Conflict</h3>
-                  <p className="text-sm font-medium text-slate-500">Route / Section Conflict Detected at Nagpur Junction (NGP)</p>
+                  <p className="text-sm font-medium text-slate-500">Surface Crossover Interlocking Conflict at NGP Yard Throat</p>
                 </div>
               </div>
               <button 
@@ -578,14 +578,18 @@ const ATSDashboard = () => {
               </div>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-0 border border-slate-200 rounded-none bg-slate-50">
+              <div className="grid grid-cols-4 gap-0 border border-slate-200 rounded-none bg-slate-50">
                 <div className="p-3 border-r border-slate-200 bg-white">
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Conflict Window</div>
                   <div className="text-xs font-bold text-slate-800">13:45 – 13:52</div>
                 </div>
                 <div className="p-3 border-r border-slate-200 bg-white">
-                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Affected Route</div>
-                  <div className="text-xs font-bold text-slate-800">NGP Approach</div>
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Conflict Point</div>
+                  <div className="text-xs font-bold text-slate-800">Yard Crossover 44B</div>
+                </div>
+                <div className="p-3 border-r border-slate-200 bg-white">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Conflict Type</div>
+                  <div className="text-[11px] font-bold text-red-600">Surface Crossing</div>
                 </div>
                 <div className="p-3 bg-white">
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">AI Confidence</div>
