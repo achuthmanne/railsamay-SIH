@@ -52,6 +52,7 @@ const ATSDashboard = () => {
   const [viewMode, setViewMode] = useState('Division');
   const [isLoading, setIsLoading] = useState(true);
   const [isConflictModalOpen, setIsConflictModalOpen] = useState(false);
+  const [isSimulating, setIsSimulating] = useState(false);
 
   const zone = localStorage.getItem('rail_samay_zone') || 'Central Railway';
   const division = localStorage.getItem('rail_samay_division') || 'Nagpur';
@@ -282,6 +283,7 @@ const ATSDashboard = () => {
                     <div className="space-y-3">
                       <button 
                         onClick={() => {
+                              setIsSimulating(true);
                             // The Dramatic Hackathon Pitch Sequence
                             
                             // Step 1: Initial State (TN Express is 10m delayed, Kerala is On Time)
@@ -322,17 +324,20 @@ const ATSDashboard = () => {
                                 if (t.no === '12626') return { ...t, currentLocation: 'Approaching NGP', scenarioFlags: ['CONFLICT_SOURCE'] };
                                 if (t.no === '12621') return { ...t, currentLocation: 'Approaching NGP', scenarioFlags: ['CONFLICT_TARGET'] };
                                 return t;
-                              }));
-                            }, 11500);
+                                }));
+                                setIsSimulating(false);
+                              }, 11500);
                           }}
-                        className="w-full bg-[#F97316] hover:bg-[#EA580C] text-white font-black text-[11px] uppercase tracking-widest py-3 rounded-sm border border-[#EA580C] transition-colors shadow-sm"
-                      >
-                        Trigger Scenario 1 (NGP)
+                        disabled={isSimulating}
+                          className={`w-full font-black text-[11px] uppercase tracking-widest py-3 rounded-sm border transition-colors shadow-sm ${isSimulating ? 'bg-slate-300 border-slate-300 text-slate-500 cursor-not-allowed' : 'bg-[#F97316] hover:bg-[#EA580C] text-white border-[#EA580C]'}`}
+                        >
+                          {isSimulating ? 'Running Simulation...' : 'Trigger Scenario 1 (NGP)'}
                       </button>
                       <button 
                         onClick={() => {
                           const engine = new SimulationEngine(division);
                           engine.initialize().then(setLiveTrains);
+                          setIsSimulating(false);
                         }}
                         className="w-full bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-[11px] uppercase tracking-widest py-3 rounded-sm border border-slate-300 transition-colors shadow-sm"
                       >
@@ -363,7 +368,7 @@ const ATSDashboard = () => {
                               
                               <button 
                                 onClick={() => setIsConflictModalOpen(true)}
-                                className="w-full bg-[#1E3A8A] text-white text-xs font-bold py-2.5 rounded-none shadow-sm hover:bg-blue-900 transition-colors flex items-center justify-center uppercase tracking-widest">
+                                className="w-full bg-red-600 text-white text-xs font-bold py-2.5 rounded-none shadow-sm hover:bg-red-700 transition-colors flex items-center justify-center uppercase tracking-widest">
                                 View Conflict Details
                                 <svg className="w-3.5 h-3.5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                               </button>
