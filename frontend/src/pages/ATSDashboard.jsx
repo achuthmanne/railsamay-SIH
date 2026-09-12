@@ -492,17 +492,20 @@ const ATSDashboard = () => {
                         };
 
                         // Extract logic for Current & Next Station
-                        let currCodeMatch = train.currentLocation.match(/\(([A-Z]+)\)/);
-                        let currCode = currCodeMatch ? currCodeMatch[1] : null;
-                        
                         let currentStation = null;
                         let nextStation = null;
                         
                         if (train.route && train.route.length > 0) {
                            let cIndex = 0;
-                           if (currCode) {
-                             cIndex = train.route.findIndex(s => s.code === currCode);
-                             if (cIndex === -1) cIndex = 0;
+                           
+                           // Robust station code extraction: Look for exact word matches (e.g., "NGP", "ET")
+                           const foundIdx = train.route.findIndex(s => {
+                             const regex = new RegExp(`\\b${s.code}\\b`, 'i');
+                             return regex.test(train.currentLocation) || train.currentLocation.includes(`(${s.code})`);
+                           });
+                           
+                           if (foundIdx !== -1) {
+                             cIndex = foundIdx;
                            }
                            currentStation = train.route[cIndex];
                            
