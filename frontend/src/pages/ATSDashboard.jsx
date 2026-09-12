@@ -534,8 +534,12 @@ const ATSDashboard = () => {
                               <div className="font-bold text-slate-800 text-sm">{train.no}</div>
                               <div className="text-xs text-slate-500">{train.name}</div>
                             </td>
-                            <td className="p-3 border-r border-slate-200 text-sm font-semibold text-slate-800 whitespace-nowrap">
-                              {train.source} <span className="text-[#1E3A8A] font-black mx-1">→</span> {train.dest}
+                            <td className="p-3 border-r border-slate-200">
+                              <div className="flex items-center text-sm font-semibold text-slate-800 whitespace-nowrap">
+                                {train.source} 
+                                <svg className="w-3.5 h-3.5 mx-2 text-[#1E3A8A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                {train.dest}
+                              </div>
                             </td>
                             <td className="p-3 border-r border-slate-200">
                               <div className="text-sm font-bold text-[#1E3A8A] mb-0.5">{train.currentLocation}</div>
