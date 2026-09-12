@@ -351,43 +351,97 @@ const ATSDashboard = () => {
                   
                   <div className="bg-white p-5 border border-slate-300 border-t-0 flex-1 overflow-y-auto custom-scrollbar space-y-4">
                     {liveTrains.some(t => t.scenarioFlags.includes('CONFLICT_SOURCE')) ? (
-                      <div className="bg-white border border-slate-200 border-l-4 border-l-red-600 p-4 shadow-sm">
-                          <div className="text-[10px] font-black text-red-600 mb-1.5 uppercase tracking-widest flex items-center">
-                            <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse mr-2"></span>
-                            Critical Conflict Detected
-                          </div>
-                          
-                          <div className="text-xs font-bold text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-2 mb-2">
-                            Route Convergence at NGP (13:45)
-                          </div>
-                          
-                          <p className="text-[11px] text-slate-600 leading-relaxed font-medium mb-3">
-                            <span className="font-black text-slate-800">12626 Kerala Exp</span> delayed by +120m (New ETA: 13:45). 
-                            Conflicts with on-time <span className="font-black text-slate-800">12621 TN Exp</span> (ETA: 13:45).
-                          </p>
-
-                          <div className="bg-red-50 border border-red-100 rounded-sm p-3 space-y-2 mb-3">
-                            <div className="flex justify-between items-center text-xs">
-                              <span className="text-slate-600 font-bold">Est. Time to Impact:</span>
-                              <span className="font-black text-red-700">~42 Mins</span>
+                      <div className="bg-white border border-slate-200 border-l-4 border-l-red-600 p-5 shadow-sm">
+                            {/* Alert Header */}
+                            <div className="flex items-center space-x-2 mb-2">
+                              <span className="flex h-2.5 w-2.5">
+                                <span className="animate-ping absolute inline-flex h-2.5 w-2.5 rounded-full bg-red-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-600"></span>
+                              </span>
+                              <h3 className="text-[11px] font-black text-red-600 uppercase tracking-widest">
+                                Critical Operational Conflict
+                              </h3>
                             </div>
-                            <div className="flex justify-between items-center text-xs">
-                              <span className="text-slate-600 font-bold">Current Separation:</span>
-                              <span className="font-black text-red-700">38.4 km</span>
+                            
+                            <div className="text-[13px] font-black text-slate-800 uppercase tracking-wide border-b border-slate-100 pb-3 mb-3">
+                              Route/Section Conflict Detected at NGP
                             </div>
-                          </div>
-
-                          <div className="mt-4 flex flex-col space-y-2">
-                            <div className="flex space-x-2">
-                              <button className="flex-1 bg-red-600 text-white text-[10px] uppercase tracking-widest px-3 py-2.5 rounded-sm font-bold shadow-sm hover:bg-red-700 transition-colors">Hold 12626</button>
-                              <button className="flex-1 bg-slate-100 border border-slate-300 text-slate-700 text-[10px] uppercase tracking-widest px-3 py-2.5 rounded-sm font-bold shadow-sm hover:bg-slate-200 transition-colors">Route via PF2</button>
+                            
+                            {/* Conflict Details */}
+                            <div className="grid grid-cols-2 gap-3 mb-4">
+                              <div className="bg-slate-50 p-2.5 rounded-sm border border-slate-200">
+                                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">12626 Kerala Exp</div>
+                                <div className="flex justify-between items-center">
+                                  <div className="text-xs font-black text-[#1E3A8A]">ETA 13:45</div>
+                                  <div className="text-[10px] font-bold text-red-600 bg-red-100 px-1.5 py-0.5 rounded-sm border border-red-200">+120m Delay</div>
+                                </div>
+                              </div>
+                              <div className="bg-slate-50 p-2.5 rounded-sm border border-slate-200">
+                                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">12621 TN Exp</div>
+                                <div className="flex justify-between items-center">
+                                  <div className="text-xs font-black text-[#1E3A8A]">ETA 13:45</div>
+                                  <div className="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-1.5 py-0.5 rounded-sm border border-emerald-200">On Time</div>
+                                </div>
+                              </div>
                             </div>
-                            <button className="w-full bg-slate-800 text-slate-100 text-[10px] uppercase tracking-widest px-4 py-2 rounded-sm font-bold shadow-sm hover:bg-slate-700 transition-colors flex items-center justify-center">
-                              <svg className="w-3.5 h-3.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
-                              Manual ATS Override / More Options
-                            </button>
+  
+                            {/* Window & Impact */}
+                            <div className="bg-red-50 border border-red-100 rounded-sm p-3 space-y-2 mb-4">
+                              <div className="flex justify-between items-center text-xs">
+                                <span className="text-slate-600 font-bold">Conflict Window:</span>
+                                <span className="font-black text-red-700">13:45 – 13:52</span>
+                              </div>
+                              <div className="flex justify-between items-center text-xs">
+                                <span className="text-slate-600 font-bold">Affected Movement:</span>
+                                <span className="font-black text-red-700">NGP Approach / Shared Route</span>
+                              </div>
+                              <div className="flex justify-between items-center text-xs">
+                                <span className="text-slate-600 font-bold">AI Confidence:</span>
+                                <span className="font-black text-red-700">94%</span>
+                              </div>
+                            </div>
+  
+                            {/* Recommendation */}
+                            <div className="border border-[#1E3A8A] bg-blue-50/30 rounded-sm p-4 mb-4">
+                              <div className="flex items-center space-x-2 mb-2">
+                                <svg className="w-4 h-4 text-[#1E3A8A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                <span className="text-[11px] font-black text-[#1E3A8A] uppercase tracking-widest">AI Recommendation</span>
+                              </div>
+                              <div className="text-[13px] font-black text-slate-800 mb-1">
+                                Regulate 12626 at Approach Signal
+                              </div>
+                              <p className="text-[10px] font-bold text-slate-600 leading-relaxed mb-3">
+                                Hold 12626 before the conflicting movement until 12621 clears the route. Expected Impact: <span className="text-orange-600 font-black">+5–10 min</span>
+                              </p>
+                              
+                              <button className="w-full bg-[#1E3A8A] text-white text-[10px] uppercase tracking-widest px-4 py-2.5 rounded-sm font-black shadow-sm hover:bg-blue-900 transition-colors flex items-center justify-center">
+                                REVIEW & APPROVE SEQUENCE
+                              </button>
+                            </div>
+  
+                            {/* More Options */}
+                            <details className="w-full group">
+                              <summary className="w-full bg-slate-100 text-slate-600 border border-slate-300 text-[10px] uppercase tracking-widest px-4 py-2 rounded-sm font-bold shadow-sm hover:bg-slate-200 transition-colors flex items-center justify-center cursor-pointer list-none">
+                                <svg className="w-3.5 h-3.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                                Review Operational Decision
+                              </summary>
+                              <div className="mt-2 p-3 border border-slate-200 bg-slate-50 shadow-sm space-y-2.5 rounded-sm">
+                                <div className="text-[10px] font-bold text-slate-700 flex justify-between items-center cursor-pointer hover:text-[#1E3A8A]">
+                                  <span>• Resequence Movement</span>
+                                </div>
+                                <div className="text-[10px] font-bold text-slate-700 flex justify-between items-center cursor-pointer hover:text-[#1E3A8A]">
+                                  <span>• Check Alternate Route/Line</span>
+                                  <span className="text-[8px] text-orange-600 bg-orange-50 px-1 border border-orange-200 uppercase tracking-widest">Check Req</span>
+                                </div>
+                                <div className="text-[10px] font-bold text-slate-700 flex justify-between items-center cursor-pointer hover:text-[#1E3A8A]">
+                                  <span>• Adjust Arrival Sequence</span>
+                                </div>
+                                <div className="text-[10px] font-bold text-slate-700 flex justify-between items-center cursor-pointer hover:text-[#1E3A8A]">
+                                  <span>• Continue & Monitor</span>
+                                </div>
+                              </div>
+                            </details>
                           </div>
-                        </div>
                     ) : (
                       <div className="flex flex-col items-center justify-center h-full text-slate-400 opacity-50 py-10">
                         <svg className="w-10 h-10 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>

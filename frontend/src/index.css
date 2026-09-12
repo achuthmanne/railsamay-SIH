@@ -36,3 +36,7 @@ body {
 .animate-slide-in {
   animation: slideInRight 0.3s ease-out forwards;
 }
+
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
