@@ -1283,7 +1283,7 @@
         "type": "stopping",
         "code": "NGP",
         "name": "Nagpur Jn",
-        "platform": "PF1",
+        "platform": "PF2",
         "distance": 1089.0,
         "scheduled_arrival": "13:45 | 11-Sep",
         "scheduled_departure": "13:50 | 11-Sep",
