@@ -330,7 +330,19 @@ export default function TrainForecast() {
               let varianceColor = 'text-emerald-600';
               let varianceBadge = 'ON TIME';
               let varianceBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-200';
-              let arrivalTime = lastStation ? lastStation.scheduled_arrival : '00:00';
+              let upcomingStation = lastStation;
+              let tempMainIndex = routeData.findIndex(s => {
+                  if (currentLocation.includes(s.code)) return true;
+                  if (s.nonStoppingList) {
+                      return s.nonStoppingList.some(ns => currentLocation.includes(ns.code));
+                  }
+                  return false;
+              });
+              if (tempMainIndex !== -1 && tempMainIndex + 1 < routeData.length) {
+                  upcomingStation = routeData[tempMainIndex + 1];
+              }
+              let arrivalTime = upcomingStation ? (upcomingStation.scheduled_arrival !== 'Source' ? upcomingStation.scheduled_arrival : (upcomingStation.arrival_time || '00:00')) : '00:00';
+
               
               if (liveDelay > 0) {
                   varianceColor = 'text-red-600';
@@ -390,7 +402,7 @@ export default function TrainForecast() {
 
                    <div className="flex justify-between items-end border-t border-slate-200 pt-3 relative z-10">
                      <div>
-                       <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Arrival Variance</div>
+                       <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Arrival Variance ({upcomingStation?.code || 'Destination'})</div>
                        <div className={`text-3xl font-black leading-none ${varianceColor}`}>{arrivalTime}</div>
                      </div>
                      <div className={`text-xs font-black px-2 py-1 border ${varianceBadgeClass}`}>
