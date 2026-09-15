@@ -316,7 +316,7 @@ export default function TrainForecast() {
           <div className="p-6 flex justify-between items-start">
             <div className="flex items-start space-x-4">
               <div className="w-14 h-14 border border-slate-200 shadow-sm flex items-center justify-center shrink-0 bg-white overflow-hidden p-1">
-                  <img src="/custom_train_icon.jpg" alt="Train" className="w-full h-full object-contain mix-blend-multiply" />
+                  <img src="/trainicon.png" alt="Train" className="w-full h-full object-contain mix-blend-multiply" />
                 </div>
               <div>
                 <h2 className="text-2xl font-black text-[#1E3A8A] tracking-wider uppercase">
