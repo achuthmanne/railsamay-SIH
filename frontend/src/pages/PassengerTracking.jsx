@@ -376,7 +376,7 @@ function PassengerForecastView({ trainNo, onBack }) {
 
   return (
     <div className="flex flex-col h-full bg-slate-50 relative overflow-x-hidden">
-      <div className="flex flex-col flex-1 p-2 md:p-6 max-w-6xl mx-auto w-full">
+      <div className="flex flex-col flex-1 p-4 pt-10 md:p-6 md:pt-12 max-w-6xl mx-auto w-full">
       <style>{`
         @keyframes signalBlink {
           0%, 100% { opacity: 0.2; transform: scale(0.9); }
@@ -390,9 +390,12 @@ function PassengerForecastView({ trainNo, onBack }) {
       {/* Top Header Block */}
       <div className="flex justify-between items-center mb-6">
         <div>
-          <button onClick={onBack} className="text-sm font-bold text-slate-500 uppercase tracking-widest hover:text-[#1E3A8A] transition-colors mb-2 flex items-center">
-            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
-            Back to Search
+          <button 
+            onClick={onBack}
+            className="flex items-center px-5 py-2 bg-white border border-slate-200 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all font-bold text-xs tracking-widest uppercase group mb-6 w-max"
+          >
+            <svg className="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+            RETURN TO SEARCH
           </button>
           <h2 className="text-3xl font-black text-[#1E3A8A] font-montserrat tracking-tight uppercase">
             {trainNo} {trainName}
