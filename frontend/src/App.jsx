@@ -1,17 +1,9 @@
-import React from 'react';
+﻿import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Landing from './pages/Landing';
 import ATSDashboard from './pages/ATSDashboard';
 import TrainForecast from './pages/TrainForecast';
-
-
-// Placeholder Dashboards for later
-const PassengerDashboard = () => (
-  <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-10 font-sans">
-    <h1 className="text-4xl font-bold font-montserrat text-[#F97316] mb-4">Passenger ETA Portal</h1>
-    <p className="text-slate-500 font-inter max-w-lg text-center">Enter your PNR to track dynamic cascade delays securely.</p>
-  </div>
-);
+import PassengerTracking from './pages/PassengerTracking';
 
 function App() {
   return (
@@ -20,15 +12,13 @@ function App() {
         {/* Public Routes */}
         <Route path="/" element={<Landing />} />
         
-        
         {/* Secure Routes */}
         <Route path="/ats-dashboard" element={<ATSDashboard />} />
         <Route path="/forecast/:trainNo" element={<TrainForecast />} />
-        <Route path="/passenger-dashboard" element={<PassengerDashboard />} />
+        <Route path="/passenger-dashboard" element={<PassengerTracking />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
-
