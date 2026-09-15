@@ -216,6 +216,12 @@ export default function TrainForecast() {
       return 0;
   };
 
+  const formatDelayTime = (mins) => {
+      const h = Math.floor(mins / 60).toString().padStart(2, '0');
+      const m = (mins % 60).toString().padStart(2, '0');
+      return `Delay: ${h}:${m}`;
+  };
+
   const liveStation = routeData.find(s => currentLocation.includes(s.code)) || routeData[0];
   const lastStation = routeData.length > 0 ? routeData[routeData.length - 1] : null;
   const progressPercent = (liveStation && lastStation && lastStation.distance > 0) 
@@ -430,7 +436,7 @@ export default function TrainForecast() {
               let nodeStatusClass = 'bg-[#DCFCE7] text-[#166534]';
 
               if (nodeDelay > 0) {
-                  nodeStatus = `Delayed (+${nodeDelay}m)`;
+                  nodeStatus = formatDelayTime(nodeDelay);
                   nodeStatusClass = isPassed ? 'bg-[#FEE2E2] text-[#991B1B] opacity-80' : 'bg-[#FEE2E2] text-[#991B1B]';
               } else if (isPassed) {
                   nodeStatusClass = 'bg-slate-200 text-slate-600';
@@ -579,7 +585,7 @@ export default function TrainForecast() {
                       let nsStatus = 'On Time';
                       let nsStatusClass = 'bg-[#DCFCE7] text-[#166534]';
                       if (nsDelay > 0) {
-                          nsStatus = `Delayed (+${nsDelay}m)`;
+                          nsStatus = formatDelayTime(nsDelay);
                           nsStatusClass = nsIsPassed ? 'bg-[#FEE2E2] text-[#991B1B] opacity-80' : 'bg-[#FEE2E2] text-[#991B1B]';
                       } else if (nsIsPassed) {
                           nsStatusClass = 'bg-slate-200 text-slate-600';
