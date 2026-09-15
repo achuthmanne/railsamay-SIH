@@ -397,8 +397,8 @@ function PassengerForecastView({ trainNo, onBack }) {
             <svg className="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             RETURN TO SEARCH
           </button>
-          <h2 className="text-3xl font-black text-[#1E3A8A] font-montserrat tracking-tight uppercase">
-            {trainNo} {trainName}
+          <h2 className="text-3xl font-black font-montserrat tracking-tight uppercase">
+            <span className="text-[#1E3A8A]">{trainNo}</span> <span className="text-orange-600">{trainName}</span>
           </h2>
           <div className="text-sm font-bold text-slate-500 tracking-widest uppercase mt-1">
             Journey: {routeData.length > 0 ? `${routeData[0].name} (${routeData[0].code}) to ${routeData[routeData.length - 1].name} (${routeData[routeData.length - 1].code})` : "Loading Journey..."}
