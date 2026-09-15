@@ -72,7 +72,7 @@ class Store {
     // T=0s
     this.trains = startTrains.map(t => {
       if (t.no === '12626') return { ...t, delayMinutes: 90, delayStr: '+ 90m', status: 'Severely Delayed', currentLocation: 'Departed ET (Itarsi)', scenarioFlags: [] };
-      if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Departed BPQ (Balharshah)', scenarioFlags: [] };
+      if (t.no === '12621') return { ...t, delayMinutes: 10, delayStr: '+ 10m', status: 'Delayed', currentLocation: 'Departed BPQ (Balharshah)', scenarioFlags: [] };
       return t;
     });
     this.notify();
@@ -81,7 +81,7 @@ class Store {
     this.timeoutIds.push(setTimeout(() => {
       this.trains = this.trains.map(t => {
         if (t.no === '12626') return { ...t, delayMinutes: 100, delayStr: '+ 100m', status: 'Severely Delayed', currentLocation: 'Passing TEO (Teegaon)' };
-        if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Passing MJRI (Majri)' };
+        if (t.no === '12621') return { ...t, delayMinutes: 10, delayStr: '+ 10m', status: 'Delayed', currentLocation: 'Passing MJRI (Majri)' };
         return t;
       });
       this.notify();

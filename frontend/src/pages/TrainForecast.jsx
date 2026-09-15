@@ -192,19 +192,24 @@ export default function TrainForecast() {
          }
       }
       
-      const idx = targetIdx;
-      const totalStations = flatIdx;
-      
-      if (idx === -1) return 0;
+      const liveDelay = train?.delayMinutes || 0;
+      if (liveDelay === 0 || targetIdx === -1) return liveDelay;
 
-      const findFlatIndex = (code) => {
+      const currentLocation = train?.currentLocation || '';
+      
+      const isMatch = (code) => {
+          const regex = new RegExp(`\\b${code}\\b|\\(${code}\\)`);
+          return regex.test(currentLocation);
+      };
+
+      const findLiveIndex = () => {
           let fIdx = 0;
           for (let i=0; i<routeData.length; i++) {
-             if (routeData[i].code === code) return fIdx;
+             if (isMatch(routeData[i].code)) return fIdx;
              fIdx++;
              if (routeData[i].nonStoppingList) {
                  for (let j=0; j<routeData[i].nonStoppingList.length; j++) {
-                     if (routeData[i].nonStoppingList[j].code === code) return fIdx;
+                     if (isMatch(routeData[i].nonStoppingList[j].code)) return fIdx;
                      fIdx++;
                  }
              }
@@ -212,35 +217,26 @@ export default function TrainForecast() {
           return -1;
       };
 
-      if (tNo === '12626') {
-          const endIdx = findFlatIndex('GNQ');
-          if (endIdx === -1) return 0;
-          
-          if (idx <= endIdx) {
-              return Math.floor((idx / endIdx) * 120);
+      const liveIdx = findLiveIndex();
+      
+      if (liveIdx !== -1) {
+          if (targetIdx <= liveIdx) {
+              return liveDelay;
           } else {
-              const remaining = totalStations - endIdx;
-              const passed = idx - endIdx;
-              return Math.max(15, 120 - Math.floor((passed / remaining) * 105));
+              const distance = targetIdx - liveIdx;
+              if (tNo === '12626') {
+                  const recovered = Math.min(Math.floor(distance * 3), Math.max(0, liveDelay - 15)); 
+                  return Math.max(15, liveDelay - recovered);
+              } else if (tNo === '12621') {
+                  const recovered = Math.min(Math.floor(distance * 4), liveDelay);
+                  return Math.max(0, liveDelay - recovered);
+              } else {
+                  return liveDelay;
+              }
           }
       }
       
-      if (tNo === '12621') {
-          const mjriIdx = findFlatIndex('MJRI');
-          const segmIdx = findFlatIndex('SEGM');
-          
-          if (mjriIdx === -1 || segmIdx === -1) return 0;
-          if (idx >= segmIdx) return 0; 
-          
-          if (idx <= mjriIdx) {
-              return Math.floor((idx / mjriIdx) * 10);
-          } else {
-              const total = segmIdx - mjriIdx;
-              const cur = idx - mjriIdx;
-              return Math.max(0, 10 - Math.floor((cur / total) * 10));
-          }
-      }
-      return 0;
+      return liveDelay;
   };
 
   const formatDelayTime = (mins) => {
