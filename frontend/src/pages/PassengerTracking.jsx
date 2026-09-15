@@ -78,12 +78,71 @@ function PassengerForecastView({ trainNo, onBack }) {
   const [expandedStations, setExpandedStations] = useState({});
 
   useEffect(() => {
-    // Fetch route data
-    setLoading(true);
-    fetch(`/data/${trainNo}_route_data.json`)
+    fetch(`/data/${trainNo}_route_data.json?t=${Date.now()}`)
       .then(res => res.json())
       .then(data => {
-        setRouteData(data);
+          // --- DYNAMIC DATE MAPPING FOR HACKATHON ---
+          const uniqueDates = new Set();
+          data.forEach(st => {
+            ["scheduled_arrival", "scheduled_departure"].forEach(field => {
+              if (st[field] && st[field].includes(" | ")) {
+                uniqueDates.add(st[field].split(" | ")[1]);
+              }
+            });
+          });
+          const dateArray = Array.from(uniqueDates); 
+
+          const today = new Date();
+          const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          const formatDate = (date) => `${String(date.getDate()).padStart(2, '0')}-${monthNames[date.getMonth()]}`;
+
+          const dateMapping = {};
+          dateArray.forEach((oldDate, idx) => {
+             const d = new Date(today);
+             d.setDate(today.getDate() + (idx - 1)); 
+             dateMapping[oldDate] = formatDate(d);
+          });
+
+          const processDates = (st, index, totalLength) => {
+            const newSt = { ...st };
+            
+            // Auto-fill missing departures to fix scraper bugs for intermediate stations
+            if (index !== totalLength - 1 && !newSt.scheduled_departure && newSt.scheduled_arrival && newSt.scheduled_arrival !== "Source") {
+               newSt.scheduled_departure = newSt.scheduled_arrival;
+            }
+            if (index !== totalLength - 1 && !newSt.expected_departure && newSt.expected_arrival && newSt.expected_arrival !== "Source") {
+               newSt.expected_departure = newSt.expected_arrival;
+            }
+
+            ["scheduled_arrival", "scheduled_departure", "expected_arrival", "expected_departure"].forEach(field => {
+              if (newSt[field] && newSt[field].includes(" | ")) {
+                const parts = newSt[field].split(" | ");
+                if (dateMapping[parts[1]]) {
+                  newSt[field] = `${parts[0]} | ${dateMapping[parts[1]]}`;
+                }
+              }
+            });
+            return newSt;
+          };
+          // ------------------------------------------
+
+          const groupedRoute = [];
+          let currentStopping = null;
+  
+          data.forEach((rawStation, idx) => {
+            const station = processDates(rawStation, idx, data.length);
+          if (station.type === 'stopping') {
+            currentStopping = {
+              ...station,
+              nonStoppingList: []
+            };
+            groupedRoute.push(currentStopping);
+          } else if (station.type === 'non-stopping' && currentStopping) {
+            currentStopping.nonStoppingList.push(station);
+          }
+        });
+
+        setRouteData(groupedRoute);
         setLoading(false);
       })
       .catch(err => {
