@@ -171,30 +171,21 @@ export default function TrainForecast() {
       if (idx === -1) return 0;
 
       if (tNo === '12626') {
-          const startIdx = findFlatIndex('ET'); 
           const endIdx = findFlatIndex('GNQ');
-          
-          if (startIdx === -1 || endIdx === -1) return 0;
-          if (idx <= startIdx) return 0;
+          if (endIdx === -1) return 0;
           if (idx >= endIdx) return 120;
           
-          const totalStations = endIdx - startIdx;
-          const currentStation = idx - startIdx;
-          return Math.floor((currentStation / totalStations) * 120);
+          return Math.floor((idx / endIdx) * 120);
       }
       if (tNo === '12621') {
-          const bpqIdx = findFlatIndex('BPQ');
           const mjriIdx = findFlatIndex('MJRI');
           const segmIdx = findFlatIndex('SEGM');
           
-          if (bpqIdx === -1 || mjriIdx === -1 || segmIdx === -1) return 0;
-          if (idx <= bpqIdx) return 0;
+          if (mjriIdx === -1 || segmIdx === -1) return 0;
           if (idx >= segmIdx) return 0; 
           
           if (idx <= mjriIdx) {
-              const total = mjriIdx - bpqIdx;
-              const cur = idx - bpqIdx;
-              return Math.floor((cur / total) * 10);
+              return Math.floor((idx / mjriIdx) * 10);
           } else {
               const total = segmIdx - mjriIdx;
               const cur = idx - mjriIdx;
