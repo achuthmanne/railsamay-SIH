@@ -238,24 +238,19 @@ function PassengerForecastView({ trainNo, onBack }) {
          }
       }
       
-      const liveDelay = train?.delayMinutes || 0;
-      if (liveDelay === 0 || targetIdx === -1) return liveDelay;
-
-      const currentLocation = train?.currentLocation || '';
+      const idx = targetIdx;
+      const totalStations = flatIdx;
       
-      const isMatch = (code) => {
-          const regex = new RegExp(`\\b${code}\\b|\\(${code}\\)`);
-          return regex.test(currentLocation);
-      };
+      if (idx === -1) return train?.delayMinutes || 0;
 
-      const findLiveIndex = () => {
+      const findFlatIndex = (code) => {
           let fIdx = 0;
           for (let i=0; i<routeData.length; i++) {
-             if (isMatch(routeData[i].code)) return fIdx;
+             if (routeData[i].code === code) return fIdx;
              fIdx++;
              if (routeData[i].nonStoppingList) {
                  for (let j=0; j<routeData[i].nonStoppingList.length; j++) {
-                     if (isMatch(routeData[i].nonStoppingList[j].code)) return fIdx;
+                     if (routeData[i].nonStoppingList[j].code === code) return fIdx;
                      fIdx++;
                  }
              }
@@ -263,26 +258,35 @@ function PassengerForecastView({ trainNo, onBack }) {
           return -1;
       };
 
-      const liveIdx = findLiveIndex();
-      
-      if (liveIdx !== -1) {
-          if (targetIdx <= liveIdx) {
-              return liveDelay;
+      if (tNo === '12626') {
+          const endIdx = findFlatIndex('GNQ');
+          if (endIdx === -1) return 0;
+          
+          if (idx <= endIdx) {
+              return Math.floor((idx / endIdx) * 120);
           } else {
-              const distance = targetIdx - liveIdx;
-              if (tNo === '12626') {
-                  const recovered = Math.min(Math.floor(distance * 3), Math.max(0, liveDelay - 15)); 
-                  return Math.max(15, liveDelay - recovered);
-              } else if (tNo === '12621') {
-                  const recovered = Math.min(Math.floor(distance * 4), liveDelay);
-                  return Math.max(0, liveDelay - recovered);
-              } else {
-                  return liveDelay;
-              }
+              const remaining = totalStations - endIdx;
+              const passed = idx - endIdx;
+              return Math.max(15, 120 - Math.floor((passed / remaining) * 105));
           }
       }
       
-      return liveDelay;
+      if (tNo === '12621') {
+          const mjriIdx = findFlatIndex('MJRI');
+          const segmIdx = findFlatIndex('SEGM');
+          
+          if (mjriIdx === -1 || segmIdx === -1) return 0;
+          if (idx >= segmIdx) return 0; 
+          
+          if (idx <= mjriIdx) {
+              return Math.floor((idx / mjriIdx) * 10);
+          } else {
+              const total = segmIdx - mjriIdx;
+              const cur = idx - mjriIdx;
+              return Math.max(0, 10 - Math.floor((cur / total) * 10));
+          }
+      }
+      return train?.delayMinutes || 0;
   };
 
   const formatDelayTime = (mins) => {
@@ -344,7 +348,8 @@ function PassengerForecastView({ trainNo, onBack }) {
       varianceColor = 'text-red-600';
       varianceBadge = formatDelayTime(liveDelay);
       varianceBadgeClass = 'bg-red-100 text-red-700 border-red-200';
-      arrivalTime = calculateDynamicETA(arrivalTime, liveDelay);
+      const upcomingPredictedDelay = upcomingStation ? getPredictiveDelayProfile(trainNo, upcomingStation.code) : liveDelay;
+                    arrivalTime = calculateDynamicETA(arrivalTime, upcomingPredictedDelay);
 
       assessmentClass = 'bg-red-100 text-red-700 border-red-200';
       if (trainNo === '12626') {
