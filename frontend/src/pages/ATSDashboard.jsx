@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SimulationEngine } from '../services/SimulationEngine';
+import { simStore } from '../store/SimulationStore';
 import LiveNetworkMap from '../components/LiveNetworkMap';
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
@@ -283,61 +284,7 @@ const ATSDashboard = () => {
                     <div className="space-y-3">
                       <button 
                         onClick={() => {
-                              setIsSimulating(true);
-                              // The Dramatic Hackathon Pitch Sequence - Progressive Real-time Simulation
-                              
-                              // T=0s: Baseline - Early stations
-                              setLiveTrains(prev => prev.map(t => {
-                                if (t.no === '12626') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Departed ET (Itarsi)', scenarioFlags: [] };
-                                if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Departed BPQ (Balharshah)', scenarioFlags: [] };
-                                return t;
-                              }));
-
-                              // T=4s: Passing early non-stopping stations
-                              setTimeout(() => {
-                                setLiveTrains(prev => prev.map(t => {
-                                  if (t.no === '12626') return { ...t, currentLocation: 'Passing TEO (Teegaon)' };
-                                  if (t.no === '12621') return { ...t, delayMinutes: 10, delayStr: '+ 10m', status: 'Delayed', currentLocation: 'Passing MJRI (Majri)' };
-                                  return t;
-                                }));
-                              }, 4000);
-
-                              // T=8s: Passing middle non-stopping stations, delay begins
-                              setTimeout(() => {
-                                setLiveTrains(prev => prev.map(t => {
-                                  if (t.no === '12626') return { ...t, delayMinutes: 30, delayStr: '+ 30m', status: 'Delayed', currentLocation: 'Passing PAR (Pandhurna)' };
-                                  if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'Delay Covered', currentLocation: 'Passing WR (Wardha)' };
-                                  return t;
-                                }));
-                              }, 8000);
-
-                              // T=12s: Delay worsens, traversing non-stopping
-                              setTimeout(() => {
-                                setLiveTrains(prev => prev.map(t => {
-                                  if (t.no === '12626') return { ...t, delayMinutes: 60, delayStr: '+ 60m', status: 'Severely Delayed', currentLocation: 'Passing KATL (Katol)' };
-                                  if (t.no === '12621') return { ...t, currentLocation: 'Passing SNI (Sindi)' };
-                                  return t;
-                                }));
-                              }, 12000);
-
-                              // T=16s: 1 station before Conflict Predict Point
-                              setTimeout(() => {
-                                setLiveTrains(prev => prev.map(t => {
-                                  if (t.no === '12626') return { ...t, delayMinutes: 90, delayStr: '+ 90m', status: 'Severely Delayed', currentLocation: 'Passing KSWR (Kalmeshwar)' };
-                                  if (t.no === '12621') return { ...t, currentLocation: 'Passing BGMN (Bhandargaon)' };
-                                  return t;
-                                }));
-                              }, 16000);
-
-                              // T=20s: Final Conflict Alert! 2 stations before NGP
-                              setTimeout(() => {
-                                setLiveTrains(prev => prev.map(t => {
-                                  if (t.no === '12626') return { ...t, delayMinutes: 120, delayStr: '+ 120m', status: 'Severely Delayed', currentLocation: 'Passing GNQ (Godhani)', scenarioFlags: ['CONFLICT_SOURCE'] };
-                                  if (t.no === '12621') return { ...t, currentLocation: 'Passing AJNI (Ajni)', scenarioFlags: ['CONFLICT_TARGET'] };
-                                  return t;
-                                }));
-                                setIsSimulating(false);
-                              }, 20000);
+                            simStore.start(liveTrains);
                           }}
                         disabled={isSimulating}
                           className={`w-full font-black text-[11px] uppercase tracking-widest py-3 rounded-sm border transition-colors shadow-sm ${isSimulating ? 'bg-slate-300 border-slate-300 text-slate-500 cursor-not-allowed' : 'bg-[#F97316] hover:bg-[#EA580C] text-white border-[#EA580C]'}`}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { simStore } from '../store/SimulationStore';
 
 const CircularGauge = ({ percentage, color, label, value }) => {
   const radius = 30;
@@ -29,7 +30,37 @@ export default function TrainForecast() {
   const navigate = useNavigate();
   const location = useLocation();
   const trainName = location.state?.trainName || 'EXPRESS';
-  const currentLocation = location.state?.currentLocation || 'NGP';
+  
+  const location_train = location.state?.train || null;
+  const storeTrain = simStore.trains.find(t => t.no === trainNo);
+  const [liveTrain, setLiveTrain] = useState(storeTrain || location_train);
+
+  useEffect(() => {
+    const unsubscribe = simStore.subscribe((trains, isSim) => {
+       const updatedTrain = trains.find(t => t.no === trainNo);
+       if (updatedTrain) {
+          setLiveTrain(updatedTrain);
+       }
+    });
+    return () => unsubscribe();
+  }, [trainNo]);
+
+  const train = liveTrain;
+  const currentLocation = train?.currentLocation || location.state?.currentLocation || 'NGP';
+  const liveDelay = train?.delayMinutes || 0;
+
+  const calculateDynamicETA = (timeStr, delayMins) => {
+    if (!timeStr || timeStr === '--:--' || timeStr.includes('Source') || timeStr.includes('Destination')) return timeStr;
+    const parts = timeStr.split(' | ');
+    const t = parts[0];
+    if (!t.includes(':')) return timeStr;
+    const [h, m] = t.split(':').map(Number);
+    if (isNaN(h) || isNaN(m)) return timeStr;
+    const d = new Date(2024, 0, 1, h, m);
+    d.setMinutes(d.getMinutes() + (delayMins || 0));
+    const newTime = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    return parts.length > 1 ? `${newTime} | ${parts[1]}` : newTime;
+  };
   const [routeData, setRouteData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedStations, setExpandedStations] = useState({});
@@ -305,14 +336,23 @@ export default function TrainForecast() {
                  }}>
             </div>
             {routeData.map((station, index) => { 
-              const getLiveIndex = () => {
-    return routeData.findIndex(s => {
+              let liveMainIndex = 0;
+  let activeNSCode = null;
+  
+  if (routeData.length > 0) {
+    liveMainIndex = routeData.findIndex(s => {
       if (currentLocation.includes(s.code)) return true;
-      if (s.nonStoppingList && s.nonStoppingList.some(ns => currentLocation.includes(ns.code))) return true;
+      if (s.nonStoppingList && s.nonStoppingList.some(ns => {
+          if (currentLocation.includes(ns.code)) {
+              activeNSCode = ns.code;
+              return true;
+          }
+          return false;
+      })) return true;
       return false;
     });
-  };
-  const liveIndex = getLiveIndex();
+    if (liveMainIndex === -1) liveMainIndex = 0;
+  }
               const safeLiveIndex = liveIndex !== -1 ? liveIndex : 0;
               const isLive = liveIndex !== -1 ? currentLocation.includes(station.code) : index === 0; 
               const isPassed = index < safeLiveIndex; 
@@ -357,7 +397,7 @@ export default function TrainForecast() {
                   {/* Node Column (Transparent Background so the global track shows through) */}
                   <div className="w-[60px] py-6 flex justify-center items-center relative z-20 bg-transparent border-b border-transparent">
                     {/* Dynamic Node */}
-                    {isLive ? (
+                    {isLiveMain ? (
                       <div className="relative w-12 h-14 z-20 flex justify-center mt-2 cursor-pointer">
                         {/* Left Broadcast Signal */}
                         <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
