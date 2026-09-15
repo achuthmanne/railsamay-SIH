@@ -23,8 +23,8 @@ export class SimulationEngine {
         let status = 'On Time';
 
         // Custom Initializations based on Division & Trains
-        if (train.no === '12621') { currentLocation = 'Balharshah (BPQ)'; scheduleTime = '13:45'; }
-        if (train.no === '12626') { currentLocation = 'Itarsi Jn (ET)'; scheduleTime = '11:45'; }
+        if (train.no === '12621') { currentLocation = 'Balharshah (BPQ)'; scheduleTime = '13:45'; delayMinutes = 10; delayStr = '+ 10m'; status = 'Delayed'; }
+        if (train.no === '12626') { currentLocation = 'Itarsi Jn (ET)'; scheduleTime = '11:45'; delayMinutes = 90; delayStr = '+ 90m'; status = 'Severely Delayed'; }
         if (train.no === '22439') { currentLocation = 'Jalandhar Cantt (JRC)'; scheduleTime = '11:15'; }
         if (train.no === '20833') { currentLocation = 'Khammam (KMT)'; scheduleTime = '10:00'; }
         if (train.no === '12615') { currentLocation = 'Tenali Jn (TEL)'; scheduleTime = '00:45'; }
