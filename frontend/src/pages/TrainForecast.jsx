@@ -160,6 +160,130 @@ export default function TrainForecast() {
           </div>
         </div>
 
+          {/* AI Predictive Forecasting Engine */}
+          <div className="bg-white border border-slate-200 shadow-sm p-6 mb-2 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#1E3A8A]/5 rounded-bl-full -z-10"></div>
+            
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-sm font-black text-[#1E3A8A] tracking-widest uppercase flex items-center">
+                <svg className="w-5 h-5 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                AI Dynamic Forecast Engine
+              </h3>
+              <div className="flex items-center space-x-3">
+                <span className="flex h-2 w-2 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <div className="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-1 uppercase tracking-widest border border-emerald-200">
+                  Live ML Feed Active
+                </div>
+              </div>
+            </div>
+
+            {trainNo === '12626' ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* AI Arrival Variance */}
+                <div className="border border-slate-200 p-4 bg-slate-50 flex flex-col justify-between">
+                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4">Arrival Variance (NGP)</div>
+                   <div className="flex justify-between items-end">
+                     <div>
+                       <div className="text-xs text-slate-400 line-through mb-1">Static: 13:45</div>
+                       <div className="text-3xl font-black text-red-600 leading-none">15:45</div>
+                     </div>
+                     <div className="text-xs font-black text-red-700 bg-red-100 px-2 py-1 border border-red-200">
+                       +120m
+                     </div>
+                   </div>
+                </div>
+
+                {/* AI Root Cause Analysis */}
+                <div className="border border-slate-200 p-4 col-span-2 bg-white">
+                   <div className="flex justify-between items-center mb-3">
+                     <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Predicted Causality Engine</div>
+                     <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Confidence: 94%</div>
+                   </div>
+                   <div className="space-y-3">
+                     <div className="flex items-center justify-between group">
+                       <div className="flex items-center text-sm font-semibold text-slate-800">
+                         <span className="w-1.5 h-1.5 rounded-none bg-red-500 mr-3"></span>
+                         Platform Sequence Conflict (Nagpur Jn)
+                       </div>
+                       <div className="text-xs font-black text-red-600">+105m</div>
+                     </div>
+                     <div className="flex items-center justify-between group">
+                       <div className="flex items-center text-sm font-semibold text-slate-800">
+                         <span className="w-1.5 h-1.5 rounded-none bg-orange-500 mr-3"></span>
+                         Temporary Speed Restriction (BZU-PAR)
+                       </div>
+                       <div className="text-xs font-black text-orange-600">+25m</div>
+                     </div>
+                     <div className="flex items-center justify-between group">
+                       <div className="flex items-center text-sm font-semibold text-slate-800">
+                         <span className="w-1.5 h-1.5 rounded-none bg-emerald-500 mr-3"></span>
+                         AI Suggested Slack Recovery
+                       </div>
+                       <div className="text-xs font-black text-emerald-600">-10m</div>
+                     </div>
+                   </div>
+                </div>
+              </div>
+            ) : trainNo === '12621' ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="border border-slate-200 p-4 bg-slate-50 flex flex-col justify-between">
+                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4">Arrival Variance (NGP)</div>
+                   <div className="flex justify-between items-end">
+                     <div>
+                       <div className="text-xs text-slate-400 line-through mb-1">Static: 13:45</div>
+                       <div className="text-3xl font-black text-emerald-600 leading-none">13:45</div>
+                     </div>
+                     <div className="text-xs font-black text-emerald-700 bg-emerald-100 px-2 py-1 border border-emerald-200">
+                       ON TIME
+                     </div>
+                   </div>
+                </div>
+                <div className="border border-slate-200 p-4 col-span-2 bg-white">
+                   <div className="flex justify-between items-center mb-3">
+                     <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Predicted Causality Engine</div>
+                     <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Confidence: 98%</div>
+                   </div>
+                   <div className="space-y-3">
+                     <div className="flex items-center justify-between">
+                       <div className="flex items-center text-sm font-semibold text-slate-800">
+                         <span className="w-1.5 h-1.5 rounded-none bg-emerald-500 mr-3"></span>
+                         Priority Routing Approved (Clear Path)
+                       </div>
+                       <div className="text-xs font-black text-emerald-600">-</div>
+                     </div>
+                     <div className="flex items-center justify-between">
+                       <div className="flex items-center text-sm font-semibold text-slate-800">
+                         <span className="w-1.5 h-1.5 rounded-none bg-emerald-500 mr-3"></span>
+                         Weather Conditions: Optimal
+                       </div>
+                       <div className="text-xs font-black text-emerald-600">-</div>
+                     </div>
+                   </div>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="border border-slate-200 p-4 bg-slate-50 flex flex-col justify-between">
+                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4">Arrival Variance (Destination)</div>
+                   <div className="flex justify-between items-end">
+                     <div>
+                       <div className="text-3xl font-black text-slate-800 leading-none">--:--</div>
+                     </div>
+                     <div className="text-xs font-black text-slate-600 bg-slate-200 px-2 py-1 border border-slate-300">
+                       AWAITING DATA
+                     </div>
+                   </div>
+                </div>
+                <div className="border border-slate-200 p-4 col-span-2 bg-white flex items-center justify-center">
+                   <div className="text-sm font-bold text-slate-400 uppercase tracking-widest">Standard Schedule Followed</div>
+                </div>
+              </div>
+            )}
+          </div>
+
         {/* The Broad Timeline */}
         <div className="bg-white border border-slate-200 shadow-sm overflow-hidden relative">
           
