@@ -269,7 +269,8 @@ function PassengerForecastView({ trainNo, onBack }) {
   }
 
   return (
-    <div className="flex flex-col flex-1 p-6 max-w-6xl mx-auto w-full">
+    <div className="flex flex-col h-full bg-slate-50 relative overflow-x-hidden">
+      <div className="flex flex-col flex-1 p-2 md:p-6 max-w-6xl mx-auto w-full">
       <style>{`
         @keyframes signalBlink {
           0%, 100% { opacity: 0.2; transform: scale(0.9); }
@@ -307,12 +308,21 @@ function PassengerForecastView({ trainNo, onBack }) {
         </div>
       </div>
 
-      {/* Passenger Status & Forecast Block (NO GAUGES) */}
-      <div className="bg-white border border-slate-200 shadow-sm p-6 mb-8 relative overflow-hidden">
+      {/* AI Predictive Forecasting Engine Clone */}
+      <div className="bg-white border border-slate-200 shadow-sm p-6 mb-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-[#1E3A8A]/5 rounded-bl-full -z-10"></div>
+        
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-sm font-black text-[#1E3A8A] tracking-widest uppercase flex items-center">
+            <svg className="w-5 h-5 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+            Operational Forecast Engine
+          </h3>
+        </div>
+
         <div className="border border-slate-200 p-5 bg-slate-50 flex flex-col justify-between relative overflow-hidden">
-           <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4 flex justify-between items-center">
-             <span>Live Operational Status</span>
-             <span className="text-orange-500 font-black tracking-widest border border-orange-200 bg-orange-50 px-2 py-0.5">TRACKING ACTIVE</span>
+           <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4 flex justify-between">
+             <span>Projected Operational Impact</span>
+             <span className="text-[#F97316] font-black tracking-widest">LIVE METEOROLOGICAL FEED</span>
            </div>
            
            <div className="flex flex-col mb-4 relative z-10">
@@ -334,23 +344,22 @@ function PassengerForecastView({ trainNo, onBack }) {
         </div>
       </div>
 
-      {/* TIMELINE */}
-      <div className="bg-white border border-slate-200 shadow-sm overflow-hidden relative">
-        <div className="absolute top-0 left-0 w-full h-1 bg-slate-800"></div>
-        <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-          <h3 className="text-[13px] font-black tracking-widest text-slate-800 uppercase">Live Journey Map</h3>
-        </div>
-        
-        <div className="p-0">
-          <div className="relative">
-            <div className="absolute left-[200px] top-0 bottom-0 w-[4px] bg-slate-200 z-0 hidden md:block">
-               <div className="absolute top-0 bottom-0 left-0 right-0 z-0 opacity-20" 
-                 style={{ 
+      {/* The Broad Timeline */}
+        <div className="bg-white border border-slate-200 shadow-sm overflow-hidden relative">
+          
+
+
+          
+          
+          <div className="relative z-10 space-y-0">
+            {/* Seamless Global Track (No Joints) */}
+            <div className="absolute left-[184px] top-0 bottom-0 w-[12px] z-0" 
+                 style={{
+                   borderLeft: '3px solid #64748b',
+                   borderRight: '3px solid #64748b',
                    backgroundImage: 'repeating-linear-gradient(to bottom, transparent, transparent 12px, #cbd5e1 12px, #cbd5e1 16px)'
                  }}>
-               </div>
             </div>
-            
             {routeData.map((station, index) => { 
               let liveMainIndex = 0;
               let activeNSCode = null;
@@ -359,28 +368,32 @@ function PassengerForecastView({ trainNo, onBack }) {
                 liveMainIndex = routeData.findIndex(s => {
                   if (isMatch(s.code)) return true;
                   if (s.nonStoppingList && s.nonStoppingList.some(ns => {
-                      if (isMatch(ns.code)) { activeNSCode = ns.code; return true; }
+                      if (isMatch(ns.code)) {
+                          activeNSCode = ns.code;
+                          return true;
+                      }
                       return false;
                   })) return true;
                   return false;
                 });
                 if (liveMainIndex === -1) liveMainIndex = 0;
               }
-
-              const isPassed = index < liveMainIndex;
-              const isLiveMain = index === liveMainIndex && activeNSCode === null;
+              const isLiveMain = index === liveMainIndex && !activeNSCode; 
+              const isPassed = index < liveMainIndex || (index === liveMainIndex && activeNSCode !== null); 
               const shouldExpandNS = index === liveMainIndex && activeNSCode !== null;
               
+              const isFutureOrLive = !isPassed;
+              
               let nodeDelay = getPredictiveDelayProfile(trainNo, station.code);
-              
+
               let nodeStatus = 'On Time';
-              let nodeStatusClass = 'bg-[#DCFCE7] text-[#166534] border border-[#BBF7D0]';
-              
+              let nodeStatusClass = 'bg-[#DCFCE7] text-[#166534]';
+
               if (nodeDelay > 0) {
-                nodeStatus = formatDelayTime(nodeDelay);
-                nodeStatusClass = isPassed ? 'bg-[#FEE2E2] text-[#991B1B] border border-[#FECACA] opacity-70' : 'bg-[#FEE2E2] text-[#991B1B] border border-[#FECACA]';
+                  nodeStatus = formatDelayTime(nodeDelay);
+                  nodeStatusClass = isPassed ? 'bg-[#FEE2E2] text-[#991B1B] opacity-80' : 'bg-[#FEE2E2] text-[#991B1B]';
               } else if (isPassed) {
-                nodeStatusClass = 'bg-slate-100 text-slate-500 border border-slate-200';
+                  nodeStatusClass = 'bg-slate-200 text-slate-600';
               }
 
               const displayExpectedArrival = calculateDynamicETA(station.scheduled_arrival, nodeDelay);
@@ -389,11 +402,14 @@ function PassengerForecastView({ trainNo, onBack }) {
               return ( 
               <div key={index} className="flex flex-col transition-colors">
                 
-                {/* Main Station Row */}
-                <div className={`flex relative items-stretch border-b border-slate-100 ${isLiveMain ? 'bg-blue-50/30' : 'bg-white group hover:bg-slate-50'}`}>
+                {/* Stopping Station Row */}
+                <div 
+                  onClick={() => toggleExpand(station.code)} 
+                  className="flex relative items-stretch cursor-pointer group transition-colors"
+                >
                   
-                  {/* Left Column: Arrival */}
-                  <div className="w-[198px] py-6 pl-6 flex flex-col justify-center text-left relative z-10">
+                  {/* Left Column: Arrival (Solid Background) */}
+                  <div className="w-[160px] py-6 pl-6 flex flex-col justify-center relative z-10 bg-white group-hover:bg-slate-50 border-b border-slate-100 transition-colors">
                     {index !== 0 ? (
                       <>
                         {station.scheduled_arrival ? (
@@ -402,9 +418,16 @@ function PassengerForecastView({ trainNo, onBack }) {
                             <div className={`text-[13px] font-black tracking-wide ${isPassed ? 'text-slate-500' : 'text-[#1E3A8A]'}`}>
                               {station.scheduled_arrival}
                             </div>
+                            
                             <div className="text-[11px] font-bold text-slate-500 mt-4 mb-1 uppercase tracking-widest">Expected *</div>
                             <div className={`text-[13px] font-black tracking-wide ${isPassed ? 'text-slate-500' : 'text-[#1E3A8A]'}`}>
                               {displayExpectedArrival}
+                            </div>
+                            
+                            <div className="mt-3">
+                              <span className={`inline-block px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-none ${nodeStatusClass}`}>
+                                {nodeStatus}
+                              </span>
                             </div>
                           </>
                         ) : null}
@@ -414,64 +437,68 @@ function PassengerForecastView({ trainNo, onBack }) {
                     )}
                   </div>
 
-                  {/* Middle Column: Node Indicator */}
-                  <div className="w-[8px] flex justify-center items-center relative z-20 py-6">
+                  {/* Node Column (Transparent Background so the global track shows through) */}
+                  <div className="w-[60px] py-6 flex justify-center items-center relative z-20 bg-transparent border-b border-transparent">
+                    {/* Dynamic Node */}
                     {isLiveMain ? (
                       <div className="relative w-12 h-14 z-20 flex justify-center mt-2 cursor-pointer">
                         {/* Left Broadcast Signal */}
-                        <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-orange-500 signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                        <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                           <path d="M14 4 A10 10 0 0 0 14 20 M20 8 A5 5 0 0 0 20 16" />
                         </svg>
                         
                         {/* Right Broadcast Signal */}
-                        <svg className="absolute right-[-16px] top-[10px] w-5 h-7 text-orange-500 signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                        <svg className="absolute right-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                           <path d="M10 4 A10 10 0 0 1 10 20 M4 8 A5 5 0 0 1 4 16" />
                         </svg>
                         
                         {/* Marker Body */}
                         <div className="relative w-12 h-14">
+                          {/* Solid Blue Map Marker */}
                           <svg className="absolute inset-0 w-full h-full text-[#1E3A8A] drop-shadow-xl" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
                           </svg>
+                          
+                          {/* White Train Icon Center */}
                           <svg className="absolute top-[10px] left-[13px] w-[22px] h-[22px] text-white z-10" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path>
                           </svg>
                         </div>
                       </div>
+                    ) : isPassed ? (
+                      <div className="w-[20px] h-[20px] bg-green-600 border-[2px] border-white rounded-full z-10 flex items-center justify-center shadow-sm">
+                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M5 13l4 4L19 7"></path></svg>
+                      </div>
                     ) : (
-                      <div className={`w-4 h-4 rounded-full border-4 z-10 ${isPassed ? 'bg-slate-300 border-white' : 'bg-white border-[#1E3A8A]'}`}></div>
+                      <div className="w-[18px] h-[18px] bg-white border-[4px] border-orange-500 rounded-full z-10 shadow-sm"></div>
                     )}
                   </div>
 
-                  {/* Right-Middle Column: Station Info */}
-                  <div className="flex-1 py-6 pl-8 flex flex-col justify-center relative z-10">
-                    <div className="flex items-center space-x-3 mb-1">
-                      <span className={`text-[15px] font-black tracking-widest uppercase ${isPassed ? 'text-slate-400' : 'text-[#1E3A8A]'}`}>
-                        {station.code}
-                      </span>
-                      <span className={`text-[15px] font-black tracking-wider uppercase ${isPassed ? 'text-slate-600' : 'text-slate-800'}`}>
-                        {station.name}
-                      </span>
-                      
-                      {station.nonStoppingList && station.nonStoppingList.length > 0 && (
-                        <button 
-                          onClick={() => toggleExpand(station.code)}
-                          className="ml-2 flex items-center space-x-1 text-[9px] font-bold text-orange-600 bg-orange-50 border border-orange-200 px-2 py-0.5 uppercase tracking-widest hover:bg-orange-100 transition-colors"
-                        >
-                          <span>{expandedStations[station.code] ? 'Hide Details' : `+ ${station.nonStoppingList.length} Nodes`}</span>
-                        </button>
+                  {/* Center Column: Station Details (Solid Background) */}
+                  <div className="flex-1 py-6 flex flex-col justify-center pl-4 relative z-10 bg-white group-hover:bg-slate-50 border-b border-slate-100 transition-colors">
+                    <div className="flex items-center space-x-3 mb-2">
+                      <span className={`text-sm font-black tracking-widest uppercase ${isPassed ? 'text-slate-500' : 'text-[#1E3A8A]'}`}>{station.code}</span>
+                      <span className={`text-[15px] font-black tracking-wider uppercase ${isPassed ? 'text-slate-600' : 'text-slate-800'}`}>{station.name}</span>
+                      {station.platform && (
+                        <span className={`text-white text-[10px] font-black px-3 py-1 rounded-none uppercase tracking-widest ${isPassed ? 'bg-slate-400' : 'bg-[#1E3A8A]'}`}>
+                          {station.platform} *</span>
                       )}
                     </div>
                     
-                    <div className="flex items-center text-[10px] font-bold text-slate-500 space-x-4 tracking-widest mt-1">
-                      <span className="flex items-center"><svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg> {station.distance} Kms</span>
-                      <span className="text-slate-300">|</span>
-                      <span>{station.platform || 'PF-1'}</span>
+                    <div className="flex items-center text-[11px] font-bold text-slate-500 space-x-6 mt-1 tracking-widest">
+                      <span>{station.distance} Kms</span>
+                      {station.nonStoppingList.length > 0 && (
+                        <span className={`flex items-center cursor-pointer font-black transition-colors ${isPassed ? 'text-slate-500 group-hover:text-slate-700' : 'text-[#1E3A8A] group-hover:text-blue-600'}`}>
+                          <span className="mr-2 text-sm leading-none">≢</span> 
+                          {station.nonStoppingList.length} Non-Stopping Stations
+                          <svg className={`w-3 h-3 ml-1 transition-transform duration-300 ${expandedStations[station.code] ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                      )}
                     </div>
                   </div>
 
-                  {/* Right Column: Departure */}
-                  <div className="w-[160px] py-6 pr-6 flex flex-col justify-center text-right relative z-10">
+                  {/* Right Column: Departure (Solid Background) */}
+                  <div className="w-[160px] py-6 pr-6 flex flex-col justify-center text-right relative z-10 bg-white group-hover:bg-slate-50 border-b border-slate-100 transition-colors">
                     {index !== routeData.length - 1 ? (
                       <>
                         {station.scheduled_departure ? (
@@ -521,25 +548,35 @@ function PassengerForecastView({ trainNo, onBack }) {
                       return (
                       <div key={i} className="flex relative items-stretch border-b border-orange-200">
                         
+                        {/* Left Badge Area - Subtract 6px width to account for the border-l-[6px] on parent! */}
                         <div className="w-[154px] pl-4 flex flex-col justify-center bg-[#FFF9F0] relative z-10 py-4">
                           <span className="inline-block px-3 py-1 text-[9px] font-black text-[#C2410C] bg-[#FFEDD5] border border-[#FED7AA] rounded-none uppercase tracking-widest shadow-none w-max">
                             Non-Stopping
                           </span>
                         </div>
 
+                        {/* Node Column */}
                         <div className="w-[60px] flex justify-center items-center relative z-20 bg-transparent py-4">
                           {activeNSCode === ns.code ? (
                             <div className="relative w-12 h-14 z-20 flex justify-center cursor-pointer scale-[0.85]">
-                              <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-orange-500 signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                              {/* Left Broadcast Signal */}
+                              <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                                 <path d="M14 4 A10 10 0 0 0 14 20 M20 8 A5 5 0 0 0 20 16" />
                               </svg>
-                              <svg className="absolute right-[-16px] top-[10px] w-5 h-7 text-orange-500 signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                              
+                              {/* Right Broadcast Signal */}
+                              <svg className="absolute right-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                                 <path d="M10 4 A10 10 0 0 1 10 20 M4 8 A5 5 0 0 1 4 16" />
                               </svg>
+                              
+                              {/* Marker Body */}
                               <div className="relative w-12 h-14">
+                                {/* Solid Blue Map Marker */}
                                 <svg className="absolute inset-0 w-full h-full text-[#1E3A8A] drop-shadow-xl" viewBox="0 0 24 24" fill="currentColor">
                                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
                                 </svg>
+                                
+                                {/* White Train Icon Center */}
                                 <svg className="absolute top-[10px] left-[13px] w-[22px] h-[22px] text-white z-10" fill="currentColor" viewBox="0 0 24 24">
                                   <path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path>
                                 </svg>
@@ -550,6 +587,7 @@ function PassengerForecastView({ trainNo, onBack }) {
                           )}
                         </div>
 
+                        {/* Info Column */}
                         <div className="flex-1 pl-4 py-4 bg-[#FFF9F0] relative z-10">
                           <div className="flex items-center space-x-3 mb-1">
                             <span className="text-[13px] font-black text-[#1E3A8A] tracking-widest uppercase">{ns.code}</span>
@@ -567,6 +605,7 @@ function PassengerForecastView({ trainNo, onBack }) {
                           </div>
                         </div>
 
+                        {/* Right Badge Area */}
                         <div className="w-[160px] pr-6 flex flex-col justify-center items-end bg-[#FFF9F0] relative z-10 py-4">
                           <span className="inline-block px-3 py-1 text-[9px] font-black text-[#C2410C] bg-[#FFEDD5] border border-[#FED7AA] rounded-none uppercase tracking-widest shadow-none">
                             Non-Stopping

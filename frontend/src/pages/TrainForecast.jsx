@@ -468,9 +468,9 @@ export default function TrainForecast() {
               
               if (routeData.length > 0) {
                 liveMainIndex = routeData.findIndex(s => {
-                  if (currentLocation.includes(s.code)) return true;
+                  if (isMatch(s.code)) return true;
                   if (s.nonStoppingList && s.nonStoppingList.some(ns => {
-                      if (currentLocation.includes(ns.code)) {
+                      if (isMatch(ns.code)) {
                           activeNSCode = ns.code;
                           return true;
                       }
