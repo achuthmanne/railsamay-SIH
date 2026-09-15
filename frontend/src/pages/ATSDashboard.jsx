@@ -288,52 +288,52 @@ const ATSDashboard = () => {
                               
                               // T=0s: Baseline - Early stations
                               setLiveTrains(prev => prev.map(t => {
-                                if (t.no === '12626') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Departed BPL (Bhopal)' };
-                                if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Departed BPQ (Balharshah)' };
+                                if (t.no === '12626') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Departed ET (Itarsi)', scenarioFlags: [] };
+                                if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Departed BPQ (Balharshah)', scenarioFlags: [] };
                                 return t;
                               }));
 
-                              // T=4s: 12626 arrives at Itarsi, 12621 picks up minor delay
+                              // T=4s: Passing early non-stopping stations
                               setTimeout(() => {
                                 setLiveTrains(prev => prev.map(t => {
-                                  if (t.no === '12626') return { ...t, currentLocation: 'Arrived ET (Itarsi)' };
-                                  if (t.no === '12621') return { ...t, delayMinutes: 10, delayStr: '+ 10m', status: 'Delayed', currentLocation: 'Passing CD (Chandrapur)' };
+                                  if (t.no === '12626') return { ...t, currentLocation: 'Passing TEO (Teegaon)' };
+                                  if (t.no === '12621') return { ...t, delayMinutes: 10, delayStr: '+ 10m', status: 'Delayed', currentLocation: 'Passing MJRI (Majri)' };
                                   return t;
                                 }));
                               }, 4000);
 
-                              // T=8s: 12626 is held at Itarsi, delay begins. 12621 approaches Sevagram
+                              // T=8s: Passing middle non-stopping stations, delay begins
                               setTimeout(() => {
                                 setLiveTrains(prev => prev.map(t => {
-                                  if (t.no === '12626') return { ...t, delayMinutes: 30, delayStr: '+ 30m', status: 'Delayed', currentLocation: 'Departed ET (Itarsi)' };
-                                  if (t.no === '12621') return { ...t, currentLocation: 'Approaching SEGM (Sevagram)' };
+                                  if (t.no === '12626') return { ...t, delayMinutes: 30, delayStr: '+ 30m', status: 'Delayed', currentLocation: 'Passing PAR (Pandhurna)' };
+                                  if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'Delay Covered', currentLocation: 'Passing WR (Wardha)' };
                                   return t;
                                 }));
                               }, 8000);
 
-                              // T=12s: 12626 delay severely worsens. 12621 recovers its delay.
+                              // T=12s: Delay worsens, traversing non-stopping
                               setTimeout(() => {
                                 setLiveTrains(prev => prev.map(t => {
-                                  if (t.no === '12626') return { ...t, delayMinutes: 60, delayStr: '+ 60m', status: 'Severely Delayed', currentLocation: 'Near BZU (Betul)' };
-                                  if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'Delay Covered', currentLocation: 'Arrived SEGM (Sevagram)' };
+                                  if (t.no === '12626') return { ...t, delayMinutes: 60, delayStr: '+ 60m', status: 'Severely Delayed', currentLocation: 'Passing KATL (Katol)' };
+                                  if (t.no === '12621') return { ...t, currentLocation: 'Passing SNI (Sindi)' };
                                   return t;
                                 }));
                               }, 12000);
 
-                              // T=16s: 12626 ETA intersects with 12621 at NGP
+                              // T=16s: 1 station before Conflict Predict Point
                               setTimeout(() => {
                                 setLiveTrains(prev => prev.map(t => {
-                                  if (t.no === '12626') return { ...t, delayMinutes: 120, delayStr: '+ 120m', status: 'Severely Delayed', currentLocation: 'Departed PAR (Pandhurna)' };
-                                  if (t.no === '12621') return { ...t, status: 'On Time', currentLocation: 'Departed SEGM (Sevagram)' };
+                                  if (t.no === '12626') return { ...t, delayMinutes: 90, delayStr: '+ 90m', status: 'Severely Delayed', currentLocation: 'Passing KSWR (Kalmeshwar)' };
+                                  if (t.no === '12621') return { ...t, currentLocation: 'Passing BGMN (Bhandargaon)' };
                                   return t;
                                 }));
                               }, 16000);
 
-                              // T=20s: Final Conflict Alert!
+                              // T=20s: Final Conflict Alert! 2 stations before NGP
                               setTimeout(() => {
                                 setLiveTrains(prev => prev.map(t => {
-                                  if (t.no === '12626') return { ...t, currentLocation: 'Approaching NGP', scenarioFlags: ['CONFLICT_SOURCE'] };
-                                  if (t.no === '12621') return { ...t, currentLocation: 'Approaching NGP', scenarioFlags: ['CONFLICT_TARGET'] };
+                                  if (t.no === '12626') return { ...t, delayMinutes: 120, delayStr: '+ 120m', status: 'Severely Delayed', currentLocation: 'Passing GNQ (Godhani)', scenarioFlags: ['CONFLICT_SOURCE'] };
+                                  if (t.no === '12621') return { ...t, currentLocation: 'Passing AJNI (Ajni)', scenarioFlags: ['CONFLICT_TARGET'] };
                                   return t;
                                 }));
                                 setIsSimulating(false);
@@ -509,10 +509,14 @@ const ATSDashboard = () => {
                            }
                            currentStation = train.route[cIndex];
                            
-                           for (let i = cIndex + 1; i < train.route.length; i++) {
-                             if (train.route[i].type === 'stopping') {
-                               nextStation = train.route[i];
-                               break;
+                           if ((train.currentLocation.toLowerCase().includes('approaching') || train.currentLocation.toLowerCase().includes('near')) && currentStation.type === 'stopping') {
+                             nextStation = currentStation;
+                           } else {
+                             for (let i = cIndex + 1; i < train.route.length; i++) {
+                               if (train.route[i].type === 'stopping') {
+                                 nextStation = train.route[i];
+                                 break;
+                               }
                              }
                            }
                         }

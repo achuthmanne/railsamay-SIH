@@ -305,7 +305,14 @@ export default function TrainForecast() {
                  }}>
             </div>
             {routeData.map((station, index) => { 
-              const liveIndex = routeData.findIndex(s => currentLocation.includes(s.code));
+              const getLiveIndex = () => {
+    return routeData.findIndex(s => {
+      if (currentLocation.includes(s.code)) return true;
+      if (s.nonStoppingList && s.nonStoppingList.some(ns => currentLocation.includes(ns.code))) return true;
+      return false;
+    });
+  };
+  const liveIndex = getLiveIndex();
               const safeLiveIndex = liveIndex !== -1 ? liveIndex : 0;
               const isLive = liveIndex !== -1 ? currentLocation.includes(station.code) : index === 0; 
               const isPassed = index < safeLiveIndex; 
