@@ -3,22 +3,51 @@ import { Link } from 'react-router-dom';
 import { simStore as simulationStore } from '../store/SimulationStore';
  // I might need to move this or redefine it
 
+
+const AVAILABLE_TRAINS = [
+  { no: '12471', name: 'SWARAJ EXPRESS' },
+  { no: '12472', name: 'SWARAJ EXPRESS' },
+  { no: '12511', name: 'RAPTISAGAR EXP' },
+  { no: '12615', name: 'GRAND TRUNK EXP' },
+  { no: '12621', name: 'TAMIL NADU EXP' },
+  { no: '12626', name: 'KERALA EXPRESS' },
+  { no: '12919', name: 'MALWA EXPRESS' },
+  { no: '12920', name: 'MALWA EXPRESS' },
+  { no: '17205', name: 'SAINAGAR SHIRDI EXP' },
+  { no: '17207', name: 'SNSI BZA EXPRESS' },
+  { no: '18045', name: 'EAST COAST EXP' },
+  { no: '20805', name: 'AP EXPRESS' },
+  { no: '20833', name: 'VANDE BHARAT EXP' },
+  { no: '22439', name: 'SVDK VANDE BHARAT' }
+];
+
 export default function PassengerTracking() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchedTrain, setSearchedTrain] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const filteredTrains = AVAILABLE_TRAINS.filter(t => 
+    t.no.includes(searchTerm) || t.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (!searchTerm) return;
     const term = searchTerm.toLowerCase();
     
-    if (term.includes('12626') || term.includes('kerala')) {
-      setSearchedTrain('12626');
-    } else if (term.includes('12621') || term.includes('tamil') || term.includes('tn')) {
-      setSearchedTrain('12621');
+    const match = AVAILABLE_TRAINS.find(t => t.no === term || t.name.toLowerCase().includes(term));
+    if (match) {
+      setSearchedTrain(match.no);
+      setShowDropdown(false);
     } else {
       alert("No live telemetry found for this train number/name in the current network.");
     }
+  };
+
+  const handleSelectTrain = (tNo) => {
+    setSearchTerm(tNo);
+    setSearchedTrain(tNo);
+    setShowDropdown(false);
   };
 
   return (
@@ -36,17 +65,38 @@ export default function PassengerTracking() {
             <h2 className="text-2xl font-black text-slate-800 mb-2 font-montserrat tracking-tight">Track Your Train</h2>
             <p className="text-sm text-slate-500 mb-8 font-medium">Enter train number or name to check current running status and expected arrival time.</p>
             
-            <form onSubmit={handleSearch} className="flex flex-col space-y-4">
-              <div>
+            <form onSubmit={handleSearch} className="flex flex-col space-y-4 relative">
+              <div className="relative">
                 <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Train Number or Name</label>
                 <input 
                   type="text" 
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setShowDropdown(true);
+                  }}
+                  onFocus={() => setShowDropdown(true)}
+                  onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
                   placeholder="Ex: 12626 or Kerala Express" 
                   className="w-full border border-slate-300 px-4 py-3 text-slate-700 font-medium focus:border-orange-400 focus:outline-none transition-colors box-border"
                   required
                 />
+                
+                {/* Autocomplete Dropdown */}
+                {showDropdown && searchTerm && filteredTrains.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 shadow-xl max-h-64 overflow-y-auto custom-scrollbar z-50">
+                    {filteredTrains.map((t, i) => (
+                      <div 
+                        key={i} 
+                        onClick={() => handleSelectTrain(t.no)}
+                        className="px-4 py-2 hover:bg-orange-50 cursor-pointer border-b border-slate-100 last:border-0 flex items-center justify-between group"
+                      >
+                        <span className="font-bold text-slate-700 group-hover:text-orange-600">{t.no}</span>
+                        <span className="text-xs text-slate-500 font-medium">{t.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
               <button 
                 type="submit" 
@@ -224,7 +274,8 @@ function PassengerForecastView({ trainNo, onBack }) {
     return <div className="p-10 flex justify-center text-slate-500 font-bold tracking-widest uppercase">Initializing Telemetry Link...</div>;
   }
 
-  const trainName = trainNo === '12626' ? 'KERALA EXPRESS' : 'TAMIL NADU EXP';
+  const trainObj = AVAILABLE_TRAINS.find(t => t.no === trainNo);
+  const trainName = trainObj ? trainObj.name : 'LIVE TRAIN DATA';
   const currentLocation = train?.currentLocation || 'Awaiting Data';
   const liveDelay = train?.delayMinutes || 0;
 
