@@ -1,4 +1,5 @@
 ﻿import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { simStore as simulationStore } from '../store/SimulationStore';
  // I might need to move this or redefine it
 
@@ -25,10 +26,14 @@ export default function PassengerTracking() {
 
 
       {!searchedTrain ? (
-        <div className="flex-1 flex flex-col items-center justify-center p-6">
+        <div className="flex-1 flex flex-col items-center justify-center p-6 relative">
+          <Link to="/" className="absolute top-8 left-8 flex items-center px-5 py-2.5 bg-white border border-slate-200 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all font-bold text-sm tracking-wide group z-50">
+            <svg className="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+            RETURN TO HOME
+          </Link>
           <div className="max-w-md w-full bg-white p-8 border border-slate-200 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-[#1E3A8A]"></div>
-            <h2 className="text-2xl font-black text-slate-800 mb-2 font-montserrat tracking-tight">Spot Your Train</h2>
+            <h2 className="text-2xl font-black text-slate-800 mb-2 font-montserrat tracking-tight">Track Your Train</h2>
             <p className="text-sm text-slate-500 mb-8 font-medium">Enter train number or name to check current running status and expected arrival time.</p>
             
             <form onSubmit={handleSearch} className="flex flex-col space-y-4">
