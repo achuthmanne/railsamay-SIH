@@ -436,7 +436,7 @@ function PassengerForecastView({ trainNo, onBack }) {
         </div>
       </div>
 
-      {/* AI Predictive Forecasting Engine Clone */}
+      {/* Live Train Status */}
       <div className="bg-white border border-slate-200 shadow-sm p-6 mb-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-48 h-48 bg-[#1E3A8A]/5 rounded-bl-full -z-10"></div>
         
@@ -449,12 +449,12 @@ function PassengerForecastView({ trainNo, onBack }) {
 
         <div className="border border-slate-200 p-5 bg-slate-50 flex flex-col justify-between relative overflow-hidden">
            <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4 flex justify-between">
-             <span>Projected Operational Impact</span>
-             <span className="text-[#F97316] font-black tracking-widest">LIVE METEOROLOGICAL FEED</span>
+             <span>Running Status Summary</span>
+             <span className="text-[#F97316] font-black tracking-widest">Weather Info</span>
            </div>
            
            <div className="flex flex-col mb-4 relative z-10">
-              <div className="text-sm font-black text-slate-800 tracking-wide mb-1">Diagnostic Assessment:</div>
+              <div className="text-sm font-black text-slate-800 tracking-wide mb-1">Latest Update:</div>
               <div className={`text-xs font-semibold px-2 py-1 border inline-block mb-1 ${assessmentClass}`}>
                 {assessmentText}
               </div>
@@ -462,7 +462,7 @@ function PassengerForecastView({ trainNo, onBack }) {
 
            <div className="flex justify-between items-end border-t border-slate-200 pt-3 relative z-10">
              <div>
-               <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Arrival Variance ({upcomingStation?.code || 'Destination'})</div>
+               <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Expected Arrival at {upcomingStation?.code || 'Destination'}</div>
                <div className={`text-3xl font-black leading-none ${varianceColor}`}>{arrivalTime}</div>
              </div>
              <div className={`text-xs font-black px-2 py-1 border ${varianceBadgeClass}`}>
