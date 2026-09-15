@@ -78,7 +78,7 @@ function Landing() {
               </div>
             </div>
               <div className="flex items-center space-x-3">
-                <button onClick={() => setAuthModalType('passenger')} className={`bg-transparent border border-[#F97316] text-[#F97316] rounded font-semibold text-sm hover:bg-orange-50 transition-all duration-300 ease-in-out flex items-center justify-center gap-2 ${isScrolled ? 'px-4 py-1.5' : 'px-5 py-2'}`}>
+                <button onClick={() => navigate('/passenger-dashboard')} className={`bg-transparent border border-[#F97316] text-[#F97316] rounded font-semibold text-sm hover:bg-orange-50 transition-all duration-300 ease-in-out flex items-center justify-center gap-2 ${isScrolled ? 'px-4 py-1.5' : 'px-5 py-2'}`}>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                   <span>Passenger Login</span>
                 </button>
@@ -108,7 +108,7 @@ function Landing() {
               An advanced digital infrastructure for real-time fleet positioning, algorithmic delay forecasting, and centralized network oversight. Ensuring precision and transparency across all railway zones.
             </p>
             <div className="flex flex-col sm:flex-row gap-5">
-              <button onClick={() => setAuthModalType('passenger')} className="bg-[#F97316] text-white font-bold py-4 px-8 rounded-sm shadow-md hover:bg-orange-700 transition-colors uppercase tracking-widest text-sm flex items-center justify-center">
+              <button onClick={() => navigate('/passenger-dashboard')} className="bg-[#F97316] text-white font-bold py-4 px-8 rounded-sm shadow-md hover:bg-orange-700 transition-colors uppercase tracking-widest text-sm flex items-center justify-center">
                 Track Live Status
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </button>
@@ -399,8 +399,8 @@ function Landing() {
                    <div className="font-semibold text-slate-800 text-lg flex items-center h-7">WhatsApp Schedule Alerts</div>
                  </div>
               </div>
-              <button onClick={() => setAuthModalType('ats')} className="bg-white border-2 border-[#1E3A8A] text-[#1E3A8A] font-bold py-4 px-10 rounded-sm shadow-sm hover:bg-slate-50 hover:shadow-md transition-all uppercase tracking-widest text-sm flex items-center group w-max">
-                Track Your Train
+              <button onClick={() => navigate('/passenger-dashboard')} className="bg-white border-2 border-[#1E3A8A] text-[#1E3A8A] font-bold py-4 px-10 rounded-sm shadow-sm hover:bg-slate-50 hover:shadow-md transition-all uppercase tracking-widest text-sm flex items-center group w-max">
+                  Track Your Train
                 <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </button>
             </div>
