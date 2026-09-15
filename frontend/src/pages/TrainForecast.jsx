@@ -151,32 +151,53 @@ export default function TrainForecast() {
   }
 
   
-  const getHistoricalDelay = (tNo, stCode) => {
+  const getPredictiveDelayProfile = (tNo, stCode) => {
+      let flatIdx = 0;
+      let targetIdx = -1;
+      for (let i=0; i<routeData.length; i++) {
+         if (routeData[i].code === stCode) targetIdx = flatIdx;
+         flatIdx++;
+         if (routeData[i].nonStoppingList) {
+             for (let j=0; j<routeData[i].nonStoppingList.length; j++) {
+                 if (routeData[i].nonStoppingList[j].code === stCode) targetIdx = flatIdx;
+                 flatIdx++;
+             }
+         }
+      }
+      
+      const idx = targetIdx;
+      const totalStations = flatIdx;
+      
+      if (idx === -1) return 0;
+
       const findFlatIndex = (code) => {
-          let flatIdx = 0;
+          let fIdx = 0;
           for (let i=0; i<routeData.length; i++) {
-             if (routeData[i].code === code) return flatIdx;
-             flatIdx++;
+             if (routeData[i].code === code) return fIdx;
+             fIdx++;
              if (routeData[i].nonStoppingList) {
                  for (let j=0; j<routeData[i].nonStoppingList.length; j++) {
-                     if (routeData[i].nonStoppingList[j].code === code) return flatIdx;
-                     flatIdx++;
+                     if (routeData[i].nonStoppingList[j].code === code) return fIdx;
+                     fIdx++;
                  }
              }
           }
           return -1;
       };
 
-      const idx = findFlatIndex(stCode);
-      if (idx === -1) return 0;
-
       if (tNo === '12626') {
           const endIdx = findFlatIndex('GNQ');
           if (endIdx === -1) return 0;
-          if (idx >= endIdx) return 120;
           
-          return Math.floor((idx / endIdx) * 120);
+          if (idx <= endIdx) {
+              return Math.floor((idx / endIdx) * 120);
+          } else {
+              const remaining = totalStations - endIdx;
+              const passed = idx - endIdx;
+              return Math.max(15, 120 - Math.floor((passed / remaining) * 105));
+          }
       }
+      
       if (tNo === '12621') {
           const mjriIdx = findFlatIndex('MJRI');
           const segmIdx = findFlatIndex('SEGM');
@@ -403,12 +424,7 @@ export default function TrainForecast() {
               
               const isFutureOrLive = !isPassed;
               
-              let nodeDelay = 0;
-              if (isPassed) {
-                  nodeDelay = getHistoricalDelay(trainNo, station.code);
-              } else {
-                  nodeDelay = liveDelay;
-              }
+              let nodeDelay = getPredictiveDelayProfile(trainNo, station.code);
 
               let nodeStatus = 'On Time';
               let nodeStatusClass = 'bg-[#DCFCE7] text-[#166534]';
@@ -558,12 +574,7 @@ export default function TrainForecast() {
                     {station.nonStoppingList.map((ns, i) => {
                       const nsIsPassed = isPassed || (index === liveMainIndex && activeNSCode !== null && station.nonStoppingList.findIndex(n => n.code === activeNSCode) > i);
                       
-                      let nsDelay = 0;
-                      if (nsIsPassed) {
-                          nsDelay = getHistoricalDelay(trainNo, ns.code);
-                      } else {
-                          nsDelay = liveDelay;
-                      }
+                      let nsDelay = getPredictiveDelayProfile(trainNo, ns.code);
                       
                       let nsStatus = 'On Time';
                       let nsStatusClass = 'bg-[#DCFCE7] text-[#166534]';
