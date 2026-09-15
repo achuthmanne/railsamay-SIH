@@ -1,6 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
+const CircularGauge = ({ percentage, color, label, value }) => {
+  const radius = 30;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+  
+  return (
+    <div className="flex flex-col items-center justify-center p-2">
+      <div className="relative w-20 h-20 mb-3">
+        <svg className="w-20 h-20 transform -rotate-90">
+          <circle cx="40" cy="40" r="30" stroke="currentColor" strokeWidth="5" fill="transparent" className="text-slate-100" />
+          <circle cx="40" cy="40" r="30" stroke="currentColor" strokeWidth="5" fill="transparent" className={color} strokeDasharray={circumference} strokeDashoffset={strokeDashoffset} strokeLinecap="round" />
+        </svg>
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center font-black text-sm text-slate-700">
+          {percentage}%
+        </div>
+      </div>
+      <div className="text-[9px] font-bold text-slate-500 uppercase tracking-widest text-center h-6 flex items-center">{label}</div>
+      <div className="text-xs font-black text-slate-800 mt-1">{value}</div>
+    </div>
+  );
+};
+
+
 export default function TrainForecast() {
   const { trainNo } = useParams();
   const navigate = useNavigate();
@@ -161,8 +184,8 @@ export default function TrainForecast() {
         </div>
 
           {/* AI Predictive Forecasting Engine */}
-          <div className="bg-white border border-slate-200 shadow-sm p-6 mb-2 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#1E3A8A]/5 rounded-bl-full -z-10"></div>
+          <div className="bg-white border border-slate-200 shadow-sm p-6 mb-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-[#1E3A8A]/5 rounded-bl-full -z-10"></div>
             
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-sm font-black text-[#1E3A8A] tracking-widest uppercase flex items-center">
@@ -181,13 +204,35 @@ export default function TrainForecast() {
             </div>
 
             {trainNo === '12626' ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* AI Arrival Variance */}
-                <div className="border border-slate-200 p-4 bg-slate-50 flex flex-col justify-between">
-                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4">Arrival Variance (NGP)</div>
-                   <div className="flex justify-between items-end">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Circular Gauges for ML Features */}
+                <div className="col-span-2 border border-slate-200 p-4 bg-white flex flex-col justify-between">
+                   <div className="flex justify-between items-center mb-2">
+                     <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Real-time Constraints Engine</div>
+                     <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Model Confidence: 94%</div>
+                   </div>
+                   
+                   <div className="flex justify-around items-center pt-2">
+                      <CircularGauge percentage={88} color={'text-red-500'} label="Network Congestion" value={'High Traffic'} />
+                      <CircularGauge percentage={35} color={'text-orange-500'} label="Weather Impact" value={'Mild Rains'} />
+                      <CircularGauge percentage={65} color={'text-red-500'} label="Speed Restrictions" value={'TSR Active'} />
+                   </div>
+                </div>
+
+                {/* Dynamic Final ML Output */}
+                <div className="border border-slate-200 p-5 bg-slate-50 flex flex-col justify-between relative overflow-hidden">
+                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4">ML Predicted Impact</div>
+                   
+                   <div className="flex flex-col mb-4 relative z-10">
+                      <div className="text-sm font-black text-slate-800 tracking-wide mb-1">Causality Analysis:</div>
+                      <div className="text-xs font-semibold text-red-600 bg-red-100 px-2 py-1 border border-red-200 inline-block mb-1">
+                        Platform Sequence Conflict detected at upcoming NGP junction. Routing bottleneck.
+                      </div>
+                   </div>
+
+                   <div className="flex justify-between items-end border-t border-slate-200 pt-3 relative z-10">
                      <div>
-                       <div className="text-xs text-slate-400 line-through mb-1">Static: 13:45</div>
+                       <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Arrival Variance</div>
                        <div className="text-3xl font-black text-red-600 leading-none">15:45</div>
                      </div>
                      <div className="text-xs font-black text-red-700 bg-red-100 px-2 py-1 border border-red-200">
@@ -195,45 +240,35 @@ export default function TrainForecast() {
                      </div>
                    </div>
                 </div>
-
-                {/* AI Root Cause Analysis */}
-                <div className="border border-slate-200 p-4 col-span-2 bg-white">
-                   <div className="flex justify-between items-center mb-3">
-                     <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Predicted Causality Engine</div>
-                     <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Confidence: 94%</div>
-                   </div>
-                   <div className="space-y-3">
-                     <div className="flex items-center justify-between group">
-                       <div className="flex items-center text-sm font-semibold text-slate-800">
-                         <span className="w-1.5 h-1.5 rounded-none bg-red-500 mr-3"></span>
-                         Platform Sequence Conflict (Nagpur Jn)
-                       </div>
-                       <div className="text-xs font-black text-red-600">+105m</div>
-                     </div>
-                     <div className="flex items-center justify-between group">
-                       <div className="flex items-center text-sm font-semibold text-slate-800">
-                         <span className="w-1.5 h-1.5 rounded-none bg-orange-500 mr-3"></span>
-                         Temporary Speed Restriction (BZU-PAR)
-                       </div>
-                       <div className="text-xs font-black text-orange-600">+25m</div>
-                     </div>
-                     <div className="flex items-center justify-between group">
-                       <div className="flex items-center text-sm font-semibold text-slate-800">
-                         <span className="w-1.5 h-1.5 rounded-none bg-emerald-500 mr-3"></span>
-                         AI Suggested Slack Recovery
-                       </div>
-                       <div className="text-xs font-black text-emerald-600">-10m</div>
-                     </div>
-                   </div>
-                </div>
               </div>
             ) : trainNo === '12621' ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="border border-slate-200 p-4 bg-slate-50 flex flex-col justify-between">
-                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4">Arrival Variance (NGP)</div>
-                   <div className="flex justify-between items-end">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="col-span-2 border border-slate-200 p-4 bg-white flex flex-col justify-between">
+                   <div className="flex justify-between items-center mb-2">
+                     <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Real-time Constraints Engine</div>
+                     <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Model Confidence: 98%</div>
+                   </div>
+                   
+                   <div className="flex justify-around items-center pt-2">
+                      <CircularGauge percentage={12} color={'text-emerald-500'} label="Network Congestion" value={'Clear Route'} />
+                      <CircularGauge percentage={5} color={'text-emerald-500'} label="Weather Impact" value={'Optimal'} />
+                      <CircularGauge percentage={10} color={'text-emerald-500'} label="Speed Restrictions" value={'Normal'} />
+                   </div>
+                </div>
+
+                <div className="border border-slate-200 p-5 bg-slate-50 flex flex-col justify-between relative overflow-hidden">
+                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4">ML Predicted Impact</div>
+                   
+                   <div className="flex flex-col mb-4 relative z-10">
+                      <div className="text-sm font-black text-slate-800 tracking-wide mb-1">Causality Analysis:</div>
+                      <div className="text-xs font-semibold text-emerald-600 bg-emerald-100 px-2 py-1 border border-emerald-200 inline-block mb-1">
+                        Clear path ahead. Priority routing approved. Proceed at optimal speed.
+                      </div>
+                   </div>
+
+                   <div className="flex justify-between items-end border-t border-slate-200 pt-3 relative z-10">
                      <div>
-                       <div className="text-xs text-slate-400 line-through mb-1">Static: 13:45</div>
+                       <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Arrival Variance</div>
                        <div className="text-3xl font-black text-emerald-600 leading-none">13:45</div>
                      </div>
                      <div className="text-xs font-black text-emerald-700 bg-emerald-100 px-2 py-1 border border-emerald-200">
@@ -241,47 +276,8 @@ export default function TrainForecast() {
                      </div>
                    </div>
                 </div>
-                <div className="border border-slate-200 p-4 col-span-2 bg-white">
-                   <div className="flex justify-between items-center mb-3">
-                     <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Predicted Causality Engine</div>
-                     <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Confidence: 98%</div>
-                   </div>
-                   <div className="space-y-3">
-                     <div className="flex items-center justify-between">
-                       <div className="flex items-center text-sm font-semibold text-slate-800">
-                         <span className="w-1.5 h-1.5 rounded-none bg-emerald-500 mr-3"></span>
-                         Priority Routing Approved (Clear Path)
-                       </div>
-                       <div className="text-xs font-black text-emerald-600">-</div>
-                     </div>
-                     <div className="flex items-center justify-between">
-                       <div className="flex items-center text-sm font-semibold text-slate-800">
-                         <span className="w-1.5 h-1.5 rounded-none bg-emerald-500 mr-3"></span>
-                         Weather Conditions: Optimal
-                       </div>
-                       <div className="text-xs font-black text-emerald-600">-</div>
-                     </div>
-                   </div>
-                </div>
               </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="border border-slate-200 p-4 bg-slate-50 flex flex-col justify-between">
-                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4">Arrival Variance (Destination)</div>
-                   <div className="flex justify-between items-end">
-                     <div>
-                       <div className="text-3xl font-black text-slate-800 leading-none">--:--</div>
-                     </div>
-                     <div className="text-xs font-black text-slate-600 bg-slate-200 px-2 py-1 border border-slate-300">
-                       AWAITING DATA
-                     </div>
-                   </div>
-                </div>
-                <div className="border border-slate-200 p-4 col-span-2 bg-white flex items-center justify-center">
-                   <div className="text-sm font-bold text-slate-400 uppercase tracking-widest">Standard Schedule Followed</div>
-                </div>
-              </div>
-            )}
+            ) : null}
           </div>
 
         {/* The Broad Timeline */}
