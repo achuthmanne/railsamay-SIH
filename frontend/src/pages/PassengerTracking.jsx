@@ -309,6 +309,10 @@ function PassengerForecastView({ trainNo, onBack }) {
       return `Delay: ${h}:${m}`;
   };
 
+  const liveDelay = train?.delayMinutes || 0;
+  const trainName = train?.name || '';
+  const currentLocation = train?.currentLocation || 'NGP';
+  
   const isMatch = (code) => {
       const regex = new RegExp(`\\b${code}\\b|\\(${code}\\)`);
       return regex.test(currentLocation);

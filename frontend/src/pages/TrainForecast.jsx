@@ -64,6 +64,17 @@ export default function TrainForecast() {
   const [routeData, setRouteData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [weatherInfo, setWeatherInfo] = useState({ impact: 5, label: 'Optimal', desc: 'Clear' });
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState('Just now');
+  
+  const handleRefresh = () => {
+      setIsRefreshing(true);
+      setTimeout(() => {
+          setIsRefreshing(false);
+          setLastUpdated('Just now');
+      }, 1000);
+  };
+
 
   useEffect(() => {
     // Fetch Real Weather Data from Open-Meteo for Nagpur (Lat: 21.1458, Lon: 79.0882)
@@ -318,11 +329,11 @@ export default function TrainForecast() {
             </div>
             <div className="text-right">
               <div className="text-xs font-bold text-slate-500 mb-2">
-                Last updated: Just now
+                Last updated: {lastUpdated}
               </div>
-              <button className="text-xs font-bold text-[#1E3A8A] border border-[#1E3A8A] px-4 py-1.5 rounded-none hover:bg-[#1E3A8A] hover:text-white transition-colors uppercase tracking-widest flex items-center justify-center w-full">
-                <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                Refresh
+              <button onClick={handleRefresh} disabled={isRefreshing} className="text-xs font-bold text-[#1E3A8A] border border-[#1E3A8A] px-4 py-1.5 rounded-none hover:bg-[#1E3A8A] hover:text-white transition-colors uppercase tracking-widest flex items-center justify-center w-full disabled:opacity-50">
+                <svg className={`w-3 h-3 mr-1 ${isRefreshing ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                {isRefreshing ? 'Refreshing...' : 'Refresh'}
               </button>
             </div>
           </div>
