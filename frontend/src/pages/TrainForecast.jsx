@@ -157,9 +157,11 @@ export default function TrainForecast() {
           for (let i=0; i<routeData.length; i++) {
              if (routeData[i].code === code) return flatIdx;
              flatIdx++;
-             for (let j=0; j<routeData[i].nonStoppingList.length; j++) {
-                 if (routeData[i].nonStoppingList[j].code === code) return flatIdx;
-                 flatIdx++;
+             if (routeData[i].nonStoppingList) {
+                 for (let j=0; j<routeData[i].nonStoppingList.length; j++) {
+                     if (routeData[i].nonStoppingList[j].code === code) return flatIdx;
+                     flatIdx++;
+                 }
              }
           }
           return -1;
@@ -169,22 +171,35 @@ export default function TrainForecast() {
       if (idx === -1) return 0;
 
       if (tNo === '12626') {
-          const gnqIdx = findFlatIndex('GNQ');
-          const kswrIdx = findFlatIndex('KSWR');
-          const katlIdx = findFlatIndex('KATL');
-          const parIdx = findFlatIndex('PAR');
-          if (gnqIdx !== -1 && idx >= gnqIdx) return 120;
-          if (kswrIdx !== -1 && idx >= kswrIdx) return 90;
-          if (katlIdx !== -1 && idx >= katlIdx) return 60;
-          if (parIdx !== -1 && idx >= parIdx) return 30;
-          return 0;
+          const startIdx = findFlatIndex('ET'); 
+          const endIdx = findFlatIndex('GNQ');
+          
+          if (startIdx === -1 || endIdx === -1) return 0;
+          if (idx <= startIdx) return 0;
+          if (idx >= endIdx) return 120;
+          
+          const totalStations = endIdx - startIdx;
+          const currentStation = idx - startIdx;
+          return Math.floor((currentStation / totalStations) * 120);
       }
       if (tNo === '12621') {
-          const segmIdx = findFlatIndex('SEGM');
+          const bpqIdx = findFlatIndex('BPQ');
           const mjriIdx = findFlatIndex('MJRI');
-          if (segmIdx !== -1 && idx >= segmIdx) return 0;
-          if (mjriIdx !== -1 && idx >= mjriIdx) return 10;
-          return 0;
+          const segmIdx = findFlatIndex('SEGM');
+          
+          if (bpqIdx === -1 || mjriIdx === -1 || segmIdx === -1) return 0;
+          if (idx <= bpqIdx) return 0;
+          if (idx >= segmIdx) return 0; 
+          
+          if (idx <= mjriIdx) {
+              const total = mjriIdx - bpqIdx;
+              const cur = idx - bpqIdx;
+              return Math.floor((cur / total) * 10);
+          } else {
+              const total = segmIdx - mjriIdx;
+              const cur = idx - mjriIdx;
+              return Math.max(0, 10 - Math.floor((cur / total) * 10));
+          }
       }
       return 0;
   };
@@ -551,6 +566,23 @@ export default function TrainForecast() {
                   <div className="w-full border-l-[6px] border-orange-500">
                     {station.nonStoppingList.map((ns, i) => {
                       const nsIsPassed = isPassed || (index === liveMainIndex && activeNSCode !== null && station.nonStoppingList.findIndex(n => n.code === activeNSCode) > i);
+                      
+                      let nsDelay = 0;
+                      if (nsIsPassed) {
+                          nsDelay = getHistoricalDelay(trainNo, ns.code);
+                      } else {
+                          nsDelay = liveDelay;
+                      }
+                      
+                      let nsStatus = 'On Time';
+                      let nsStatusClass = 'bg-[#DCFCE7] text-[#166534]';
+                      if (nsDelay > 0) {
+                          nsStatus = `Delayed (+${nsDelay}m)`;
+                          nsStatusClass = nsIsPassed ? 'bg-[#FEE2E2] text-[#991B1B] opacity-80' : 'bg-[#FEE2E2] text-[#991B1B]';
+                      } else if (nsIsPassed) {
+                          nsStatusClass = 'bg-slate-200 text-slate-600';
+                      }
+                      
                       return (
                       <div key={i} className="flex relative items-stretch border-b border-orange-200">
                         
@@ -598,13 +630,16 @@ export default function TrainForecast() {
                           <div className="flex items-center space-x-3 mb-1">
                             <span className="text-[13px] font-black text-[#1E3A8A] tracking-widest uppercase">{ns.code}</span>
                             <span className="text-[13px] font-black text-slate-800 tracking-wider uppercase">{ns.name}</span>
+                            <span className={`inline-block px-2 py-0.5 text-[9px] font-black uppercase tracking-widest rounded-none ${nsStatusClass}`}>
+                              {nsStatus}
+                            </span>
                           </div>
                           <div className="flex items-center text-[10px] font-bold text-slate-500 space-x-4 tracking-widest mt-1">
                             <span>{ns.distance} Kms</span>
                             <span className="text-slate-300">|</span>
-                            <span>Arrival Time: {calculateDynamicETA(ns.arrival_time, nsIsPassed ? getHistoricalDelay(trainNo, ns.code) : liveDelay)}</span>
+                            <span>Arrival Time: {calculateDynamicETA(ns.arrival_time, nsDelay)}</span>
                             <span className="text-slate-300">|</span>
-                            <span>Departure Time: {calculateDynamicETA(ns.departure_time, nsIsPassed ? getHistoricalDelay(trainNo, ns.code) : liveDelay)}</span>
+                            <span>Departure Time: {calculateDynamicETA(ns.departure_time, nsDelay)}</span>
                           </div>
                         </div>
 
