@@ -576,7 +576,7 @@ const ATSDashboard = () => {
                               </div>
                             </td>
                             <td className="p-3 pr-5 text-right">
-                              <button onClick={() => navigate(`/forecast/${train.no}`, { state: { trainName: train.name, currentLocation: train.currentLocation } })} className="bg-white border border-[#1E3A8A] text-[#1E3A8A] hover:bg-[#1E3A8A] hover:text-white transition-colors text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-sm shadow-sm">
+                              <button onClick={() => navigate(`/forecast/${train.no}`, { state: { train } })} className="bg-white border border-[#1E3A8A] text-[#1E3A8A] hover:bg-[#1E3A8A] hover:text-white transition-colors text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-sm shadow-sm">
                                 SEE FORECAST
                               </button>
                             </td>
