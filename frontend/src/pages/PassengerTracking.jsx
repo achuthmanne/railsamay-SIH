@@ -474,7 +474,7 @@ function PassengerForecastView({ trainNo, onBack }) {
         <div className="border border-slate-200 p-5 bg-slate-50 flex flex-col justify-between relative overflow-hidden">
            <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4 flex justify-between">
              <span>Running Status Summary</span>
-             <span className="text-[#F97316] font-black tracking-widest">Weather Info</span>
+             
            </div>
            
            <div className="flex flex-col mb-4 relative z-10">
