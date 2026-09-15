@@ -22,16 +22,7 @@ export default function PassengerTracking() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-inter flex flex-col relative overflow-x-hidden">
-      {/* Top Navigation */}
-      <div className="bg-slate-900 text-white px-4 py-3 flex justify-between items-center shadow-md z-50">
-        <div className="flex items-center space-x-3">
-          <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" /></svg>
-          <h1 className="text-base font-black tracking-widest uppercase font-montserrat">RailSamay <span className="text-orange-500">Passenger</span></h1>
-        </div>
-        <div className="text-[10px] font-bold text-slate-400 tracking-widest uppercase">
-          Live Tracking Portal
-        </div>
-      </div>
+
 
       {!searchedTrain ? (
         <div className="flex-1 flex flex-col items-center justify-center p-6">
