@@ -178,7 +178,7 @@ function Landing() {
               <div className="p-8 flex flex-col flex-grow">
                 <h3 className="text-xl font-montserrat font-extrabold text-[#1E3A8A] mb-3">Real-Time Telemetry</h3>
                 <p className="text-slate-600 font-inter text-sm leading-relaxed mb-8 flex-grow">
-                  Continuous ingestion of live GPS coordinates and automated station clearance signals to monitor train locations with pinpoint accuracy across the network.
+                  Continuous ingestion of ISRO RTIS (NavIC) feeds and Data Logger signal track circuits and automated station clearance signals to monitor train locations with pinpoint accuracy across the network.
                 </p>
                 <button 
                   onClick={() => setActiveModal('telemetry')}
@@ -437,7 +437,7 @@ function Landing() {
                 <div className="text-white font-black text-2xl tracking-tight">RAIL <span className="text-[#F97316]">SAMAY</span></div>
               </div>
               <p className="text-sm leading-relaxed max-w-sm">
-                Advanced Algorithmic Delay Prediction & GPS Fleet Tracking System. 
+                Advanced Algorithmic Delay Prediction & RTIS & Data Logger Fleet Tracking System. 
                 Developed as a Proof of Concept for the Smart India Hackathon.
               </p>
             </div>
@@ -503,7 +503,7 @@ function Landing() {
             
             <div className="bg-slate-50 p-6 border-l-4 border-[#1E3A8A] shadow-sm">
               <p className="text-slate-700 font-inter font-medium leading-relaxed">
-                {activeModal === 'telemetry' && 'The Telemetry Ingestion Node bypasses legacy static timetables by establishing a direct sync with Real-Time Train Information System (RTIS) GPS devices on locomotives. We continuously capture dynamic speed fluctuations, section clearance signals, and unscheduled outer-signal halts. This raw telemetry is piped directly into our high-performance Python FastAPI backend, which cleanses and normalizes the data to establish the definitive ground truth for every active train in the national network.'}
+                {activeModal === 'telemetry' && 'The Telemetry Ingestion Node bypasses legacy static timetables by establishing a direct sync with ISRO\'s Real-Time Train Information System (RTIS) and track-circuit Data Loggers on locomotives. We continuously capture dynamic speed fluctuations, section clearance signals, and unscheduled outer-signal halts. This raw telemetry is piped directly into our high-performance Python FastAPI backend, which cleanses and normalizes the data to establish the definitive ground truth for every active train in the national network.'}
                 {activeModal === 'alerts' && 'Our Smart Notification Matrix completely eliminates passenger panic and "alert fatigue". When a delay incident occurs (e.g., an unscheduled halt on the tracks), our system dynamically maps the exact "blast radius". It identifies trailing trains on the SAME physical track block and marks them for ETA impact alerts. Meanwhile, parallel or opposite-direction trains are flagged as "Clear", ensuring those passengers are never disturbed by irrelevant delay notifications.'}
                 {activeModal === 'algorithms' && 'Our ETA Engine goes far beyond simple delay addition; it is a full-scale Station Resource & Platform Planner. The algorithm calculates exact mathematical overlaps across all active schedules. If a delayed train clashes with an on-time train at a specific platform, the engine scans all alternative platforms, calculates safety clearance buffers (e.g., 15 mins), checks standby crew availability, and verifies cleaning slot feasibility. It then generates a "Smart Recommendation" for the ATS Controller to resolve the conflict instantly.'}
               </p>
@@ -519,7 +519,7 @@ function Landing() {
                   {activeModal === 'telemetry' ? 'Direct RTIS Sync' : activeModal === 'alerts' ? 'Blast-Radius Mapping' : 'Cascade Math Logic'}
                 </h4>
                 <p className="text-sm text-slate-500 font-inter">
-                  {activeModal === 'telemetry' ? 'Bypasses manual NTES updates by fetching live GPS coordinate feeds directly from locomotives.' : 
+                  {activeModal === 'telemetry' ? 'Bypasses manual NTES updates by fetching live RTIS (NavIC) and Signal Data Logger feeds directly from locomotives.' : 
                    activeModal === 'alerts' ? 'Intelligently isolates the exact physical track blocks affected by an unscheduled halt.' : 
                    'Uses Max(Start) < Min(End) interval math to detect true temporal overlaps between schedules.'}
                 </p>
@@ -534,7 +534,7 @@ function Landing() {
                   {activeModal === 'telemetry' ? 'Edge Validation' : activeModal === 'alerts' ? 'Targeted Dissemination' : 'Platform Scanner'}
                 </h4>
                 <p className="text-sm text-slate-500 font-inter">
-                  {activeModal === 'telemetry' ? 'Automatically filters out GPS anomalies and false signals before passing data to the AI Engine.' : 
+                  {activeModal === 'telemetry' ? 'Automatically filters out RTIS/NavIC packet drops and false signals before passing data to the AI Engine.' : 
                    activeModal === 'alerts' ? 'Sends critical ETA alerts only to the smartphones of passengers directly impacted by the delay.' : 
                    'Scans all available station platforms instantly to find alternative routes with sufficient safety buffers.'}
                 </p>
