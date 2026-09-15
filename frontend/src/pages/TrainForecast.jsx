@@ -251,14 +251,19 @@ export default function TrainForecast() {
 
   let liveStation = routeData.length > 0 ? routeData[0] : null;
   let exactDistance = 0;
+  const isMatch = (code) => {
+      const regex = new RegExp(`\\b${code}\\b|\\(${code}\\)`);
+      return regex.test(currentLocation);
+  };
+
   for (const s of routeData) {
-      if (currentLocation.includes(s.code)) {
+      if (isMatch(s.code)) {
           liveStation = s;
           exactDistance = s.distance;
           break;
       }
       if (s.nonStoppingList) {
-          const ns = s.nonStoppingList.find(n => currentLocation.includes(n.code));
+          const ns = s.nonStoppingList.find(n => isMatch(n.code));
           if (ns) {
               liveStation = s;
               exactDistance = ns.distance;
@@ -349,9 +354,9 @@ export default function TrainForecast() {
               let varianceBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-200';
               let upcomingStation = lastStation;
               let tempMainIndex = routeData.findIndex(s => {
-                  if (currentLocation.includes(s.code)) return true;
+                  if (isMatch(s.code)) return true;
                   if (s.nonStoppingList) {
-                      return s.nonStoppingList.some(ns => currentLocation.includes(ns.code));
+                      return s.nonStoppingList.some(ns => isMatch(ns.code));
                   }
                   return false;
               });
