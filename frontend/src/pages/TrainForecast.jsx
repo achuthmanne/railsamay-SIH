@@ -279,6 +279,15 @@ export default function TrainForecast() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-inter">
+      <style>{`
+        @keyframes signalBlink {
+          0%, 100% { opacity: 0.2; transform: scale(0.9); }
+          50% { opacity: 1; transform: scale(1.1); }
+        }
+        .signal-blink {
+          animation: signalBlink 1.5s ease-in-out infinite;
+        }
+      `}</style>
       {/* Top Header Navigation */}
       <div className="bg-[#1E3A8A] border-b-4 border-orange-500 px-4 py-3 flex items-center sticky top-0 z-50">
         <button onClick={() => navigate(-1)} className="text-white p-2 mr-4 transition-all duration-300 hover:bg-white/10 rounded-sm group">
