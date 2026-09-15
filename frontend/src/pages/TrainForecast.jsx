@@ -337,25 +337,25 @@ export default function TrainForecast() {
             </div>
             {routeData.map((station, index) => { 
               let liveMainIndex = 0;
-  let activeNSCode = null;
-  
-  if (routeData.length > 0) {
-    liveMainIndex = routeData.findIndex(s => {
-      if (currentLocation.includes(s.code)) return true;
-      if (s.nonStoppingList && s.nonStoppingList.some(ns => {
-          if (currentLocation.includes(ns.code)) {
-              activeNSCode = ns.code;
-              return true;
-          }
-          return false;
-      })) return true;
-      return false;
-    });
-    if (liveMainIndex === -1) liveMainIndex = 0;
-  }
-              const safeLiveIndex = liveIndex !== -1 ? liveIndex : 0;
-              const isLive = liveIndex !== -1 ? currentLocation.includes(station.code) : index === 0; 
-              const isPassed = index < safeLiveIndex; 
+              let activeNSCode = null;
+              
+              if (routeData.length > 0) {
+                liveMainIndex = routeData.findIndex(s => {
+                  if (currentLocation.includes(s.code)) return true;
+                  if (s.nonStoppingList && s.nonStoppingList.some(ns => {
+                      if (currentLocation.includes(ns.code)) {
+                          activeNSCode = ns.code;
+                          return true;
+                      }
+                      return false;
+                  })) return true;
+                  return false;
+                });
+                if (liveMainIndex === -1) liveMainIndex = 0;
+              }
+              const isLiveMain = index === liveMainIndex && !activeNSCode; 
+              const isPassed = index < liveMainIndex || (index === liveMainIndex && activeNSCode !== null); 
+              const shouldExpandNS = index === liveMainIndex && activeNSCode !== null;
               return ( 
               <div key={index} className="flex flex-col transition-colors">
                 
@@ -378,7 +378,7 @@ export default function TrainForecast() {
                             
                             <div className="text-[11px] font-bold text-slate-500 mt-4 mb-1 uppercase tracking-widest">Expected *</div>
                             <div className={`text-[13px] font-black tracking-wide ${isPassed ? 'text-slate-500' : 'text-[#1E3A8A]'}`}>
-                              {station.expected_arrival}
+                              {calculateDynamicETA(station.scheduled_arrival, liveDelay)}
                             </div>
                             
                             <div className="mt-3">
@@ -467,7 +467,7 @@ export default function TrainForecast() {
                             
                             <div className="text-[11px] font-bold text-slate-500 mt-4 mb-1 uppercase tracking-widest">Expected *</div>
                             <div className={`text-[13px] font-black tracking-wide ${isPassed ? 'text-slate-500' : 'text-[#1E3A8A]'}`}>
-                              {station.expected_departure}
+                              {calculateDynamicETA(station.scheduled_departure, liveDelay)}
                             </div>
                             
                             <div className="mt-3 flex justify-end">
@@ -486,7 +486,7 @@ export default function TrainForecast() {
                 </div>
 
                 {/* Expanded Non-Stopping Stations Row */}
-                {expandedStations[station.code] && station.nonStoppingList.length > 0 && (
+                {station.nonStoppingList && station.nonStoppingList.length > 0 && (expandedStations[station.code] || shouldExpandNS) && (
                   <div className="w-full border-l-[6px] border-orange-500">
                     {station.nonStoppingList.map((ns, i) => (
                       <div key={i} className="flex relative items-stretch border-b border-orange-200">
@@ -498,9 +498,16 @@ export default function TrainForecast() {
                           </span>
                         </div>
 
-                        {/* Node Column (EMPTY & Transparent for pure continuous track without any square boxes) */}
-                        <div className="w-[60px] flex justify-center items-center relative z-0 bg-transparent py-4">
-                          {/* Purposely left empty so the track runs perfectly straight without nodes/boxes */}
+                        {/* Node Column */}
+                        <div className="w-[60px] flex justify-center items-center relative z-20 bg-transparent py-4">
+                          {activeNSCode === ns.code ? (
+                            <div className="relative w-8 h-8 z-20 flex justify-center items-center">
+                              <span className="absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75 animate-ping"></span>
+                              <div className="relative w-5 h-5 bg-orange-500 rounded-full border-2 border-white shadow-sm"></div>
+                            </div>
+                          ) : (
+                            <div className="w-2 h-2 bg-slate-300 rounded-full z-10"></div>
+                          )}
                         </div>
 
                         {/* Info Column */}
