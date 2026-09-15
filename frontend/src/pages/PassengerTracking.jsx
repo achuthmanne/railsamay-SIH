@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { simStore as simulationStore } from '../store/SimulationStore';
  // I might need to move this or redefine it
@@ -122,6 +122,15 @@ function PassengerForecastView({ trainNo, onBack }) {
   const [train, setTrain] = useState(null);
   const [loading, setLoading] = useState(true);
   const [expandedStations, setExpandedStations] = useState({});
+  const liveMarkerRef = useRef(null);
+
+  useEffect(() => {
+    if (liveMarkerRef.current && !loading) {
+      setTimeout(() => {
+        liveMarkerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 500);
+    }
+  }, [train, loading]);
 
   useEffect(() => {
     fetch(`/data/${trainNo}_route_data.json?t=${Date.now()}`)
