@@ -291,7 +291,7 @@ const ATSDashboard = () => {
                       
                       <h4 className="text-[11px] font-black text-slate-800 uppercase tracking-wide mb-1">Scenario 1: NGP Conflict</h4>
                       <p className="text-[11px] text-slate-600 leading-relaxed font-medium">
-                        Simulates automated detection when <span className="font-bold text-slate-800">12626 Kerala Exp</span> incurs a +02h 00m delay, causing a simultaneous arrival convergence with the on-time <span className="font-bold text-slate-800">12621 TN Exp</span> at Nagpur Junction.
+                        Simulates automated detection when <span className="font-bold text-[#1E3A8A]">12626 <span className="text-orange-600">Kerala Exp</span></span> incurs a +02h 00m delay, causing a simultaneous arrival convergence with the on-time <span className="font-bold text-[#1E3A8A]">12621 <span className="text-orange-600">TN Exp</span></span> at Nagpur Junction.
                       </p>
                     </div>
                     
@@ -590,7 +590,7 @@ const ATSDashboard = () => {
               <div className="grid grid-cols-2 gap-0 border border-slate-200 rounded-none bg-slate-50">
                 <div className="p-4 border-r border-slate-200 bg-white">
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Affected Train</div>
-                  <div className="text-sm font-bold text-slate-900 mb-2">12626 Kerala Express</div>
+                  <div className="text-sm font-bold text-[#1E3A8A] mb-2">12626 <span className="text-orange-600">Kerala Express</span></div>
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-semibold text-slate-500">ETA: 13:45</span>
                     <span className="bg-red-50 text-red-700 text-[10px] font-bold px-2 py-0.5 border border-red-200 rounded-none uppercase tracking-wider">+02h 00m Delay</span>
@@ -598,7 +598,7 @@ const ATSDashboard = () => {
                 </div>
                 <div className="p-4 bg-white">
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Conflicting Train</div>
-                  <div className="text-sm font-bold text-slate-900 mb-2">12621 Tamil Nadu Express</div>
+                  <div className="text-sm font-bold text-[#1E3A8A] mb-2">12621 <span className="text-orange-600">Tamil Nadu Express</span></div>
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-semibold text-slate-500">ETA: 13:45</span>
                     <span className="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2 py-0.5 border border-emerald-200 rounded-none uppercase tracking-wider">On Time</span>

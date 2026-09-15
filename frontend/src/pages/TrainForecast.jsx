@@ -319,9 +319,9 @@ export default function TrainForecast() {
                   <svg className="w-8 h-8 text-[#1E3A8A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                 </div>
               <div>
-                <h2 className="text-2xl font-black text-[#1E3A8A] tracking-wider uppercase">
-                  {trainNo} {trainName}
-                </h2>
+                <h2 className="text-2xl font-black tracking-wider uppercase">
+                    <span className="text-[#1E3A8A]">{trainNo}</span> <span className="text-orange-600">{trainName}</span>
+                  </h2>
                 <div className="text-sm font-bold text-slate-500 tracking-widest uppercase mt-1">
                   Journey: {routeData.length > 0 ? `${routeData[0].name} (${routeData[0].code}) to ${routeData[routeData.length - 1].name} (${routeData[routeData.length - 1].code})` : "Loading Journey..."}
                 </div>
