@@ -61,11 +61,17 @@ export default function PassengerTracking() {
             RETURN TO HOME
           </Link>
           <div className="max-w-md w-full bg-white p-8 border border-slate-200 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-[#1E3A8A]"></div>
-            <h2 className="text-2xl font-black text-slate-800 mb-2 font-montserrat tracking-tight">Track Your Train</h2>
-            <p className="text-sm text-slate-500 mb-8 font-medium">Enter train number or name to check current running status and expected arrival time.</p>
+              {/* Train Watermark */}
+              <img 
+                src="/trainicon.png" 
+                alt="" 
+                className="absolute -bottom-10 -right-10 w-64 h-64 opacity-[0.03] pointer-events-none mix-blend-multiply grayscale z-0" 
+              />
+              <div className="absolute top-0 left-0 w-full h-1 bg-[#1E3A8A]"></div>
+              <h2 className="text-2xl font-black text-slate-800 mb-2 font-montserrat tracking-tight relative z-20">Track Your Train</h2>
+            <p className="text-sm text-slate-500 mb-8 font-medium relative z-20">Enter train number or name to check current running status and expected arrival time.</p>
             
-            <form onSubmit={handleSearch} className="flex flex-col space-y-4 relative">
+            <form onSubmit={handleSearch} className="flex flex-col space-y-4 relative z-20">
               <div className="relative">
                 <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Train Number or Name</label>
                 <input 
