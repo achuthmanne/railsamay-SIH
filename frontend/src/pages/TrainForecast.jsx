@@ -316,7 +316,7 @@ export default function TrainForecast() {
           <div className="p-6 flex justify-between items-start">
             <div className="flex items-start space-x-4">
               <div className="w-14 h-14 border border-slate-200 shadow-sm flex items-center justify-center shrink-0 bg-white overflow-hidden p-1">
-                  <img src="/trainicon.png" alt="Train" className="w-full h-full object-contain mix-blend-multiply" />
+                  <svg className="w-8 h-8 text-[#1E3A8A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                 </div>
               <div>
                 <h2 className="text-2xl font-black text-[#1E3A8A] tracking-wider uppercase">
