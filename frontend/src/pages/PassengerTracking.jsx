@@ -289,6 +289,19 @@ function PassengerForecastView({ trainNo, onBack }) {
       return train?.delayMinutes || 0;
   };
 
+  const calculateDynamicETA = (timeStr, delayMins) => {
+    if (!timeStr || timeStr === '--:--' || timeStr.includes('Source') || timeStr.includes('Destination')) return timeStr;
+    const parts = timeStr.split(' | ');
+    const t = parts[0];
+    if (!t.includes(':')) return timeStr;
+    const [h, m] = t.split(':').map(Number);
+    if (isNaN(h) || isNaN(m)) return timeStr;
+    const d = new Date(2024, 0, 1, h, m);
+    d.setMinutes(d.getMinutes() + (delayMins || 0));
+    const newTime = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+    return parts.length > 1 ? `${newTime} | ${parts[1]}` : newTime;
+  };
+
   const formatDelayTime = (mins) => {
       if (mins <= 0) return 'ON TIME';
       const h = Math.floor(mins / 60).toString().padStart(2, '0');
