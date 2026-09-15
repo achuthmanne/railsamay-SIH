@@ -324,9 +324,44 @@ export default function TrainForecast() {
               
             </div>
 
-            {trainNo === '12626' ? (
+            {(() => {
+              let assessmentClass = 'bg-emerald-100 text-emerald-700 border-emerald-200';
+              let assessmentText = 'Clear path ahead. Priority routing approved. Proceed at optimal speed.';
+              let varianceColor = 'text-emerald-600';
+              let varianceBadge = 'ON TIME';
+              let varianceBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-200';
+              let arrivalTime = lastStation ? lastStation.scheduled_arrival : '00:00';
+              
+              if (liveDelay > 0) {
+                  varianceColor = 'text-red-600';
+                  varianceBadge = formatDelayTime(liveDelay);
+                  varianceBadgeClass = 'bg-red-100 text-red-700 border-red-200';
+                  arrivalTime = calculateDynamicETA(arrivalTime, liveDelay);
+
+                  assessmentClass = 'bg-red-100 text-red-700 border-red-200';
+                  if (trainNo === '12626') {
+                      assessmentText = `Current Status at ${currentLocation}: Train is operating with a ${formatDelayTime(liveDelay)}. Root Cause: Severe network congestion and adverse weather cascading into a Platform Sequence Conflict at upcoming NGP junction.`;
+                  } else {
+                      assessmentText = `Current Status at ${currentLocation}: Train is operating with a ${formatDelayTime(liveDelay)}. Root Cause: Minor origin delay. System has engaged compensatory speed limits to fully recover time.`;
+                  }
+              } else {
+                  if (trainNo === '12621' && liveStation && liveStation.code !== 'BPQ') {
+                      assessmentText = `Current Status at ${currentLocation}: Train is ON TIME (Delay successfully recovered). Root Cause: Clear path ahead and optimal speed maintained.`;
+                  } else {
+                      assessmentText = `Current Status at ${currentLocation}: Train is perfectly ON TIME. Root Cause: Clear path ahead and optimal operational conditions.`;
+                  }
+              }
+
+              const congestionVal = trainNo === '12626' ? (liveDelay >= 100 ? 88 : 75) : (liveDelay > 0 ? 35 : 12);
+              const congestionColor = congestionVal > 50 ? 'text-red-500' : (congestionVal > 25 ? 'text-orange-500' : 'text-emerald-500');
+              const congestionLabel = congestionVal > 50 ? 'High Traffic' : (liveDelay > 0 ? 'Moderate' : 'Clear Route');
+
+              const speedVal = trainNo === '12626' ? (liveDelay >= 100 ? 65 : 45) : (liveDelay > 0 ? 25 : 10);
+              const speedColor = speedVal > 50 ? 'text-red-500' : 'text-emerald-500';
+              const speedLabel = speedVal > 50 ? 'TSR Active' : 'Normal';
+
+              return (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Circular Gauges for ML Features */}
                 <div className="col-span-2 border border-slate-200 p-4 bg-white flex flex-col justify-between">
                    <div className="flex justify-between items-center mb-2">
                      <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Live Operational Constraints</div>
@@ -334,49 +369,9 @@ export default function TrainForecast() {
                    </div>
                    
                    <div className="flex justify-around items-center pt-2">
-                      <CircularGauge percentage={88} color={'text-red-500'} label="Network Congestion" value={'High Traffic'} />
+                      <CircularGauge percentage={congestionVal} color={congestionColor} label="Network Congestion" value={congestionLabel} />
                       <CircularGauge percentage={weatherInfo.impact} color={weatherInfo.impact > 30 ? 'text-orange-500' : 'text-emerald-500'} label={`Weather: ${weatherInfo.desc}`} value={weatherInfo.label} />
-                      <CircularGauge percentage={65} color={'text-red-500'} label="Speed Restrictions" value={'TSR Active'} />
-                   </div>
-                </div>
-
-                {/* Dynamic Final ML Output */}
-                <div className="border border-slate-200 p-5 bg-slate-50 flex flex-col justify-between relative overflow-hidden">
-                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4 flex justify-between">
-                     <span>Projected Operational Impact</span>
-                     <span className="text-[#F97316] font-black tracking-widest">LIVE METEOROLOGICAL FEED</span>
-                   </div>
-                   
-                   <div className="flex flex-col mb-4 relative z-10">
-                      <div className="text-sm font-black text-slate-800 tracking-wide mb-1">Diagnostic Assessment:</div>
-                      <div className="text-xs font-semibold text-red-600 bg-red-100 px-2 py-1 border border-red-200 inline-block mb-1">
-                        Platform Sequence Conflict detected at upcoming NGP junction. Routing bottleneck.
-                      </div>
-                   </div>
-
-                   <div className="flex justify-between items-end border-t border-slate-200 pt-3 relative z-10">
-                     <div>
-                       <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Arrival Variance</div>
-                       <div className="text-3xl font-black text-red-600 leading-none">15:45</div>
-                     </div>
-                     <div className="text-xs font-black text-red-700 bg-red-100 px-2 py-1 border border-red-200">
-                       +120m
-                     </div>
-                   </div>
-                </div>
-              </div>
-            ) : trainNo === '12621' ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="col-span-2 border border-slate-200 p-4 bg-white flex flex-col justify-between">
-                   <div className="flex justify-between items-center mb-2">
-                     <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Live Operational Constraints</div>
-                     <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Telemetry Reliability: 98%</div>
-                   </div>
-                   
-                   <div className="flex justify-around items-center pt-2">
-                      <CircularGauge percentage={12} color={'text-emerald-500'} label="Network Congestion" value={'Clear Route'} />
-                      <CircularGauge percentage={weatherInfo.impact} color={weatherInfo.impact > 30 ? 'text-orange-500' : 'text-emerald-500'} label={`Weather: ${weatherInfo.desc}`} value={weatherInfo.label} />
-                      <CircularGauge percentage={10} color={'text-emerald-500'} label="Speed Restrictions" value={'Normal'} />
+                      <CircularGauge percentage={speedVal} color={speedColor} label="Speed Restrictions" value={speedLabel} />
                    </div>
                 </div>
 
@@ -388,23 +383,24 @@ export default function TrainForecast() {
                    
                    <div className="flex flex-col mb-4 relative z-10">
                       <div className="text-sm font-black text-slate-800 tracking-wide mb-1">Diagnostic Assessment:</div>
-                      <div className="text-xs font-semibold text-emerald-600 bg-emerald-100 px-2 py-1 border border-emerald-200 inline-block mb-1">
-                        Clear path ahead. Priority routing approved. Proceed at optimal speed.
+                      <div className={`text-xs font-semibold px-2 py-1 border inline-block mb-1 ${assessmentClass}`}>
+                        {assessmentText}
                       </div>
                    </div>
 
                    <div className="flex justify-between items-end border-t border-slate-200 pt-3 relative z-10">
                      <div>
                        <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Arrival Variance</div>
-                       <div className="text-3xl font-black text-emerald-600 leading-none">13:45</div>
+                       <div className={`text-3xl font-black leading-none ${varianceColor}`}>{arrivalTime}</div>
                      </div>
-                     <div className="text-xs font-black text-emerald-700 bg-emerald-100 px-2 py-1 border border-emerald-200">
-                       ON TIME
+                     <div className={`text-xs font-black px-2 py-1 border ${varianceBadgeClass}`}>
+                       {varianceBadge}
                      </div>
                    </div>
                 </div>
               </div>
-            ) : null}
+              );
+            })()}
           </div>
 
         {/* The Broad Timeline */}
