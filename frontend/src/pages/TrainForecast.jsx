@@ -491,8 +491,8 @@ export default function TrainForecast() {
                     {station.nonStoppingList.map((ns, i) => (
                       <div key={i} className="flex relative items-stretch border-b border-orange-200">
                         
-                        {/* Left Badge Area */}
-                        <div className="w-[160px] pl-6 flex flex-col justify-center bg-[#FFF9F0] relative z-10 py-4">
+                        {/* Left Badge Area - Subtract 6px width to account for the border-l-[6px] on parent! */}
+                        <div className="w-[154px] pl-4 flex flex-col justify-center bg-[#FFF9F0] relative z-10 py-4">
                           <span className="inline-block px-3 py-1 text-[9px] font-black text-[#C2410C] bg-[#FFEDD5] border border-[#FED7AA] rounded-none uppercase tracking-widest shadow-none w-max">
                             Non-Stopping
                           </span>
@@ -501,9 +501,29 @@ export default function TrainForecast() {
                         {/* Node Column */}
                         <div className="w-[60px] flex justify-center items-center relative z-20 bg-transparent py-4">
                           {activeNSCode === ns.code ? (
-                            <div className="relative w-8 h-8 z-20 flex justify-center items-center">
-                              <span className="absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75 animate-ping"></span>
-                              <div className="relative w-5 h-5 bg-orange-500 rounded-full border-2 border-white shadow-sm"></div>
+                            <div className="relative w-12 h-14 z-20 flex justify-center cursor-pointer scale-[0.85]">
+                              {/* Left Broadcast Signal */}
+                              <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                                <path d="M14 4 A10 10 0 0 0 14 20 M20 8 A5 5 0 0 0 20 16" />
+                              </svg>
+                              
+                              {/* Right Broadcast Signal */}
+                              <svg className="absolute right-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                                <path d="M10 4 A10 10 0 0 1 10 20 M4 8 A5 5 0 0 1 4 16" />
+                              </svg>
+                              
+                              {/* Marker Body */}
+                              <div className="relative w-12 h-14">
+                                {/* Solid Blue Map Marker */}
+                                <svg className="absolute inset-0 w-full h-full text-[#1E3A8A] drop-shadow-xl" viewBox="0 0 24 24" fill="currentColor">
+                                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+                                </svg>
+                                
+                                {/* White Train Icon Center */}
+                                <svg className="absolute top-[10px] left-[13px] w-[22px] h-[22px] text-white z-10" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2.23v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path>
+                                </svg>
+                              </div>
                             </div>
                           ) : (
                             <div className="w-2 h-2 bg-slate-300 rounded-full z-10"></div>
