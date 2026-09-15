@@ -445,7 +445,7 @@ export default function TrainForecast() {
 
                    <div className="flex justify-between items-end border-t border-slate-200 pt-3 relative z-10">
                      <div>
-                       <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Expected Arrival at {upcomingStation?.code || 'Destination'})</div>
+                       <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Expected Arrival at {upcomingStation?.name || 'Destination'}</div>
                        <div className={`text-3xl font-black leading-none ${varianceColor}`}>{arrivalTime}</div>
                      </div>
                      <div className={`text-xs font-black px-2 py-1 border ${varianceBadgeClass}`}>
@@ -593,12 +593,18 @@ export default function TrainForecast() {
                     <div className="flex items-center space-x-3 mb-2">
                       <span className={`text-sm font-black tracking-widest uppercase ${isPassed ? 'text-slate-500' : 'text-[#1E3A8A]'}`}>{station.code}</span>
                       <span className={`text-[15px] font-black tracking-wider uppercase ${isPassed ? 'text-slate-600' : 'text-slate-800'}`}>{station.name}</span>
+
                       {station.platform && (
                         <span className={`text-white text-[10px] font-black px-3 py-1 rounded-none uppercase tracking-widest ${isPassed ? 'bg-slate-400' : 'bg-[#1E3A8A]'}`}>
                           {station.platform} *</span>
                       )}
                     </div>
                     
+                    {(!isPassed && (index === liveMainIndex || index === liveMainIndex + 1) && station.code !== liveStation?.code) && (
+                      <div className="mt-1.5 mb-1.5">
+                        <span className="bg-orange-50 text-orange-600 border border-orange-200 text-[9px] font-black px-2 py-0.5 rounded-sm uppercase tracking-widest shadow-sm">UPCOMING STATION</span>
+                      </div>
+                    )}
                     <div className="flex items-center text-[11px] font-bold text-slate-500 space-x-6 mt-1 tracking-widest">
                       <span>{station.distance} Kms</span>
                       {station.nonStoppingList.length > 0 && (
