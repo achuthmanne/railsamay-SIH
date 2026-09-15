@@ -122,6 +122,16 @@ function PassengerForecastView({ trainNo, onBack }) {
   const [train, setTrain] = useState(null);
   const [loading, setLoading] = useState(true);
   const [expandedStations, setExpandedStations] = useState({});
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState('Just now');
+  
+  const handleRefresh = () => {
+      setIsRefreshing(true);
+      setTimeout(() => {
+          setIsRefreshing(false);
+          setLastUpdated('Just now');
+      }, 1000);
+  };
   const liveMarkerRef = useRef(null);
 
   useEffect(() => {
@@ -396,7 +406,7 @@ function PassengerForecastView({ trainNo, onBack }) {
       `}</style>
       
       {/* Top Header Block */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-end mb-4">
         <div>
           <button 
             onClick={onBack}
@@ -412,6 +422,23 @@ function PassengerForecastView({ trainNo, onBack }) {
             Journey: {routeData.length > 0 ? `${routeData[0].name} (${routeData[0].code}) to ${routeData[routeData.length - 1].name} (${routeData[routeData.length - 1].code})` : "Loading Journey..."}
           </div>
         </div>
+
+        {/* Refresh Button block matching ATS */}
+        <div className="text-right pb-1">
+          <div className="text-xs font-bold text-slate-500 mb-2">
+            Last updated: {lastUpdated}
+          </div>
+          <button onClick={handleRefresh} disabled={isRefreshing} className="text-xs font-bold text-[#1E3A8A] border border-[#1E3A8A] bg-white px-4 py-1.5 rounded-none hover:bg-[#1E3A8A] hover:text-white transition-colors uppercase tracking-widest flex items-center justify-center w-full disabled:opacity-50 shadow-sm">
+            <svg className={`w-3 h-3 mr-1 ${isRefreshing ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            {isRefreshing ? 'Refreshing...' : 'Refresh'}
+          </button>
+        </div>
+      </div>
+      
+      {/* Dynamic Info Banner matching ATS */}
+      <div className="bg-orange-50 border border-orange-100 px-6 py-3 mb-6 flex items-center text-xs font-bold text-orange-800 tracking-wide shadow-sm">
+        <span className="w-4 h-4 bg-orange-200 rounded-none flex items-center justify-center mr-2 text-[10px]">i</span>
+        Data shown with (*) are dynamic in nature and may change.
       </div>
 
       {/* Journey Progress */}
