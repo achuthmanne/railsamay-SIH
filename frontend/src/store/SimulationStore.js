@@ -1,4 +1,4 @@
-﻿class Store {
+class Store {
   constructor() {
     this.isSimulating = false;
     this.trains = [];
@@ -54,7 +54,7 @@
     this.timeoutIds.push(setTimeout(() => {
       this.trains = this.trains.map(t => {
         if (t.no === '12626') return { ...t, delayMinutes: 30, delayStr: '+ 30m', status: 'Delayed', currentLocation: 'Passing PAR (Pandhurna)' };
-        if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'Delay Covered', currentLocation: 'Passing WR (Wardha)' };
+        if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'Delay Covered', currentLocation: 'Passing SEGM (Sevagram)' };
         return t;
       });
       this.notify();
@@ -72,7 +72,7 @@
     this.timeoutIds.push(setTimeout(() => {
       this.trains = this.trains.map(t => {
         if (t.no === '12626') return { ...t, delayMinutes: 90, delayStr: '+ 90m', status: 'Severely Delayed', currentLocation: 'Passing KSWR (Kalmeshwar)' };
-        if (t.no === '12621') return { ...t, currentLocation: 'Passing BGMN (Bhandargaon)' };
+        if (t.no === '12621') return { ...t, currentLocation: 'Passing GMG (Gumgaon)' };
         return t;
       });
       this.notify();
