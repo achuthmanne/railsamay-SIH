@@ -536,12 +536,12 @@ export default function TrainForecast() {
                     {isLiveMain ? (
                       <div className="relative w-12 h-14 z-20 flex justify-center mt-2 cursor-pointer">
                         {/* Left Broadcast Signal */}
-                        <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-[#F97316] " viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                        <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                           <path d="M14 4 A10 10 0 0 0 14 20 M20 8 A5 5 0 0 0 20 16" />
                         </svg>
                         
                         {/* Right Broadcast Signal */}
-                        <svg className="absolute right-[-16px] top-[10px] w-5 h-7 text-[#F97316] " viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                        <svg className="absolute right-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                           <path d="M10 4 A10 10 0 0 1 10 20 M4 8 A5 5 0 0 1 4 16" />
                         </svg>
                         
@@ -653,12 +653,12 @@ export default function TrainForecast() {
                           {activeNSCode === ns.code ? (
                             <div className="relative w-12 h-14 z-20 flex justify-center cursor-pointer scale-[0.85]">
                               {/* Left Broadcast Signal */}
-                              <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-[#F97316] " viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                              <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                                 <path d="M14 4 A10 10 0 0 0 14 20 M20 8 A5 5 0 0 0 20 16" />
                               </svg>
                               
                               {/* Right Broadcast Signal */}
-                              <svg className="absolute right-[-16px] top-[10px] w-5 h-7 text-[#F97316] " viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                              <svg className="absolute right-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                                 <path d="M10 4 A10 10 0 0 1 10 20 M4 8 A5 5 0 0 1 4 16" />
                               </svg>
                               
