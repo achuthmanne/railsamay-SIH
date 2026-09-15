@@ -59,12 +59,18 @@ const ATSDashboard = () => {
   const division = localStorage.getItem('rail_samay_division') || 'Nagpur';
   const office = localStorage.getItem('rail_samay_office') || 'Control Room';
 
-  useEffect(() => {
-    const engine = new SimulationEngine(division);
-    engine.initialize().then(data => {
-      setLiveTrains(data);
-      setIsLoading(false);
+    useEffect(() => {
+    if (simStore.trains.length === 0) {
+      const engine = new SimulationEngine(division);
+      engine.initialize().then(data => simStore.setInitial(data));
+    }
+    const unsubscribe = simStore.subscribe((trains, isSim) => {
+      setLiveTrains(trains);
+      setIsSimulating(isSim);
     });
+    setLiveTrains(simStore.trains);
+    setIsSimulating(simStore.isSimulating);
+    return () => unsubscribe();
   }, [division]);
 
   useEffect(() => {
@@ -291,12 +297,15 @@ const ATSDashboard = () => {
                         >
                           {isSimulating ? 'Running Simulation...' : 'Trigger Scenario 1 (NGP)'}
                       </button>
-                      <button 
-                        onClick={() => {
-                          const engine = new SimulationEngine(division);
-                          engine.initialize().then(setLiveTrains);
-                          setIsSimulating(false);
-                        }}
+                                              <button 
+                          onClick={() => {
+                            simStore.stop();
+                            const engine = new SimulationEngine(division);
+                            engine.initialize().then(data => {
+                                simStore.isSimulating = false;
+                                simStore.setInitial(data);
+                            });
+                          }}
                         className="w-full bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-[11px] uppercase tracking-widest py-3 rounded-sm border border-slate-300 transition-colors shadow-sm"
                       >
                         Reset Baseline Timeline
