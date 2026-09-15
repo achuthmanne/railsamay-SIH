@@ -60,12 +60,12 @@ export default function PassengerTracking() {
             <svg className="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             RETURN TO HOME
           </Link>
-          <div className="max-w-md w-full bg-white p-8 border border-slate-200 relative overflow-hidden">
+          <div className="max-w-lg w-full bg-white p-12 border border-slate-200 relative overflow-hidden">
               {/* Train Watermark */}
               <img 
                 src="/trainicon.png" 
                 alt="" 
-                className="absolute -bottom-10 -right-10 w-64 h-64 opacity-[0.03] pointer-events-none mix-blend-multiply grayscale z-0" 
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 opacity-[0.10] pointer-events-none mix-blend-multiply grayscale z-0" 
               />
               <div className="absolute top-0 left-0 w-full h-1 bg-[#1E3A8A]"></div>
               <h2 className="text-2xl font-black text-slate-800 mb-2 font-montserrat tracking-tight relative z-20">Track Your Train</h2>
