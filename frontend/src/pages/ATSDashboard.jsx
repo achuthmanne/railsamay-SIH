@@ -59,17 +59,25 @@ const ATSDashboard = () => {
   const division = localStorage.getItem('rail_samay_division') || 'Nagpur';
   const office = localStorage.getItem('rail_samay_office') || 'Control Room';
 
-    useEffect(() => {
+      useEffect(() => {
     if (simStore.trains.length === 0) {
       const engine = new SimulationEngine(division);
-      engine.initialize().then(data => simStore.setInitial(data));
+      engine.initialize().then(data => {
+        simStore.setInitial(data);
+        setIsLoading(false);
+      });
+    } else {
+      setIsLoading(false);
     }
+    
     const unsubscribe = simStore.subscribe((trains, isSim) => {
       setLiveTrains(trains);
       setIsSimulating(isSim);
     });
+    
     setLiveTrains(simStore.trains);
     setIsSimulating(simStore.isSimulating);
+    
     return () => unsubscribe();
   }, [division]);
 
