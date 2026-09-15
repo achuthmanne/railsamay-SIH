@@ -26,10 +26,10 @@ export default function PassengerTracking() {
 
       {!searchedTrain ? (
         <div className="flex-1 flex flex-col items-center justify-center p-6">
-          <div className="max-w-md w-full bg-white p-8 border border-slate-200 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-orange-500"></div>
-            <h2 className="text-2xl font-black text-slate-800 mb-2 font-montserrat tracking-tight">Track Your Train</h2>
-            <p className="text-sm text-slate-500 mb-8 font-medium">Enter your train number or name to access real-time telemetry and dynamic ETA.</p>
+          <div className="max-w-md w-full bg-white p-8 border border-slate-200 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-[#1E3A8A]"></div>
+            <h2 className="text-2xl font-black text-slate-800 mb-2 font-montserrat tracking-tight">Spot Your Train</h2>
+            <p className="text-sm text-slate-500 mb-8 font-medium">Enter train number or name to check current running status and expected arrival time.</p>
             
             <form onSubmit={handleSearch} className="flex flex-col space-y-4">
               <div>
@@ -38,16 +38,16 @@ export default function PassengerTracking() {
                   type="text" 
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="e.g., 12626 or Kerala Express" 
-                  className="w-full border-2 border-slate-200 px-4 py-3 text-slate-800 font-bold focus:border-[#1E3A8A] focus:outline-none transition-colors"
+                  placeholder="Ex: 12626 or Kerala Express" 
+                  className="w-full border border-slate-300 px-4 py-3 text-slate-700 font-medium focus:border-orange-400 focus:outline-none transition-colors box-border"
                   required
                 />
               </div>
               <button 
                 type="submit" 
-                className="w-full bg-[#1E3A8A] hover:bg-[#152a66] text-white font-black uppercase tracking-widest py-3 transition-colors shadow-md"
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-black uppercase tracking-widest py-3 transition-colors"
               >
-                Track Live Status
+                Check Status
               </button>
             </form>
           </div>
