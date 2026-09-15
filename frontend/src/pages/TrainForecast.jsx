@@ -249,10 +249,27 @@ export default function TrainForecast() {
       return `Delay: ${h}:${m}`;
   };
 
-  const liveStation = routeData.find(s => currentLocation.includes(s.code)) || routeData[0];
+  let liveStation = routeData.length > 0 ? routeData[0] : null;
+  let exactDistance = 0;
+  for (const s of routeData) {
+      if (currentLocation.includes(s.code)) {
+          liveStation = s;
+          exactDistance = s.distance;
+          break;
+      }
+      if (s.nonStoppingList) {
+          const ns = s.nonStoppingList.find(n => currentLocation.includes(n.code));
+          if (ns) {
+              liveStation = s;
+              exactDistance = ns.distance;
+              break;
+          }
+      }
+  }
+  
   const lastStation = routeData.length > 0 ? routeData[routeData.length - 1] : null;
-  const progressPercent = (liveStation && lastStation && lastStation.distance > 0) 
-    ? Math.round((liveStation.distance / lastStation.distance) * 100) 
+  const progressPercent = (exactDistance > 0 && lastStation && lastStation.distance > 0) 
+    ? Math.round((exactDistance / lastStation.distance) * 100) 
     : 0;
 
   return (
