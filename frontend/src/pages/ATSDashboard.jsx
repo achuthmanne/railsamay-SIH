@@ -279,7 +279,7 @@ const ATSDashboard = () => {
             {/* RIGHT: CHARTS & STATS */}
               <div className="flex flex-col space-y-6 h-[580px]">
               
-              {/* AI Simulation Command Center (For Hackathon Demo) */}
+              {/* Simulation Command Center (For Hackathon Demo) */}
                 <div className="flex flex-col shadow-sm rounded-sm overflow-hidden">
                   <div className="bg-[#1E3A8A] px-4 py-3 border border-[#1E3A8A]">
                     <h3 className="text-xs font-black text-white uppercase tracking-widest flex items-center">
@@ -291,7 +291,7 @@ const ATSDashboard = () => {
                       
                       <h4 className="text-[11px] font-black text-slate-800 uppercase tracking-wide mb-1">Scenario 1: NGP Conflict</h4>
                       <p className="text-[11px] text-slate-600 leading-relaxed font-medium">
-                        Tests AI detection when <span className="font-bold text-slate-800">12626 Kerala Exp</span> incurs a +120m delay, causing a simultaneous arrival convergence with the on-time <span className="font-bold text-slate-800">12621 TN Exp</span> at Nagpur Junction.
+                        Simulates automated detection when <span className="font-bold text-slate-800">12626 Kerala Exp</span> incurs a +120m delay, causing a simultaneous arrival convergence with the on-time <span className="font-bold text-slate-800">12621 TN Exp</span> at Nagpur Junction.
                       </p>
                     </div>
                     
@@ -322,7 +322,7 @@ const ATSDashboard = () => {
                   </div>
                 </div>
 
-                {/* AI Conflict Output / Alert Logs */}
+                {/* System Alert Logs */}
                 <div className="flex flex-col shadow-sm rounded-sm overflow-hidden flex-1">
                   <div className="bg-slate-800 px-4 py-3 border border-slate-800">
                     <h3 className="text-xs font-black text-white uppercase tracking-widest flex items-center">
@@ -400,10 +400,10 @@ const ATSDashboard = () => {
               </div>
             </div>
 
-            {/* AI Interventions -> AI Auto-Resolutions */}
+            {/* System Interventions -> System Auto-Resolutions */}
             <div className="bg-white rounded-sm border border-slate-300 border-l-4 border-l-red-600 shadow-sm p-4 flex flex-col relative">
               <div className="flex justify-between items-start mb-1">
-                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">AI Auto-Resolutions</div>
+                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">System Auto-Resolutions</div>
                 <svg className="w-4 h-4 text-red-600 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
               </div>
               <div className="flex items-center space-x-2 mt-1">
@@ -621,7 +621,7 @@ const ATSDashboard = () => {
                   <div className="text-[12px] font-bold text-red-600">Arrival Sequence Overlap</div>
                 </div>
                 <div className="p-3 bg-white">
-                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">AI Confidence</div>
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Telemetry Confidence</div>
                   <div className="text-[13px] font-bold text-blue-700 flex items-center">
                     <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
                     94% Validated
@@ -633,7 +633,7 @@ const ATSDashboard = () => {
               <div className="pt-4 border-t border-slate-100">
                 <div className="flex items-center space-x-2 mb-4">
                   <div className="w-1.5 h-4 bg-[#1E3A8A]"></div>
-                  <h4 className="text-sm font-bold text-slate-900 tracking-tight uppercase">AI-Evaluated Movement Sequences</h4>
+                  <h4 className="text-sm font-bold text-slate-900 tracking-tight uppercase">System-Evaluated Movement Sequences</h4>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4 mb-6">
