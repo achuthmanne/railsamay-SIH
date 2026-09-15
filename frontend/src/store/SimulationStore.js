@@ -4,6 +4,33 @@ class Store {
     this.trains = [];
     this.listeners = [];
     this.timeoutIds = [];
+    
+    // Listen for cross-tab updates
+    if (typeof window !== 'undefined') {
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'ats_simulation_state' && e.newValue) {
+          try {
+            const data = JSON.parse(e.newValue);
+            this.trains = data.trains;
+            this.isSimulating = data.isSimulating;
+            this.listeners.forEach(l => l([...this.trains], this.isSimulating));
+          } catch(err) {}
+        }
+      });
+      
+      // Load initial state if it exists
+      try {
+        const stored = localStorage.getItem('ats_simulation_state');
+        if (stored) {
+          const data = JSON.parse(stored);
+          // Only load if it's less than 1 hour old so it doesn't stay stale forever
+          if (Date.now() - data.timestamp < 3600000) {
+            this.trains = data.trains;
+            this.isSimulating = data.isSimulating;
+          }
+        }
+      } catch(err) {}
+    }
   }
 
   subscribe(listener) {
@@ -15,6 +42,14 @@ class Store {
 
   notify() {
     this.listeners.forEach(l => l([...this.trains], this.isSimulating));
+    // Broadcast to other tabs
+    try {
+      localStorage.setItem('ats_simulation_state', JSON.stringify({
+        trains: this.trains,
+        isSimulating: this.isSimulating,
+        timestamp: Date.now()
+      }));
+    } catch (e) {}
   }
 
   setInitial(trains) {
