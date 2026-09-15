@@ -356,6 +356,26 @@ export default function TrainForecast() {
               const isLiveMain = index === liveMainIndex && !activeNSCode; 
               const isPassed = index < liveMainIndex || (index === liveMainIndex && activeNSCode !== null); 
               const shouldExpandNS = index === liveMainIndex && activeNSCode !== null;
+              
+              const isFutureOrLive = !isPassed;
+              let nodeStatus = station.status;
+              let nodeStatusClass = station.status === 'On Time' ? 'bg-[#DCFCE7] text-[#166534]' : 'bg-[#FEE2E2] text-[#991B1B]';
+
+              if (isPassed) {
+                  nodeStatusClass = station.status === 'On Time' ? 'bg-slate-200 text-slate-600' : 'bg-[#FEE2E2] text-[#991B1B]';
+              } else {
+                  if (liveDelay > 0) {
+                      nodeStatus = `Delayed (+${liveDelay}m)`;
+                      nodeStatusClass = 'bg-[#FEE2E2] text-[#991B1B]';
+                  } else {
+                      nodeStatus = 'On Time';
+                      nodeStatusClass = 'bg-[#DCFCE7] text-[#166534]';
+                  }
+              }
+
+              const displayExpectedArrival = isPassed ? station.expected_arrival : calculateDynamicETA(station.scheduled_arrival, liveDelay);
+              const displayExpectedDeparture = isPassed ? station.expected_departure : calculateDynamicETA(station.scheduled_departure, liveDelay);
+              
               return ( 
               <div key={index} className="flex flex-col transition-colors">
                 
@@ -378,12 +398,12 @@ export default function TrainForecast() {
                             
                             <div className="text-[11px] font-bold text-slate-500 mt-4 mb-1 uppercase tracking-widest">Expected *</div>
                             <div className={`text-[13px] font-black tracking-wide ${isPassed ? 'text-slate-500' : 'text-[#1E3A8A]'}`}>
-                              {calculateDynamicETA(station.scheduled_arrival, liveDelay)}
+                              {displayExpectedArrival}
                             </div>
                             
                             <div className="mt-3">
-                              <span className={`inline-block px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-none ${station.status === 'On Time' ? (isPassed ? 'bg-slate-200 text-slate-600' : 'bg-[#DCFCE7] text-[#166534]') : 'bg-[#FEE2E2] text-[#991B1B]'}`}>
-                                {station.status}
+                              <span className={`inline-block px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-none ${nodeStatusClass}`}>
+                                {nodeStatus}
                               </span>
                             </div>
                           </>
@@ -467,12 +487,12 @@ export default function TrainForecast() {
                             
                             <div className="text-[11px] font-bold text-slate-500 mt-4 mb-1 uppercase tracking-widest">Expected *</div>
                             <div className={`text-[13px] font-black tracking-wide ${isPassed ? 'text-slate-500' : 'text-[#1E3A8A]'}`}>
-                              {calculateDynamicETA(station.scheduled_departure, liveDelay)}
+                              {displayExpectedDeparture}
                             </div>
                             
                             <div className="mt-3 flex justify-end">
-                              <span className={`inline-block px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-none ${station.status === 'On Time' ? (isPassed ? 'bg-slate-200 text-slate-600' : 'bg-[#DCFCE7] text-[#166534]') : 'bg-[#FEE2E2] text-[#991B1B]'}`}>
-                                {station.status}
+                              <span className={`inline-block px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-none ${nodeStatusClass}`}>
+                                {nodeStatus}
                               </span>
                             </div>
                           </>
