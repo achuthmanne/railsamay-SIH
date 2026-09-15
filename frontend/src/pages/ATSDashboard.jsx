@@ -267,7 +267,7 @@ const ATSDashboard = () => {
                   On Time
                 </div>
                 <div className="flex items-center">
-                  <svg width="12" height="17" viewBox="0 0 24 34" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2 animate-pulse">
+                  <svg width="12" height="17" viewBox="0 0 24 34" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
                     <path d="M12 0C5.373 0 0 5.373 0 12C0 21 12 34 12 34C12 34 24 21 24 12C24 5.373 18.627 0 12 0Z" fill="#EF4444"/>
                     <circle cx="12" cy="12" r="5" fill="white"/>
                   </svg>
@@ -334,7 +334,7 @@ const ATSDashboard = () => {
                     {liveTrains.some(t => t.scenarioFlags.includes('CONFLICT_SOURCE')) ? (
                       <div className="bg-white border-y border-r border-slate-200 border-l-4 border-l-red-600 shadow-sm flex flex-col p-4 rounded-none hover:bg-slate-50 transition-colors">
                                 <div className="flex items-start gap-2 mb-1.5">
-                                  <svg className="w-4 h-4 mt-0.5 text-red-600 flex-shrink-0 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                  <svg className="w-4 h-4 mt-0.5 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                                   <h3 className="text-sm font-bold text-slate-800 leading-tight">Critical Operational Conflict</h3>
                                 </div>
                                 <p className="text-xs font-semibold text-slate-500 ml-6 mb-4 leading-normal">
@@ -569,7 +569,7 @@ const ATSDashboard = () => {
             <div className="bg-white border-b border-slate-200 p-5 flex justify-between items-start">
               <div className="flex items-center space-x-3.5">
                 <div className="bg-red-50 border border-red-100 p-2.5 rounded-none flex-shrink-0">
-                  <svg className="w-6 h-6 text-red-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                  <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                 </div>
                 <div className="flex flex-col justify-center">
                   <h3 className="text-lg font-bold text-slate-900 tracking-tight leading-tight mb-1">Critical Operational Conflict</h3>

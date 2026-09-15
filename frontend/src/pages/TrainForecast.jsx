@@ -63,6 +63,33 @@ export default function TrainForecast() {
   };
   const [routeData, setRouteData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [weatherInfo, setWeatherInfo] = useState({ impact: 5, label: 'Optimal', desc: 'Clear' });
+
+  useEffect(() => {
+    // Fetch Real Weather Data from Open-Meteo for Nagpur (Lat: 21.1458, Lon: 79.0882)
+    const fetchWeather = async () => {
+      try {
+        const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=21.1458&longitude=79.0882&current=temperature_2m,precipitation,weather_code,wind_speed_10m');
+        const data = await res.json();
+        const wCode = data.current.weather_code;
+        
+        let impact = 5;
+        let label = 'Optimal';
+        let desc = 'Clear';
+
+        if (wCode >= 1 && wCode <= 3) { desc = 'Cloudy'; impact = 10; label = 'Slight Delay'; }
+        else if (wCode === 45 || wCode === 48) { desc = 'Fog'; impact = 50; label = 'Visibility Low'; }
+        else if (wCode >= 51 && wCode <= 67) { desc = 'Rain'; impact = 35; label = 'Traction Reduced'; }
+        else if (wCode >= 71 && wCode <= 82) { desc = 'Heavy Rain/Snow'; impact = 60; label = 'Severe Impact'; }
+        else if (wCode >= 95) { desc = 'Thunderstorm'; impact = 80; label = 'Red Alert'; }
+
+        setWeatherInfo({ impact, label, desc: `${desc} (${data.current.temperature_2m}°C)` });
+      } catch (e) {
+        console.error('Weather API failed', e);
+      }
+    };
+    fetchWeather();
+  }, []);
   const [expandedStations, setExpandedStations] = useState({});
 
   useEffect(() => {
@@ -316,14 +343,17 @@ export default function TrainForecast() {
                    
                    <div className="flex justify-around items-center pt-2">
                       <CircularGauge percentage={88} color={'text-red-500'} label="Network Congestion" value={'High Traffic'} />
-                      <CircularGauge percentage={35} color={'text-orange-500'} label="Weather Impact" value={'Mild Rains'} />
+                      <CircularGauge percentage={weatherInfo.impact} color={weatherInfo.impact > 30 ? 'text-orange-500' : 'text-emerald-500'} label={`Weather: ${weatherInfo.desc}`} value={weatherInfo.label} />
                       <CircularGauge percentage={65} color={'text-red-500'} label="Speed Restrictions" value={'TSR Active'} />
                    </div>
                 </div>
 
                 {/* Dynamic Final ML Output */}
                 <div className="border border-slate-200 p-5 bg-slate-50 flex flex-col justify-between relative overflow-hidden">
-                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4">ML Predicted Impact</div>
+                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4 flex justify-between">
+                     <span>ML Predicted Impact</span>
+                     <span className="text-[#F97316] font-black tracking-widest">LIVE OPEN-METEO WEATHER SYNC</span>
+                   </div>
                    
                    <div className="flex flex-col mb-4 relative z-10">
                       <div className="text-sm font-black text-slate-800 tracking-wide mb-1">Causality Analysis:</div>
@@ -353,13 +383,16 @@ export default function TrainForecast() {
                    
                    <div className="flex justify-around items-center pt-2">
                       <CircularGauge percentage={12} color={'text-emerald-500'} label="Network Congestion" value={'Clear Route'} />
-                      <CircularGauge percentage={5} color={'text-emerald-500'} label="Weather Impact" value={'Optimal'} />
+                      <CircularGauge percentage={weatherInfo.impact} color={weatherInfo.impact > 30 ? 'text-orange-500' : 'text-emerald-500'} label={`Weather: ${weatherInfo.desc}`} value={weatherInfo.label} />
                       <CircularGauge percentage={10} color={'text-emerald-500'} label="Speed Restrictions" value={'Normal'} />
                    </div>
                 </div>
 
                 <div className="border border-slate-200 p-5 bg-slate-50 flex flex-col justify-between relative overflow-hidden">
-                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4">ML Predicted Impact</div>
+                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4 flex justify-between">
+                     <span>ML Predicted Impact</span>
+                     <span className="text-[#F97316] font-black tracking-widest">LIVE OPEN-METEO WEATHER SYNC</span>
+                   </div>
                    
                    <div className="flex flex-col mb-4 relative z-10">
                       <div className="text-sm font-black text-slate-800 tracking-wide mb-1">Causality Analysis:</div>
@@ -385,15 +418,7 @@ export default function TrainForecast() {
         {/* The Broad Timeline */}
         <div className="bg-white border border-slate-200 shadow-sm overflow-hidden relative">
           
-          <style>{`
-            @keyframes signalBlink {
-              0%, 100% { opacity: 0.2; transform: scale(0.9); }
-              50% { opacity: 1; transform: scale(1.1); }
-            }
-            .signal-blink {
-              animation: signalBlink 1.5s ease-in-out infinite;
-            }
-          `}</style>
+
 
           
           
@@ -489,12 +514,12 @@ export default function TrainForecast() {
                     {isLiveMain ? (
                       <div className="relative w-12 h-14 z-20 flex justify-center mt-2 cursor-pointer">
                         {/* Left Broadcast Signal */}
-                        <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                        <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-[#F97316] " viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                           <path d="M14 4 A10 10 0 0 0 14 20 M20 8 A5 5 0 0 0 20 16" />
                         </svg>
                         
                         {/* Right Broadcast Signal */}
-                        <svg className="absolute right-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                        <svg className="absolute right-[-16px] top-[10px] w-5 h-7 text-[#F97316] " viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                           <path d="M10 4 A10 10 0 0 1 10 20 M4 8 A5 5 0 0 1 4 16" />
                         </svg>
                         
@@ -606,12 +631,12 @@ export default function TrainForecast() {
                           {activeNSCode === ns.code ? (
                             <div className="relative w-12 h-14 z-20 flex justify-center cursor-pointer scale-[0.85]">
                               {/* Left Broadcast Signal */}
-                              <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                              <svg className="absolute left-[-16px] top-[10px] w-5 h-7 text-[#F97316] " viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                                 <path d="M14 4 A10 10 0 0 0 14 20 M20 8 A5 5 0 0 0 20 16" />
                               </svg>
                               
                               {/* Right Broadcast Signal */}
-                              <svg className="absolute right-[-16px] top-[10px] w-5 h-7 text-[#F97316] signal-blink" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                              <svg className="absolute right-[-16px] top-[10px] w-5 h-7 text-[#F97316] " viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                                 <path d="M10 4 A10 10 0 0 1 10 20 M4 8 A5 5 0 0 1 4 16" />
                               </svg>
                               
