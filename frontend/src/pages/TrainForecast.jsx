@@ -151,6 +151,44 @@ export default function TrainForecast() {
   }
 
   
+  const getHistoricalDelay = (tNo, stCode) => {
+      const findFlatIndex = (code) => {
+          let flatIdx = 0;
+          for (let i=0; i<routeData.length; i++) {
+             if (routeData[i].code === code) return flatIdx;
+             flatIdx++;
+             for (let j=0; j<routeData[i].nonStoppingList.length; j++) {
+                 if (routeData[i].nonStoppingList[j].code === code) return flatIdx;
+                 flatIdx++;
+             }
+          }
+          return -1;
+      };
+
+      const idx = findFlatIndex(stCode);
+      if (idx === -1) return 0;
+
+      if (tNo === '12626') {
+          const gnqIdx = findFlatIndex('GNQ');
+          const kswrIdx = findFlatIndex('KSWR');
+          const katlIdx = findFlatIndex('KATL');
+          const parIdx = findFlatIndex('PAR');
+          if (gnqIdx !== -1 && idx >= gnqIdx) return 120;
+          if (kswrIdx !== -1 && idx >= kswrIdx) return 90;
+          if (katlIdx !== -1 && idx >= katlIdx) return 60;
+          if (parIdx !== -1 && idx >= parIdx) return 30;
+          return 0;
+      }
+      if (tNo === '12621') {
+          const segmIdx = findFlatIndex('SEGM');
+          const mjriIdx = findFlatIndex('MJRI');
+          if (segmIdx !== -1 && idx >= segmIdx) return 0;
+          if (mjriIdx !== -1 && idx >= mjriIdx) return 10;
+          return 0;
+      }
+      return 0;
+  };
+
   const liveStation = routeData.find(s => currentLocation.includes(s.code)) || routeData[0];
   const lastStation = routeData.length > 0 ? routeData[routeData.length - 1] : null;
   const progressPercent = (liveStation && lastStation && lastStation.distance > 0) 
@@ -358,23 +396,26 @@ export default function TrainForecast() {
               const shouldExpandNS = index === liveMainIndex && activeNSCode !== null;
               
               const isFutureOrLive = !isPassed;
-              let nodeStatus = station.status;
-              let nodeStatusClass = station.status === 'On Time' ? 'bg-[#DCFCE7] text-[#166534]' : 'bg-[#FEE2E2] text-[#991B1B]';
-
+              
+              let nodeDelay = 0;
               if (isPassed) {
-                  nodeStatusClass = station.status === 'On Time' ? 'bg-slate-200 text-slate-600' : 'bg-[#FEE2E2] text-[#991B1B]';
+                  nodeDelay = getHistoricalDelay(trainNo, station.code);
               } else {
-                  if (liveDelay > 0) {
-                      nodeStatus = `Delayed (+${liveDelay}m)`;
-                      nodeStatusClass = 'bg-[#FEE2E2] text-[#991B1B]';
-                  } else {
-                      nodeStatus = 'On Time';
-                      nodeStatusClass = 'bg-[#DCFCE7] text-[#166534]';
-                  }
+                  nodeDelay = liveDelay;
               }
 
-              const displayExpectedArrival = isPassed ? station.expected_arrival : calculateDynamicETA(station.scheduled_arrival, liveDelay);
-              const displayExpectedDeparture = isPassed ? station.expected_departure : calculateDynamicETA(station.scheduled_departure, liveDelay);
+              let nodeStatus = 'On Time';
+              let nodeStatusClass = 'bg-[#DCFCE7] text-[#166534]';
+
+              if (nodeDelay > 0) {
+                  nodeStatus = `Delayed (+${nodeDelay}m)`;
+                  nodeStatusClass = isPassed ? 'bg-[#FEE2E2] text-[#991B1B] opacity-80' : 'bg-[#FEE2E2] text-[#991B1B]';
+              } else if (isPassed) {
+                  nodeStatusClass = 'bg-slate-200 text-slate-600';
+              }
+
+              const displayExpectedArrival = calculateDynamicETA(station.scheduled_arrival, nodeDelay);
+              const displayExpectedDeparture = calculateDynamicETA(station.scheduled_departure, nodeDelay);
               
               return ( 
               <div key={index} className="flex flex-col transition-colors">
@@ -508,7 +549,9 @@ export default function TrainForecast() {
                 {/* Expanded Non-Stopping Stations Row */}
                 {station.nonStoppingList && station.nonStoppingList.length > 0 && (expandedStations[station.code] || shouldExpandNS) && (
                   <div className="w-full border-l-[6px] border-orange-500">
-                    {station.nonStoppingList.map((ns, i) => (
+                    {station.nonStoppingList.map((ns, i) => {
+                      const nsIsPassed = isPassed || (index === liveMainIndex && activeNSCode !== null && station.nonStoppingList.findIndex(n => n.code === activeNSCode) > i);
+                      return (
                       <div key={i} className="flex relative items-stretch border-b border-orange-200">
                         
                         {/* Left Badge Area - Subtract 6px width to account for the border-l-[6px] on parent! */}
@@ -559,9 +602,9 @@ export default function TrainForecast() {
                           <div className="flex items-center text-[10px] font-bold text-slate-500 space-x-4 tracking-widest mt-1">
                             <span>{ns.distance} Kms</span>
                             <span className="text-slate-300">|</span>
-                            <span>Arrival Time: {ns.arrival_time}</span>
+                            <span>Arrival Time: {calculateDynamicETA(ns.arrival_time, nsIsPassed ? getHistoricalDelay(trainNo, ns.code) : liveDelay)}</span>
                             <span className="text-slate-300">|</span>
-                            <span>Departure Time: {ns.departure_time}</span>
+                            <span>Departure Time: {calculateDynamicETA(ns.departure_time, nsIsPassed ? getHistoricalDelay(trainNo, ns.code) : liveDelay)}</span>
                           </div>
                         </div>
 
@@ -573,7 +616,8 @@ export default function TrainForecast() {
                         </div>
 
                       </div>
-                    ))}
+                    );
+                    })}
                   </div>
                 )}
                 
