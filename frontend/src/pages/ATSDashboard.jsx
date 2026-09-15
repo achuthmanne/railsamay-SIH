@@ -291,7 +291,7 @@ const ATSDashboard = () => {
                       
                       <h4 className="text-[11px] font-black text-slate-800 uppercase tracking-wide mb-1">Scenario 1: NGP Conflict</h4>
                       <p className="text-[11px] text-slate-600 leading-relaxed font-medium">
-                        Simulates automated detection when <span className="font-bold text-slate-800">12626 Kerala Exp</span> incurs a +120m delay, causing a simultaneous arrival convergence with the on-time <span className="font-bold text-slate-800">12621 TN Exp</span> at Nagpur Junction.
+                        Simulates automated detection when <span className="font-bold text-slate-800">12626 Kerala Exp</span> incurs a +02h 00m delay, causing a simultaneous arrival convergence with the on-time <span className="font-bold text-slate-800">12621 TN Exp</span> at Nagpur Junction.
                       </p>
                     </div>
                     
@@ -538,7 +538,7 @@ const ATSDashboard = () => {
                                 </span>
                                 {train.delayMinutes > 0 && (
                                   <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium text-red-600 bg-red-50 border border-red-200">
-                                    +{train.delayMinutes}m
+                                    +{Math.floor(train.delayMinutes / 60).toString().padStart(2, '0')}h {(train.delayMinutes % 60).toString().padStart(2, '0')}m
                                   </span>
                                 )}
                               </div>
@@ -593,7 +593,7 @@ const ATSDashboard = () => {
                   <div className="text-sm font-bold text-slate-900 mb-2">12626 Kerala Express</div>
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-semibold text-slate-500">ETA: 13:45</span>
-                    <span className="bg-red-50 text-red-700 text-[10px] font-bold px-2 py-0.5 border border-red-200 rounded-none uppercase tracking-wider">+120m Delay</span>
+                    <span className="bg-red-50 text-red-700 text-[10px] font-bold px-2 py-0.5 border border-red-200 rounded-none uppercase tracking-wider">+02h 00m Delay</span>
                   </div>
                 </div>
                 <div className="p-4 bg-white">
