@@ -298,17 +298,20 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
       };
 
       if (tNo === '12626') {
-          const endIdx = findFlatIndex('GNQ');
-          if (endIdx === -1) return 0;
-          
-          if (idx <= endIdx) {
-              return Math.floor((idx / endIdx) * 120);
-          } else {
-              const remaining = totalStations - endIdx;
-              const passed = idx - endIdx;
-              return Math.max(15, 120 - Math.floor((passed / remaining) * 105));
-          }
-      }
+            const endIdx = findFlatIndex('GNQ');
+            if (endIdx === -1) return 0;
+            
+            const maxDelay = Math.max(120, train?.delayMinutes || 120);
+            
+            if (idx <= endIdx) {
+                return Math.floor((idx / endIdx) * maxDelay);
+            } else {
+                const remaining = totalStations - endIdx;
+                const passed = idx - endIdx;
+                const recovered = maxDelay > 15 ? maxDelay - 15 : 0;
+                return Math.max(15, maxDelay - Math.floor((passed / remaining) * recovered));
+            }
+        }
       
       if (tNo === '12621') {
           const mjriIdx = findFlatIndex('MJRI');

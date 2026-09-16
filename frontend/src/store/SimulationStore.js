@@ -133,14 +133,16 @@ class Store {
   resolveConflict() {
     this.trains = this.trains.map(t => {
       if (t.no === '12626') {
-         return {
-           ...t,
-           status: 'Held',
-           currentLocation: 'GNQ (Godhani) - Regulated',
-           scenarioFlags: [],
-           platform: 'Waiting'
-         };
-      }
+           return {
+             ...t,
+             status: 'Held',
+             currentLocation: 'GNQ (Godhani) - Regulated',
+             delayMinutes: 126,
+             delayStr: '+ 126m',
+             scenarioFlags: [],
+             platform: 'Waiting'
+           };
+        }
       if (t.no === '12621') {
          return {
            ...t,
