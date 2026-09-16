@@ -178,7 +178,7 @@ const AuthDoorModal = ({ isOpen, onClose, type }) => {
         if (data.role === 'ats') {
           navigate('/ats-dashboard');
         } else {
-          navigate('/passenger-dashboard');
+          navigate('/passenger-dashboard', { state: { loggedIn: true } });
         }
       }, 1500);
     } catch (err) {
@@ -195,7 +195,7 @@ const AuthDoorModal = ({ isOpen, onClose, type }) => {
             if (modalType === 'ats') {
             navigate('/ats-dashboard');
           } else {
-            navigate('/passenger-dashboard');
+            navigate('/passenger-dashboard', { state: { loggedIn: true } });
           }
         }, 1500);
       } else {

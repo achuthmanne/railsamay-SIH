@@ -1,5 +1,5 @@
 ﻿import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { simStore as simulationStore } from '../store/SimulationStore';
  // I might need to move this or redefine it
 
@@ -25,6 +25,8 @@ export default function PassengerTracking() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchedTrain, setSearchedTrain] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const location = useLocation();
+  const isLoggedIn = location.state?.loggedIn || false;
 
   const filteredTrains = AVAILABLE_TRAINS.filter(t => 
     t.no.includes(searchTerm) || t.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -60,6 +62,12 @@ export default function PassengerTracking() {
             <svg className="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             RETURN TO HOME
           </Link>
+            {isLoggedIn && (
+              <button className="absolute top-8 right-8 flex items-center justify-center p-3 bg-white border border-slate-200 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all shadow-sm z-50 group cursor-pointer" title="Passenger Alerts & Notifications">
+                 <svg className="w-5 h-5 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                 <span className="absolute top-2 right-2 w-2 h-2 bg-red-600 rounded-full animate-pulse border border-white"></span>
+              </button>
+            )}
           <div className="max-w-lg w-full bg-white p-12 border border-slate-200 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-[#1E3A8A]"></div>
               {/* Normal Train Icon */}
@@ -116,7 +124,7 @@ export default function PassengerTracking() {
           </div>
         </div>
       ) : (
-        <PassengerForecastView trainNo={searchedTrain} onBack={() => setSearchedTrain(null)} />
+        <PassengerForecastView trainNo={searchedTrain} onBack={() => setSearchedTrain(null)} isLoggedIn={isLoggedIn} />
       )}
     </div>
   );
@@ -125,7 +133,7 @@ export default function PassengerTracking() {
 // ------------------------------------------------------------
 // PASSENGER TRACKING VIEW COMPONENT
 // ------------------------------------------------------------
-function PassengerForecastView({ trainNo, onBack }) {
+function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
   const [routeData, setRouteData] = useState([]);
   const [train, setTrain] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -431,8 +439,15 @@ function PassengerForecastView({ trainNo, onBack }) {
           </div>
         </div>
 
-        {/* Refresh Button block matching ATS */}
-        <div className="text-right pb-1">
+        <div className="flex items-end gap-5 pb-1">
+          {isLoggedIn && (
+            <button className="flex items-center justify-center p-3 bg-white border border-slate-200 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all shadow-sm z-50 group relative cursor-pointer" title="Passenger Alerts & Notifications">
+               <svg className="w-5 h-5 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+               <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full animate-pulse border border-white"></span>
+            </button>
+          )}
+          {/* Refresh Button block matching ATS */}
+          <div className="text-right">
           <div className="text-xs font-bold text-slate-500 mb-2">
             Last updated: {lastUpdated}
           </div>
@@ -442,6 +457,7 @@ function PassengerForecastView({ trainNo, onBack }) {
           </button>
         </div>
       </div>
+        </div>
       
       {/* Dynamic Info Banner matching ATS */}
       <div className="bg-orange-50 border border-orange-100 px-6 py-3 mb-6 flex items-center text-xs font-bold text-orange-800 tracking-wide shadow-sm">
