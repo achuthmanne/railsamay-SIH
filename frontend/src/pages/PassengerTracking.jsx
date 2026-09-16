@@ -396,6 +396,10 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
         varianceColor = 'text-red-600';
         varianceBadge = formatDelayTime(upcomingPredictedDelay);
         varianceBadgeClass = 'bg-red-100 text-red-700 border-red-200';
+    } else if (train?.status === 'Not Started') {
+        varianceColor = 'text-slate-600';
+        varianceBadge = 'SCHEDULED';
+        varianceBadgeClass = 'bg-slate-100 text-slate-700 border-slate-300';
     }
 
     assessmentClass = 'bg-[#DCFCE7] text-[#166534] border-[#BBF7D0]';
@@ -409,7 +413,10 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
             assessmentText = `Current Status at ${currentLocation}: Train is operating with a ${formatDelayTime(liveDelay)} delay. Root Cause: Minor origin delay. System has engaged compensatory speed limits to fully recover time.`;
         }
     } else {
-        if (trainNo === '12621' && liveStation && liveStation.code !== 'BPQ') {
+        if (train?.status === 'Not Started') {
+            assessmentText = `Current Status at ${currentLocation}: Train has not started yet. Pre-departure checks are in progress and route clearance is awaited.`;
+            assessmentClass = 'bg-slate-100 text-slate-700 border-slate-300';
+        } else if (trainNo === '12621' && liveStation && liveStation.code !== 'BPQ') {
             assessmentText = `Current Status at ${currentLocation}: Train is ON TIME (Delay successfully recovered). Root Cause: Clear path ahead and optimal speed maintained.`;
         } else {
             assessmentText = `Current Status at ${currentLocation}: Train is perfectly ON TIME. Root Cause: Clear path ahead and optimal operational conditions.`;

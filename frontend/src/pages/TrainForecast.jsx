@@ -413,12 +413,15 @@ export default function TrainForecast() {
                         assessmentText = `Current Status at ${currentLocation}: Train is operating with a ${formatDelayTime(liveDelay)} delay. Root Cause: Minor origin delay. System has engaged compensatory speed limits to fully recover time.`;
                     }
                 } else {
-                    if (trainNo === '12621' && liveStation && liveStation.code !== 'BPQ') {
-                        assessmentText = `Current Status at ${currentLocation}: Train is ON TIME (Delay successfully recovered). Root Cause: Clear path ahead and optimal speed maintained.`;
-                    } else {
-                        assessmentText = `Current Status at ${currentLocation}: Train is perfectly ON TIME. Root Cause: Clear path ahead and optimal operational conditions.`;
-                    }
-                }
+        if (train?.status === 'Not Started') {
+            assessmentText = `Current Status at ${currentLocation}: Train has not started yet. Pre-departure checks are in progress and route clearance is awaited.`;
+            assessmentClass = 'bg-slate-100 text-slate-700 border-slate-300';
+        } else if (trainNo === '12621' && liveStation && liveStation.code !== 'BPQ') {
+            assessmentText = `Current Status at ${currentLocation}: Train is ON TIME (Delay successfully recovered). Root Cause: Clear path ahead and optimal speed maintained.`;
+        } else {
+            assessmentText = `Current Status at ${currentLocation}: Train is perfectly ON TIME. Root Cause: Clear path ahead and optimal operational conditions.`;
+        }
+    }
 
               const congestionVal = trainNo === '12626' ? (liveDelay >= 100 ? 88 : 75) : (liveDelay > 0 ? 35 : 12);
               const congestionColor = congestionVal > 50 ? 'text-red-500' : (congestionVal > 25 ? 'text-orange-500' : 'text-emerald-500');
