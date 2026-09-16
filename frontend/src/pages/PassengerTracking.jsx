@@ -414,7 +414,7 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
       let varianceBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-200';
   
       if (train?.status === 'Held') {
-          varianceColor = 'text-orange-600';
+          varianceColor = 'text-red-600';
           varianceBadge = 'HELD';
           varianceBadgeClass = 'bg-orange-100 text-orange-700 border-orange-200 shadow-sm';
       } else if (train?.status === 'Cleared') {
