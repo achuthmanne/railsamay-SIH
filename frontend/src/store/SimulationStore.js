@@ -129,6 +129,32 @@ class Store {
     }, 20000));
   }
 
+  
+  resolveConflict() {
+    this.trains = this.trains.map(t => {
+      if (t.no === '12626') {
+         return {
+           ...t,
+           status: 'Held',
+           currentLocation: 'GNQ (Godhani) - Regulated',
+           scenarioFlags: [],
+           platform: 'Waiting'
+         };
+      }
+      if (t.no === '12621') {
+         return {
+           ...t,
+           status: 'Cleared',
+           currentLocation: 'NGP (Nagpur) - Admitted',
+           scenarioFlags: [],
+           platform: 'PF 2'
+         };
+      }
+      return t;
+    });
+    this.notify();
+  }
+
   stop() {
     this.timeoutIds.forEach(clearTimeout);
     this.timeoutIds = [];

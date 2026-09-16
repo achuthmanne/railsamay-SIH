@@ -651,7 +651,7 @@ const ATSDashboard = () => {
                       <span className="inline-block mt-3 font-bold text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded-none border border-slate-200">Est. Network Impact: +6 min</span>
                     </p>
                     <div className="mt-auto">
-                      <button onClick={() => setIsConflictModalOpen(false)} className="w-full bg-[#1E3A8A] text-white text-xs font-bold py-2.5 rounded-none hover:bg-blue-900 transition-colors flex items-center justify-center uppercase tracking-wider">
+                      <button onClick={() => { setIsConflictModalOpen(false); simStore.resolveConflict(); }} className="w-full bg-[#1E3A8A] text-white text-xs font-bold py-2.5 rounded-none hover:bg-blue-900 transition-colors flex items-center justify-center uppercase tracking-wider">
                         Approve Sequence
                       </button>
                     </div>
