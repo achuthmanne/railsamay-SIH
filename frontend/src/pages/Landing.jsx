@@ -184,8 +184,7 @@ function Landing() {
                   onClick={() => setActiveModal('telemetry')}
                   className="text-[#F97316] font-bold text-sm uppercase tracking-wide flex items-center hover:text-orange-700 transition-colors mt-auto w-max"
                 >
-                  Explore Architecture 
-                  <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                  Explore Architecture
                 </button>
               </div>
             </div>
@@ -205,8 +204,7 @@ function Landing() {
                   onClick={() => setActiveModal('alerts')}
                   className="text-[#F97316] font-bold text-sm uppercase tracking-wide flex items-center hover:text-orange-700 transition-colors mt-auto w-max"
                 >
-                  Explore Notifications 
-                  <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                  Explore Notifications
                 </button>
               </div>
             </div>
@@ -226,8 +224,7 @@ function Landing() {
                   onClick={() => setActiveModal('algorithms')}
                   className="text-[#F97316] font-bold text-sm uppercase tracking-wide flex items-center hover:text-orange-700 transition-colors mt-auto w-max"
                 >
-                  Explore Algorithms 
-                  <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                  Explore Algorithms
                 </button>
               </div>
             </div>
@@ -512,9 +509,7 @@ function Landing() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
               {/* Card 1 */}
               <div className="border border-slate-200 p-6 rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mb-4 border border-blue-100">
-                  <svg className="w-6 h-6 text-[#1E3A8A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                </div>
+                
                 <h4 className="text-[#1E3A8A] font-bold font-montserrat mb-2">
                   {activeModal === 'telemetry' ? 'Direct RTIS Sync' : activeModal === 'alerts' ? 'Blast-Radius Mapping' : 'Cascade Math Logic'}
                 </h4>
@@ -527,9 +522,7 @@ function Landing() {
 
               {/* Card 2 */}
               <div className="border border-slate-200 p-6 rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center mb-4 border border-orange-100">
-                  <svg className="w-6 h-6 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                </div>
+                
                 <h4 className="text-[#1E3A8A] font-bold font-montserrat mb-2">
                   {activeModal === 'telemetry' ? 'Edge Validation' : activeModal === 'alerts' ? 'Targeted Dissemination' : 'Platform Scanner'}
                 </h4>
@@ -542,9 +535,7 @@ function Landing() {
 
               {/* Card 3 */}
               <div className="border border-slate-200 p-6 rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center mb-4 border border-green-100">
-                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                </div>
+                
                 <h4 className="text-[#1E3A8A] font-bold font-montserrat mb-2">
                   {activeModal === 'telemetry' ? 'Sub-Second Latency' : activeModal === 'alerts' ? 'Multi-Channel Sync' : 'Resource Allocation'}
                 </h4>
