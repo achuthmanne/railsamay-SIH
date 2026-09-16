@@ -370,27 +370,31 @@ export default function TrainForecast() {
         </div>
 
         
-          {/* Running Days Carousel UI */}
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 mb-6 flex items-center px-2 py-1">
-            <button className="p-2 text-slate-400 hover:text-slate-600 cursor-pointer">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+          {/* Running Days Carousel UI (Sharp & Technical) */}
+          <div className="bg-white border-y border-slate-300 mb-6 flex items-center p-1">
+            <button className="p-2 text-slate-400 hover:text-[#F97316] transition-colors cursor-pointer bg-slate-50 border border-slate-200 mr-1 rounded-sm">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
             </button>
             
-            <div className="flex-1 flex justify-between items-center overflow-x-auto gap-2">
+            <div className="flex-1 flex justify-between items-center overflow-x-auto gap-1">
               {carouselDays.map((day, idx) => {
                 let statusText = '';
                 let statusClass = '';
+                let bgClass = 'hover:bg-slate-50 bg-white border border-transparent';
+                let textClass = 'text-slate-600 font-semibold';
                 
                 if (day.isPast) {
                   statusText = 'Journey completed';
                   statusClass = 'text-slate-500 font-medium';
-                } else if (day.isToday) {
+                } else if (day.isActiveRun) {
+                  bgClass = 'bg-orange-50 border border-orange-200 shadow-inner';
+                  textClass = 'text-slate-900 font-black';
                   if (train?.status === 'Not Started' || !liveStation) {
                     statusText = 'Yet to start from source';
-                    statusClass = 'text-blue-700 font-bold';
+                    statusClass = 'text-orange-700 font-bold';
                   } else {
                     statusText = 'Active / In Journey';
-                    statusClass = 'text-blue-700 font-bold';
+                    statusClass = 'text-orange-700 font-bold';
                   }
                 } else {
                   statusText = 'Yet to start from source';
@@ -398,16 +402,16 @@ export default function TrainForecast() {
                 }
 
                 return (
-                  <div key={idx} className={`flex flex-col items-center justify-center px-4 py-3 flex-1 rounded-lg transition-colors cursor-pointer ${day.isToday ? 'bg-[#EEF2FF]' : 'hover:bg-slate-50'}`}>
-                    <span className={`text-[13px] ${day.isToday ? 'font-bold text-slate-800' : 'text-slate-600 font-medium'}`}>{day.label}</span>
-                    <span className={`text-[11px] mt-1 ${statusClass} text-center`}>{statusText}</span>
+                  <div key={idx} className={`flex flex-col items-center justify-center px-2 py-2 flex-1 rounded-sm transition-colors cursor-pointer ${bgClass}`}>
+                    <span className={`text-[11px] uppercase tracking-wider ${textClass}`}>{day.label}</span>
+                    <span className={`text-[9px] uppercase tracking-widest mt-1 ${statusClass} text-center`}>{statusText}</span>
                   </div>
                 );
               })}
             </div>
 
-            <button className="p-2 text-slate-400 hover:text-slate-600 cursor-pointer">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+            <button className="p-2 text-slate-400 hover:text-[#F97316] transition-colors cursor-pointer bg-slate-50 border border-slate-200 ml-1 rounded-sm">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
             </button>
           </div>
 
@@ -484,37 +488,47 @@ export default function TrainForecast() {
         }
     }
                 const generateDateCarousel = () => {
-                  const today = new Date();
-                  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                  const runningDays = TRAIN_DAYS[trainNo] || ['Daily'];
-                  
-                  let allValid = [];
-                  for(let i = -7; i <= 7; i++) {
-                     const d = new Date(today);
-                     d.setDate(today.getDate() + i);
-                     const dName = dayNames[d.getDay()];
-                     if (runningDays.includes('Daily') || runningDays.includes(dName)) {
-                        allValid.push({
-                           label: `${dName}, ${d.getDate()} ${monthNames[d.getMonth()]}`,
-                           isPast: i < 0,
-                           isToday: i === 0,
-                           isFuture: i > 0,
-                           diff: i
-                        });
-                     }
-                  }
-                  
-                  let centerIdx = allValid.findIndex(d => d.diff >= 0);
-                  if (centerIdx === -1) centerIdx = allValid.length - 1;
-                  
-                  let startIdx = Math.max(0, centerIdx - 2);
-                  let endIdx = Math.min(allValid.length, startIdx + 5);
-                  if (endIdx - startIdx < 5) {
-                     startIdx = Math.max(0, endIdx - 5);
-                  }
-                  return allValid.slice(startIdx, endIdx);
-                };
+      const today = new Date();
+      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const runningDays = TRAIN_DAYS[trainNo] || ['Daily'];
+      
+      let allValid = [];
+      for(let i = -7; i <= 7; i++) {
+         const d = new Date(today);
+         d.setDate(today.getDate() + i);
+         const dName = dayNames[d.getDay()];
+         if (runningDays.includes('Daily') || runningDays.includes(dName)) {
+            allValid.push({
+               label: `${dName}, ${d.getDate()} ${monthNames[d.getMonth()]}`,
+               diff: i
+            });
+         }
+      }
+      
+      let activeIdx = 0;
+      for (let i = 0; i < allValid.length; i++) {
+          if (allValid[i].diff <= 0) {
+              activeIdx = i;
+          } else {
+              break;
+          }
+      }
+      
+      allValid = allValid.map((day, i) => ({
+          ...day,
+          isPast: i < activeIdx,
+          isActiveRun: i === activeIdx,
+          isFuture: i > activeIdx
+      }));
+      
+      let startIdx = Math.max(0, activeIdx - 2);
+      let endIdx = Math.min(allValid.length, startIdx + 5);
+      if (endIdx - startIdx < 5) {
+         startIdx = Math.max(0, endIdx - 5);
+      }
+      return allValid.slice(startIdx, endIdx);
+    };
                 
                 const carouselDays = generateDateCarousel();
                 
