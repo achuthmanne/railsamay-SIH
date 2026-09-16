@@ -52,7 +52,7 @@ const ATSDashboard = () => {
   const [selectedForecast, setSelectedForecast] = useState(null);
   const [viewMode, setViewMode] = useState('Division');
   const [isLoading, setIsLoading] = useState(true);
-  const [isConflictModalOpen, setIsConflictModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('dashboard');
   const [isSimulating, setIsSimulating] = useState(false);
 
   // Dynamic Conflict Detection
@@ -135,26 +135,22 @@ const ATSDashboard = () => {
         {/* Navigation - Solid Flat Colors, No Transparency */}
         <nav className="flex-1 py-6 space-y-2">
           
-          {/* Dashboard (Active) - Solid White with Blue Text */}
-          <button className="w-full flex items-center space-x-3 bg-white text-[#1E3A8A] px-5 py-4 border-l-4 border-orange-500 shadow-sm">
-            <svg className="w-5 h-5 text-[#1E3A8A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          {/* Dashboard Tab */}
+          <button 
+            onClick={() => setActiveTab('dashboard')}
+            className={`w-full flex items-center space-x-3 px-5 py-4 border-l-4 transition-none cursor-pointer ${activeTab === 'dashboard' ? 'bg-white text-[#1E3A8A] border-orange-500 shadow-sm' : 'bg-[#1E3A8A] hover:bg-blue-900 text-white border-transparent'}`}>
+            <svg className={`w-5 h-5 ${activeTab === 'dashboard' ? 'text-[#1E3A8A]' : 'text-white'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
             <span className="font-bold text-sm font-inter">Live Dashboard</span>
           </button>
           
-          {/* Inactive Tabs - Solid Blue, White Text */}
+          {/* Conflicts Tab */}
           <button 
-              onClick={() => {
-                if (activeConflictCount > 0) {
-                  setIsConflictModalOpen(true);
-                } else {
-                  alert("Network Clear. No active conflicts detected.");
-                }
-              }}
-              className={`w-full flex items-center space-x-3 text-white px-5 py-4 border-l-4 transition-none cursor-pointer ${activeConflictCount > 0 ? 'bg-red-700 hover:bg-red-800 border-red-400' : 'bg-[#1E3A8A] hover:bg-blue-900 border-transparent'}`}>
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-              <span className="font-semibold text-sm flex-1 text-left font-inter">Conflict Alerts</span>
-              <span className={`w-6 h-5 text-white rounded-sm text-[11px] font-bold flex items-center justify-center ${activeConflictCount > 0 ? 'bg-red-500' : 'bg-blue-900'}`}>{activeConflictCount}</span>
-            </button>
+              onClick={() => setActiveTab('conflicts')}
+              className={`w-full flex items-center space-x-3 px-5 py-4 border-l-4 transition-none cursor-pointer ${activeTab === 'conflicts' ? 'bg-white text-red-700 border-red-600 shadow-sm' : activeConflictCount > 0 ? 'bg-red-700 hover:bg-red-800 border-red-400 text-white' : 'bg-[#1E3A8A] hover:bg-blue-900 text-white border-transparent'}`}>
+              <svg className={`w-5 h-5 ${activeTab === 'conflicts' ? 'text-red-700' : 'text-white'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+              <span className={`font-semibold text-sm flex-1 text-left font-inter ${activeTab === 'conflicts' ? 'font-bold' : ''}`}>Conflict Alerts</span>
+              <span className={`w-6 h-5 rounded-sm text-[11px] font-bold flex items-center justify-center ${activeTab === 'conflicts' ? 'bg-red-600 text-white' : activeConflictCount > 0 ? 'bg-red-500 text-white' : 'bg-blue-900 text-white'}`}>{activeConflictCount}</span>
+          </button>
         </nav>
 
         {/* Vector Image */}
@@ -213,8 +209,9 @@ const ATSDashboard = () => {
             </div>
         </header>
 
-        {/* DASHBOARD CONTENT (SCROLLABLE) */}
-        <div className="flex-1 overflow-auto p-6 bg-slate-50">
+        {/* MAIN TAB CONTENT */}
+        {activeTab === 'dashboard' ? (
+          <div className="flex-1 overflow-auto p-6 bg-slate-50">
           
           {/* Top Info Bar (Map Controls & Time) */}
           <div className="flex justify-between items-center mb-4">
@@ -346,7 +343,7 @@ const ATSDashboard = () => {
                               </p>
                               
                               <button 
-                                onClick={() => setIsConflictModalOpen(true)}
+                                onClick={() => setActiveTab('conflicts')}
                                 className="w-full bg-red-600 text-white text-xs font-bold py-2.5 rounded-none shadow-sm hover:bg-red-700 transition-colors flex items-center justify-center uppercase tracking-widest">
                                 View Conflict Details
                                 <svg className="w-3.5 h-3.5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
@@ -561,155 +558,81 @@ const ATSDashboard = () => {
             </div>
           </div>
         </div>
-      </div>
-      
-
-      {/* Conflict Modal Overlay */}
-      {isConflictModalOpen && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-none shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden animate-slide-up border border-slate-700">
-            
-            {/* Modal Header */}
-            <div className="bg-white border-b border-slate-200 p-5 flex justify-between items-start">
-              <div className="flex items-center space-x-3.5">
-                <div className="bg-red-50 border border-red-100 p-2.5 rounded-none flex-shrink-0">
-                  <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                </div>
-                <div className="flex flex-col justify-center">
-                  <h3 className="text-lg font-bold text-slate-900 tracking-tight leading-tight mb-1">Critical Operational Conflict</h3>
-                  <p className="text-sm font-medium text-slate-500 leading-tight">Platform Occupancy Conflict – {activeConflictStation}</p>
-                </div>
-              </div>
-              <button 
-                onClick={() => setIsConflictModalOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors rounded-none">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-              </button>
-            </div>
-
-            {/* Modal Body */}
-            <div className="p-6 overflow-y-auto custom-scrollbar space-y-6 flex-1 bg-white">
-              
-              {/* Trains */}
-              <div className="grid grid-cols-2 gap-0 border border-slate-200 rounded-none bg-slate-50">
-                <div className="p-4 border-r border-slate-200 bg-white">
-                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Affected Train</div>
-                  <div className="text-sm font-bold text-[#1E3A8A] mb-2">{sourceConflictTrain?.no} <span className="text-orange-600">{sourceConflictTrain?.name}</span></div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs font-semibold text-slate-500">Delay: {sourceConflictTrain?.delayMinutes}m</span>
-                    <span className="bg-red-50 text-red-700 text-[10px] font-bold px-2 py-0.5 border border-red-200 rounded-none uppercase tracking-wider">{sourceConflictTrain?.delayStr}</span>
-                  </div>
-                </div>
-                <div className="p-4 bg-white">
-                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Conflicting Train</div>
-                  <div className="text-sm font-bold text-[#1E3A8A] mb-2">{targetConflictTrain?.no} <span className="text-orange-600">{targetConflictTrain?.name}</span></div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs font-semibold text-slate-500">Delay: {targetConflictTrain?.delayMinutes}m</span>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 border rounded-none uppercase tracking-wider ${targetConflictTrain?.delayMinutes > 0 ? 'bg-orange-50 text-orange-700 border-orange-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>{targetConflictTrain?.delayStr || 'On Time'}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Stats */}
-              <div className="grid grid-cols-4 gap-0 border border-slate-200 rounded-none bg-slate-50 mb-6">
-                <div className="p-3 border-r border-slate-200 bg-white">
-                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Platform</div>
-                  <div className="text-[13px] font-bold text-slate-800">PF 2</div>
-                </div>
-                <div className="p-3 border-r border-slate-200 bg-white">
-                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Conflict Window</div>
-                  <div className="text-[13px] font-bold text-slate-800">13:45 – 13:52</div>
-                </div>
-                <div className="p-3 border-r border-slate-200 bg-white">
-                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Conflict Type</div>
-                  <div className="text-[12px] font-bold text-red-600">Arrival Sequence Overlap</div>
-                </div>
-                <div className="p-3 bg-white">
-                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Telemetry Confidence</div>
-                  <div className="text-[13px] font-bold text-blue-700 flex items-center">
-                    <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
-                    94% Validated
-                  </div>
-                </div>
-              </div>
-
-              {/* AI Sequences Section */}
-              <div className="pt-4 border-t border-slate-100">
-                <div className="flex items-center space-x-2 mb-4">
-                  <div className="w-1.5 h-4 bg-[#1E3A8A]"></div>
-                  <h4 className="text-sm font-bold text-slate-900 tracking-tight uppercase">System-Evaluated Movement Sequences</h4>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  {/* Recommended Sequence */}
-                  <div className="bg-white border-2 border-[#1E3A8A] rounded-none p-4 flex flex-col relative group">
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-[10px] font-bold tracking-widest uppercase bg-[#1E3A8A] text-white px-2 py-0.5 rounded-none">Recommended</span>
-                    </div>
-                    <div className="text-base font-bold text-slate-900 mb-2 flex items-center space-x-2">
-                      <span className="text-emerald-700">12621 First</span> 
-                      <svg className="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg> 
-                      <span className="text-slate-500">12626</span>
-                    </div>
-                    <p className="text-xs font-medium text-slate-500 mb-5 leading-relaxed">
-                      Admit the on-time TN Express to PF 2 first. Regulate Kerala Express at the approach until PF 2 is cleared.<br/>
-                      <span className="inline-block mt-3 font-bold text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded-none border border-slate-200">Est. Network Impact: +6 min</span>
-                    </p>
-                    <div className="mt-auto">
-                      <button onClick={() => { setIsConflictModalOpen(false); simStore.resolveConflict(); }} className="w-full bg-[#1E3A8A] text-white text-xs font-bold py-2.5 rounded-none hover:bg-blue-900 transition-colors flex items-center justify-center uppercase tracking-wider">
-                        Approve Sequence
-                      </button>
-                    </div>
-                  </div>
-          
-                  {/* Alternative Sequence */}
-                  <div className="bg-white border border-slate-300 rounded-none p-4 flex flex-col hover:border-slate-400 transition-colors">
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-[10px] font-bold tracking-widest uppercase bg-slate-100 text-slate-500 px-2 py-0.5 rounded-none border border-slate-200">Alternative</span>
-                    </div>
-                    <div className="text-base font-bold text-slate-900 mb-2 flex items-center space-x-2">
-                      <span className="text-orange-700">12626 First</span> 
-                      <svg className="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg> 
-                      <span className="text-slate-500">12621</span>
-                    </div>
-                    <p className="text-xs font-medium text-slate-500 mb-5 leading-relaxed">
-                      Admit Kerala Express to PF 2 first and regulate Tamil Nadu Express at the approach.<br/>
-                      <span className="inline-block mt-3 font-bold text-orange-800 bg-orange-50 px-1.5 py-0.5 border border-orange-200 rounded-none">Est. Network Impact: +9 min</span>
-                    </p>
-                    <div className="mt-auto">
-                      <button onClick={() => setIsConflictModalOpen(false)} className="w-full bg-white border border-slate-300 text-slate-700 text-xs font-bold py-2.5 rounded-none hover:bg-slate-50 transition-colors flex items-center justify-center uppercase tracking-wider">
-                        Select Alternative
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Options */}
-                <div className="bg-white border border-slate-200 rounded-none overflow-hidden">
-                  <div className="px-5 py-3 bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-900 uppercase tracking-widest">
-                    More Operational Options
-                  </div>
-                  <div className="divide-y divide-slate-100">
-                    {[
-                      'Prioritize On-Time Train',
-                      'Prioritize Delayed Train',
-                      'Evaluate Network Impact',
-                      'Check Alternate Route/Platform',
-                      'Continue Monitoring',
-                      'Manual ATS Decision'
-                    ].map((option, idx) => (
-                      <div key={idx} className="px-5 py-3 text-xs font-semibold text-slate-600 hover:text-[#1E3A8A] hover:bg-slate-50 cursor-pointer flex justify-between items-center transition-colors group">
-                        <span>{option}</span>
-                        <svg className="w-3.5 h-3.5 text-slate-300 group-hover:text-[#1E3A8A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+        ) : (
+          <div className="flex-1 overflow-auto p-8 bg-slate-50">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-3xl font-black text-slate-800 tracking-tight">Active Conflicts</h2>
+                <p className="text-slate-500 text-sm font-semibold mt-1">Real-time network overlap detection and resolution</p>
               </div>
             </div>
+
+            {activeConflictCount === 0 ? (
+              <div className="bg-white border border-slate-200 p-16 flex flex-col items-center justify-center rounded-sm shadow-sm">
+                <svg className="w-20 h-20 text-emerald-500 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <h3 className="text-2xl font-black text-slate-800 mb-2">Network Clear</h3>
+                <p className="text-slate-500 font-semibold">No operational conflicts detected across monitored zones at this time.</p>
+              </div>
+            ) : (
+              <div className="bg-white border border-red-200 border-l-4 border-l-red-600 shadow-sm rounded-sm overflow-hidden mb-6 flex flex-col">
+                <div className="bg-red-50 p-6 border-b border-red-100 flex justify-between items-center">
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-red-600 p-3 rounded-full text-white shadow-md">
+                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-black text-red-900 leading-tight mb-1">Critical Operational Conflict</h3>
+                      <p className="text-sm font-bold text-red-700 tracking-wide uppercase">Platform Occupancy Conflict – {activeConflictStation}</p>
+                    </div>
+                  </div>
+                  <div className="bg-red-100 text-red-800 text-xs font-black uppercase tracking-widest px-4 py-2 border border-red-200 rounded-sm">
+                    ACTION REQUIRED
+                  </div>
+                </div>
+
+                <div className="p-8 grid grid-cols-2 gap-8 bg-white">
+                  {/* Source Train */}
+                  <div className="border border-slate-200 p-6 rounded-sm bg-slate-50 relative shadow-inner">
+                    <div className="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-black px-3 py-1.5 uppercase tracking-wider shadow-sm">Affected Train</div>
+                    <div className="text-2xl font-black text-[#1E3A8A] mb-2 mt-4">{sourceConflictTrain?.no} <span className="text-orange-600">{sourceConflictTrain?.name}</span></div>
+                    <div className="flex justify-between items-center mt-6 pt-4 border-t border-slate-200">
+                      <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">Live Delay: <span className="text-slate-800">{sourceConflictTrain?.delayMinutes}m</span></span>
+                      <span className="bg-red-100 text-red-700 text-xs font-black px-3 py-1.5 uppercase border border-red-200 shadow-sm">{sourceConflictTrain?.delayStr}</span>
+                    </div>
+                  </div>
+
+                  {/* Target Train */}
+                  <div className="border border-slate-200 p-6 rounded-sm bg-slate-50 relative shadow-inner">
+                    <div className="absolute top-0 right-0 bg-slate-800 text-white text-[10px] font-black px-3 py-1.5 uppercase tracking-wider shadow-sm">Conflicting Train</div>
+                    <div className="text-2xl font-black text-[#1E3A8A] mb-2 mt-4">{targetConflictTrain?.no} <span className="text-emerald-600">{targetConflictTrain?.name}</span></div>
+                    <div className="flex justify-between items-center mt-6 pt-4 border-t border-slate-200">
+                      <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">Live Delay: <span className="text-slate-800">{targetConflictTrain?.delayMinutes}m</span></span>
+                      <span className={`text-xs font-black px-3 py-1.5 uppercase border shadow-sm ${targetConflictTrain?.delayMinutes > 0 ? 'bg-orange-100 text-orange-700 border-orange-200' : 'bg-emerald-100 text-emerald-700 border-emerald-200'}`}>{targetConflictTrain?.delayStr || 'On Time'}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-100 border-t border-slate-200 p-8 flex items-center justify-between">
+                  <div>
+                    <div className="text-xs font-black text-slate-500 mb-2 uppercase tracking-widest">AI Recommended Resolution</div>
+                    <div className="text-2xl font-black text-slate-800 mb-1">Hold {sourceConflictTrain?.no} at Outer Signal</div>
+                    <p className="text-sm text-orange-600 font-bold flex items-center">
+                      <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                      Est. Network Impact: +6 min to {sourceConflictTrain?.no} ETA
+                    </p>
+                  </div>
+                  <button 
+                    onClick={() => { simStore.resolveConflict(); setActiveTab('dashboard'); }}
+                    className="bg-[#1E3A8A] hover:bg-blue-900 text-white px-10 py-4 font-black text-sm uppercase tracking-widest shadow-lg transition-colors flex items-center group">
+                    Approve Sequence
+                    <svg className="w-5 h-5 ml-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
