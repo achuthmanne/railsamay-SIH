@@ -2,6 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { simStore } from '../store/SimulationStore';
 
+const TRAIN_DAYS = {
+  '12471': ['Sun', 'Mon', 'Thu', 'Fri'],
+  '12472': ['Tue', 'Wed', 'Fri', 'Sat'],
+  '12511': ['Thu', 'Fri', 'Sun'],
+  '12615': ['Daily'],
+  '12621': ['Daily'],
+  '12626': ['Daily'],
+  '12919': ['Daily'],
+  '12920': ['Daily'],
+  '17205': ['Tue', 'Thu', 'Sun'],
+  '17207': ['Wed'],
+  '18045': ['Daily'],
+  '20805': ['Daily'],
+  '20833': ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  '22439': ['Mon', 'Tue', 'Wed', 'Fri', 'Sat', 'Sun']
+};
+
+
 const CircularGauge = ({ percentage, color, label, value }) => {
   const radius = 30;
   const circumference = 2 * Math.PI * radius;
@@ -332,6 +350,7 @@ export default function TrainForecast() {
                 <div className="text-sm font-bold text-slate-500 tracking-widest uppercase mt-1">
                   Journey: {routeData.length > 0 ? `${routeData[0].name} (${routeData[0].code}) to ${routeData[routeData.length - 1].name} (${routeData[routeData.length - 1].code})` : "Loading Journey..."}
                 </div>
+            
               </div>
             </div>
             <div className="text-right">
@@ -350,7 +369,49 @@ export default function TrainForecast() {
           </div>
         </div>
 
-        {/* Journey Progress */}
+        
+          {/* Running Days Carousel UI */}
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 mb-6 flex items-center px-2 py-1">
+            <button className="p-2 text-slate-400 hover:text-slate-600 cursor-pointer">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            
+            <div className="flex-1 flex justify-between items-center overflow-x-auto gap-2">
+              {carouselDays.map((day, idx) => {
+                let statusText = '';
+                let statusClass = '';
+                
+                if (day.isPast) {
+                  statusText = 'Journey completed';
+                  statusClass = 'text-slate-500 font-medium';
+                } else if (day.isToday) {
+                  if (train?.status === 'Not Started' || !liveStation) {
+                    statusText = 'Yet to start from source';
+                    statusClass = 'text-blue-700 font-bold';
+                  } else {
+                    statusText = 'Active / In Journey';
+                    statusClass = 'text-blue-700 font-bold';
+                  }
+                } else {
+                  statusText = 'Yet to start from source';
+                  statusClass = 'text-blue-500 font-medium';
+                }
+
+                return (
+                  <div key={idx} className={`flex flex-col items-center justify-center px-4 py-3 flex-1 rounded-lg transition-colors cursor-pointer ${day.isToday ? 'bg-[#EEF2FF]' : 'hover:bg-slate-50'}`}>
+                    <span className={`text-[13px] ${day.isToday ? 'font-bold text-slate-800' : 'text-slate-600 font-medium'}`}>{day.label}</span>
+                    <span className={`text-[11px] mt-1 ${statusClass} text-center`}>{statusText}</span>
+                  </div>
+                );
+              })}
+            </div>
+
+            <button className="p-2 text-slate-400 hover:text-slate-600 cursor-pointer">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
+
+          {/* Journey Progress */}
         <div className="bg-white border border-slate-200 shadow-sm p-6">
           <div className="flex justify-between items-end mb-2">
             <span className="text-sm font-bold text-slate-800 tracking-widest uppercase">Journey Progress</span>
@@ -422,8 +483,42 @@ export default function TrainForecast() {
             assessmentText = `Current Status at ${currentLocation}: Train is perfectly ON TIME. Root Cause: Clear path ahead and optimal operational conditions.`;
         }
     }
-
-              const congestionVal = trainNo === '12626' ? (liveDelay >= 100 ? 88 : 75) : (liveDelay > 0 ? 35 : 12);
+                const generateDateCarousel = () => {
+                  const today = new Date();
+                  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                  const runningDays = TRAIN_DAYS[trainNo] || ['Daily'];
+                  
+                  let allValid = [];
+                  for(let i = -7; i <= 7; i++) {
+                     const d = new Date(today);
+                     d.setDate(today.getDate() + i);
+                     const dName = dayNames[d.getDay()];
+                     if (runningDays.includes('Daily') || runningDays.includes(dName)) {
+                        allValid.push({
+                           label: `${dName}, ${d.getDate()} ${monthNames[d.getMonth()]}`,
+                           isPast: i < 0,
+                           isToday: i === 0,
+                           isFuture: i > 0,
+                           diff: i
+                        });
+                     }
+                  }
+                  
+                  let centerIdx = allValid.findIndex(d => d.diff >= 0);
+                  if (centerIdx === -1) centerIdx = allValid.length - 1;
+                  
+                  let startIdx = Math.max(0, centerIdx - 2);
+                  let endIdx = Math.min(allValid.length, startIdx + 5);
+                  if (endIdx - startIdx < 5) {
+                     startIdx = Math.max(0, endIdx - 5);
+                  }
+                  return allValid.slice(startIdx, endIdx);
+                };
+                
+                const carouselDays = generateDateCarousel();
+                
+                const congestionVal = trainNo === '12626' ? (liveDelay >= 100 ? 88 : 75) : (liveDelay > 0 ? 35 : 12);
               const congestionColor = congestionVal > 50 ? 'text-red-500' : (congestionVal > 25 ? 'text-orange-500' : 'text-emerald-500');
               const congestionLabel = congestionVal > 50 ? 'High Traffic' : (liveDelay > 0 ? 'Moderate' : 'Clear Route');
 
