@@ -407,18 +407,18 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
     arrivalTime = calculateDynamicETA(arrivalTime, upcomingPredictedDelay);
 
     let varianceColor = 'text-emerald-600';
-    let varianceBadge = 'ON TIME';
-    let varianceBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-200';
-
-    if (train?.status === 'Held') {
-        varianceColor = 'text-orange-600';
-        varianceBadge = 'HELD';
-        varianceBadgeClass = 'bg-orange-100 text-orange-700 border-orange-200 shadow-sm';
-    } else if (train?.status === 'Cleared') {
-        varianceColor = 'text-emerald-600';
-        varianceBadge = 'CLEARED';
-        varianceBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-200 shadow-sm';
-    } else if (upcomingPredictedDelay > 0) {
+      let varianceBadge = 'ON TIME';
+      let varianceBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-200';
+  
+      if (train?.status === 'Held') {
+          varianceColor = 'text-orange-600';
+          varianceBadge = 'HELD';
+          varianceBadgeClass = 'bg-orange-100 text-orange-700 border-orange-200 shadow-sm';
+      } else if (train?.status === 'Cleared') {
+          varianceColor = 'text-emerald-600';
+          varianceBadge = 'CLEARED';
+          varianceBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-200 shadow-sm';
+      } else if (upcomingPredictedDelay > 0) {
         varianceColor = 'text-red-600';
         varianceBadge = formatDelayTime(upcomingPredictedDelay);
         varianceBadgeClass = 'bg-red-100 text-red-700 border-red-200';
@@ -429,32 +429,32 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
     }
 
     assessmentClass = 'bg-[#DCFCE7] text-[#166534] border-[#BBF7D0]';
-    assessmentText = '';
-
-    if (train?.status === 'Held') {
+      assessmentText = '';
+  
+      if (train?.status === 'Held') {
           assessmentClass = 'bg-orange-100 text-orange-800 border-orange-300 shadow-sm';
           assessmentText = `Current Status at ${currentLocation}: Train is being regulated at the approach to allow clearance of prioritized traffic.`;
       } else if (train?.status === 'Cleared') {
           assessmentClass = 'bg-emerald-100 text-emerald-800 border-emerald-300 shadow-sm';
           assessmentText = `Current Status at ${currentLocation}: Train has been given priority clearance to maintain network fluidity.`;
       } else if (liveDelay > 0) {
-          assessmentClass = 'bg-red-100 text-red-700 border-red-200';
-          if (trainNo === '12626') {
-              assessmentText = `Current Status at ${currentLocation}: Train is operating with a ${formatDelayTime(liveDelay)} delay. Root Cause: Severe network congestion cascading into a Platform Sequence Conflict.`;
-          } else {
-              assessmentText = `Current Status at ${currentLocation}: Train is operating with a ${formatDelayTime(liveDelay)} delay. Root Cause: Minor origin delay. System engaged compensatory limits to recover.`;
-          }
-      } else {
-          if (train?.status === 'Not Started') {
-              assessmentText = `Current Status at ${currentLocation}: Train has not started yet. Pre-departure checks are in progress and route clearance is awaited.`;
-              assessmentClass = 'bg-slate-100 text-slate-700 border-slate-300';
-          } else if (trainNo === '12621' && liveStation && liveStation.code !== 'BPQ') {
-              assessmentText = `Current Status at ${currentLocation}: Train is ON TIME (Delay successfully recovered). Root Cause: Clear path ahead and optimal speed maintained.`;
-          } else {
-              assessmentText = `Current Status at ${currentLocation}: Train is perfectly ON TIME. Root Cause: Clear path ahead and optimal operational conditions.`;
-          }
-      }
-      
+        assessmentClass = 'bg-red-100 text-red-700 border-red-200';
+        if (trainNo === '12626') {
+            assessmentText = `Current Status at ${currentLocation}: Train is operating with a ${formatDelayTime(liveDelay)} delay. Root Cause: Severe network congestion and adverse weather cascading into a Platform Sequence Conflict at upcoming NGP junction.`;
+        } else {
+            assessmentText = `Current Status at ${currentLocation}: Train is operating with a ${formatDelayTime(liveDelay)} delay. Root Cause: Minor origin delay. System has engaged compensatory speed limits to fully recover time.`;
+        }
+    } else {
+        if (train?.status === 'Not Started') {
+            assessmentText = `Current Status at ${currentLocation}: Train has not started yet. Pre-departure checks are in progress and route clearance is awaited.`;
+            assessmentClass = 'bg-slate-100 text-slate-700 border-slate-300';
+        } else if (trainNo === '12621' && liveStation && liveStation.code !== 'BPQ') {
+            assessmentText = `Current Status at ${currentLocation}: Train is ON TIME (Delay successfully recovered). Root Cause: Clear path ahead and optimal speed maintained.`;
+        } else {
+            assessmentText = `Current Status at ${currentLocation}: Train is perfectly ON TIME. Root Cause: Clear path ahead and optimal operational conditions.`;
+        }
+    }
+    
     const generateDateCarousel = () => {
       const today = new Date();
       const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
