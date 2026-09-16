@@ -60,26 +60,24 @@ const ATSDashboard = () => {
   const office = localStorage.getItem('rail_samay_office') || 'Control Room';
 
       useEffect(() => {
-    if (simStore.trains.length === 0) {
-      const engine = new SimulationEngine(division);
-      engine.initialize().then(data => {
-        simStore.setInitial(data);
-        setIsLoading(false);
-      });
-    } else {
+    // We re-initialize the simulation engine whenever viewMode changes so it loads Zone vs Division trains.
+    const queryContext = viewMode === 'Zone' ? zone : division;
+    
+    setIsLoading(true);
+    simStore.stop();
+    const engine = new SimulationEngine(queryContext);
+    engine.initialize().then(data => {
+      simStore.setInitial(data);
       setIsLoading(false);
-    }
+    });
     
     const unsubscribe = simStore.subscribe((trains, isSim) => {
       setLiveTrains(trains);
       setIsSimulating(isSim);
     });
     
-    setLiveTrains(simStore.trains);
-    setIsSimulating(simStore.isSimulating);
-    
     return () => unsubscribe();
-  }, [division]);
+  }, [viewMode, division, zone]);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -308,8 +306,9 @@ const ATSDashboard = () => {
                                               <button 
                           onClick={() => {
                             simStore.stop();
-                            const engine = new SimulationEngine(division);
-                            engine.initialize().then(data => {
+                              const queryContext = viewMode === 'Zone' ? zone : division;
+                              const engine = new SimulationEngine(queryContext);
+                              engine.initialize().then(data => {
                                 simStore.isSimulating = false;
                                 simStore.setInitial(data);
                             });

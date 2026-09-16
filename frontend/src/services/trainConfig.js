@@ -27,7 +27,19 @@ export const DIVISION_MAPPING = {
   'Vijayawada': ['12615', '20805', '12621', '20833']
 };
 
-export const getTrainsForDivision = (division) => {
-  const trainNumbers = DIVISION_MAPPING[division] || TRAIN_REGISTRY.map(t => t.no);
-  return TRAIN_REGISTRY.filter(t => trainNumbers.includes(t.no));
+export const ZONE_MAPPING = {
+  'Central Railway': ['12621', '12626', '20805'],
+  'South Central Railway': ['20833', '18045', '17205', '17207', '12511', '12615', '20805', '12621'],
+  'Northern Railway': ['22439', '12920', '12919', '12471', '12472']
+};
+
+export const getTrainsForContext = (context) => {
+  if (DIVISION_MAPPING[context]) {
+    return TRAIN_REGISTRY.filter(t => DIVISION_MAPPING[context].includes(t.no));
+  }
+  if (ZONE_MAPPING[context]) {
+    // We use a filter to ensure no duplicates if there's overlap
+    return TRAIN_REGISTRY.filter(t => ZONE_MAPPING[context].includes(t.no));
+  }
+  return TRAIN_REGISTRY;
 };

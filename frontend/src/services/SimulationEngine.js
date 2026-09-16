@@ -1,9 +1,9 @@
-import { getTrainsForDivision } from './trainConfig';
+import { getTrainsForContext } from './trainConfig';
 
 export class SimulationEngine {
   constructor(division) {
     this.division = division;
-    this.trains = getTrainsForDivision(division);
+    this.trains = getTrainsForContext(division);
     this.liveData = [];
   }
 
