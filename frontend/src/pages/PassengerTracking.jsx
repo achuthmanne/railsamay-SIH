@@ -62,12 +62,7 @@ export default function PassengerTracking() {
             <svg className="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             RETURN TO HOME
           </Link>
-            {isLoggedIn && (
-              <button className="absolute top-8 right-8 flex items-center justify-center p-3 bg-white border border-slate-200 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all shadow-sm z-50 group cursor-pointer" title="Passenger Alerts & Notifications">
-                 <svg className="w-5 h-5 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                 <span className="absolute top-2 right-2 w-2 h-2 bg-red-600 rounded-full animate-pulse border border-white"></span>
-              </button>
-            )}
+            
           <div className="max-w-lg w-full bg-white p-12 border border-slate-200 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-[#1E3A8A]"></div>
               {/* Normal Train Icon */}
@@ -424,13 +419,21 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
       {/* Top Header Block */}
       <div className="flex justify-between items-end mb-4">
         <div>
-          <button 
+          <div className="flex justify-between items-start mb-6 w-full">
+            <button 
             onClick={onBack}
-            className="flex items-center px-5 py-2 bg-white border border-slate-200 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all font-bold text-xs tracking-widest uppercase group mb-6 w-max"
+            className="flex items-center px-5 py-2 bg-white border border-slate-200 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all font-bold text-xs tracking-widest uppercase group w-max"
           >
             <svg className="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             RETURN TO SEARCH
           </button>
+            {isLoggedIn && (
+              <button className="text-slate-400 hover:text-[#F97316] transition-colors relative cursor-pointer" title="Passenger Alerts">
+                 <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                 <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse border-2 border-slate-50"></span>
+              </button>
+            )}
+          </div>
           <h2 className="text-3xl font-black font-montserrat tracking-tight uppercase">
             <span className="text-[#1E3A8A]">{trainNo}</span> <span className="text-orange-600">{trainName}</span>
           </h2>
@@ -439,15 +442,8 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
           </div>
         </div>
 
-        <div className="flex items-end gap-5 pb-1">
-          {isLoggedIn && (
-            <button className="flex items-center justify-center p-3 bg-white border border-slate-200 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all shadow-sm z-50 group relative cursor-pointer" title="Passenger Alerts & Notifications">
-               <svg className="w-5 h-5 text-[#F97316]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-               <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full animate-pulse border border-white"></span>
-            </button>
-          )}
-          {/* Refresh Button block matching ATS */}
-          <div className="text-right">
+        {/* Refresh Button block matching ATS */}
+        <div className="text-right pb-1">
           <div className="text-xs font-bold text-slate-500 mb-2">
             Last updated: {lastUpdated}
           </div>
@@ -455,11 +451,10 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
             <svg className={`w-3 h-3 mr-1 ${isRefreshing ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
             {isRefreshing ? 'Refreshing...' : 'Refresh'}
           </button>
+          </div>
         </div>
-      </div>
-        </div>
-      
-      {/* Dynamic Info Banner matching ATS */}
+        
+        {/* Dynamic Info Banner matching ATS */}
       <div className="bg-orange-50 border border-orange-100 px-6 py-3 mb-6 flex items-center text-xs font-bold text-orange-800 tracking-wide shadow-sm">
         <span className="w-4 h-4 bg-orange-200 rounded-none flex items-center justify-center mr-2 text-[10px]">i</span>
         Data shown with (*) are dynamic in nature and may change.
