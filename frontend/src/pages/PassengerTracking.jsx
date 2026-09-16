@@ -51,8 +51,7 @@ export default function PassengerTracking() {
     setSearchedTrain(tNo);
     setShowDropdown(false);
   };
-
-  return (
+    return (
     <div className="min-h-screen bg-slate-50 font-inter flex flex-col relative overflow-x-hidden">
 
 
@@ -135,6 +134,7 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
   const [expandedStations, setExpandedStations] = useState({});
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState('Just now');
+    const [showNotifications, setShowNotifications] = useState(false);
   
   const handleRefresh = () => {
       setIsRefreshing(true);
@@ -402,8 +402,45 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
           assessmentText = `Current Status at ${currentLocation}: Train is perfectly ON TIME. Root Cause: Clear path ahead and optimal operational conditions.`;
       }
   }
+    const getDynamicAlerts = () => {
+      const alerts = [];
+      if (liveStation) {
+        alerts.push({
+          type: liveDelay > 0 ? 'warning' : 'success',
+          title: 'Current Status',
+          message: `Your train has recently departed from ${liveStation.name} (${liveStation.code}).`,
+          time: lastUpdated
+        });
+      }
+      if (upcomingStation) {
+        if (liveDelay > 0) {
+          alerts.push({
+            type: 'warning',
+            title: 'Running Late',
+            message: `The train is delayed by ${formatDelayTime(liveDelay)}. It is expected to reach ${upcomingStation.name} at ${arrivalTime}.`,
+            time: lastUpdated
+          });
+        } else {
+          alerts.push({
+            type: 'success',
+            title: 'On Time',
+            message: `Good news! Your train is running on time and will reach ${upcomingStation.name} exactly at ${arrivalTime}.`,
+            time: lastUpdated
+          });
+        }
+      }
+      alerts.push({
+        type: 'info',
+        title: 'Live Tracking Active',
+        message: 'We are actively tracking your train\'s location to give you the most accurate arrival times.',
+        time: lastUpdated
+      });
+      return alerts;
+    };
+    
+    const alertsList = getDynamicAlerts();
 
-  return (
+    return (
     <div className="flex flex-col h-full bg-slate-50 relative overflow-x-hidden">
       <div className="flex flex-col flex-1 p-4 pt-10 md:p-6 md:pt-12 max-w-6xl mx-auto w-full">
       <style>{`
@@ -437,10 +474,35 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
         {/* Refresh Button block matching ATS */}
         <div className="flex items-end gap-6 pb-1">
           {isLoggedIn && (
-              <button className="text-slate-800 hover:text-[#F97316] transition-colors relative cursor-pointer mb-[2px]" title="Passenger Alerts">
+              <div className="relative z-[100]">
+                <button onClick={() => setShowNotifications(!showNotifications)} className="text-slate-800 hover:text-[#F97316] transition-colors relative cursor-pointer mb-[2px]" title="Passenger Alerts">
                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
                    <span className="absolute top-0 right-0 w-3 h-3 bg-red-600 rounded-full border-2 border-white"></span>
-              </button>
+                </button>
+                {showNotifications && (
+                  <div className="absolute top-10 right-0 w-80 bg-white border border-slate-200 shadow-xl overflow-hidden text-left font-inter rounded-sm">
+                    <div className="bg-[#1E3A8A] text-white px-4 py-3 font-bold text-sm flex justify-between items-center tracking-widest uppercase">
+                      <span>Train Updates</span>
+                      <button onClick={() => setShowNotifications(false)} className="text-white hover:text-orange-300">✕</button>
+                    </div>
+                    <div className="p-0 max-h-80 overflow-y-auto">
+                       {alertsList.map((alert, idx) => (
+                         <div key={idx} className="border-b border-slate-100 p-4 hover:bg-slate-50 transition-colors">
+                           <div className={`text-xs font-black uppercase mb-1 tracking-wider ${alert.type === 'warning' ? 'text-orange-600' : alert.type === 'success' ? 'text-emerald-600' : 'text-blue-600'}`}>
+                             {alert.title}
+                           </div>
+                           <div className="text-[13px] text-slate-700 leading-relaxed font-medium">
+                             {alert.message}
+                           </div>
+                           <div className="text-[10px] text-slate-400 mt-2 font-bold tracking-wider">
+                             {alert.time}
+                           </div>
+                         </div>
+                       ))}
+                    </div>
+                  </div>
+                )}
+              </div>
           )}
           <div className="text-right">
           <div className="text-xs font-bold text-slate-500 mb-2">
@@ -561,8 +623,7 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
 
               const displayExpectedArrival = calculateDynamicETA(station.scheduled_arrival, nodeDelay);
               const displayExpectedDeparture = calculateDynamicETA(station.scheduled_departure, nodeDelay);
-              
-              return ( 
+    return ( 
               <div key={index} className="flex flex-col transition-colors">
                 
                 {/* Stopping Station Row */}
@@ -713,8 +774,7 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
                       } else if (nsIsPassed) {
                           nsStatusClass = 'bg-slate-200 text-slate-600';
                       }
-                      
-                      return (
+    return (
                       <div key={i} className="flex relative items-stretch border-b border-orange-200">
                         
                         {/* Left Badge Area - Subtract 6px width to account for the border-l-[6px] on parent! */}
