@@ -72,7 +72,7 @@ class Store {
     // T=0s
     this.trains = startTrains.map(t => {
       if (t.no === '12626') return { ...t, delayMinutes: 90, delayStr: '+ 90m', status: 'Severely Delayed', currentLocation: 'Departed ET (Itarsi)', scenarioFlags: [] };
-      if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Departed BPQ (Balharshah)', scenarioFlags: [] };
+      if (t.no === '12621') return { ...t, delayMinutes: 8, delayStr: '+ 8m', status: 'Recovering', currentLocation: 'Departed BPQ (Balharshah)', scenarioFlags: [] };
       return t;
     });
     this.notify();
@@ -81,7 +81,7 @@ class Store {
     this.timeoutIds.push(setTimeout(() => {
       this.trains = this.trains.map(t => {
         if (t.no === '12626') return { ...t, delayMinutes: 100, delayStr: '+ 100m', status: 'Severely Delayed', currentLocation: 'Passing TEO (Teegaon)' };
-        if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Passing MJRI (Majri)' };
+        if (t.no === '12621') return { ...t, delayMinutes: 4, delayStr: '+ 4m', status: 'Recovering', currentLocation: 'Passing MJRI (Majri)' };
         return t;
       });
       this.notify();
@@ -101,7 +101,7 @@ class Store {
     this.timeoutIds.push(setTimeout(() => {
       this.trains = this.trains.map(t => {
         if (t.no === '12626') return { ...t, delayMinutes: 115, delayStr: '+ 115m', status: 'Severely Delayed', currentLocation: 'Passing KATL (Katol)' };
-        if (t.no === '12621') return { ...t, currentLocation: 'Passing SNI (Sindi)' };
+        if (t.no === '12621') return { ...t, delayMinutes: 0, delayStr: 'On Time', status: 'On Time', currentLocation: 'Passing SNI (Sindi)' };
         return t;
       });
       this.notify();
