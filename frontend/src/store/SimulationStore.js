@@ -12,7 +12,7 @@ class Store {
           try {
             const data = JSON.parse(e.newValue);
             this.trains = data.trains;
-            this.isSimulating = data.isSimulating;
+            this.isSimulating = false; // Force false on reload since timeouts are lost
             this.listeners.forEach(l => l([...this.trains], this.isSimulating));
           } catch(err) {}
         }
