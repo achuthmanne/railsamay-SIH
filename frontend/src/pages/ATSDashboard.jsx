@@ -55,6 +55,12 @@ const ATSDashboard = () => {
   const [isConflictModalOpen, setIsConflictModalOpen] = useState(false);
   const [isSimulating, setIsSimulating] = useState(false);
 
+  // Dynamic Conflict Detection
+  const sourceConflictTrain = liveTrains.find(t => t.scenarioFlags?.includes('CONFLICT_SOURCE'));
+  const targetConflictTrain = liveTrains.find(t => t.scenarioFlags?.includes('CONFLICT_TARGET'));
+  const activeConflictStation = sourceConflictTrain ? sourceConflictTrain.currentLocation.split('(')[1]?.split(')')[0] || 'NGP' : 'NGP';
+
+
   const zone = localStorage.getItem('rail_samay_zone') || 'Central Railway';
   const division = localStorage.getItem('rail_samay_division') || 'Nagpur';
   const office = localStorage.getItem('rail_samay_office') || 'Control Room';
@@ -337,7 +343,7 @@ const ATSDashboard = () => {
                                   <h3 className="text-sm font-bold text-slate-800 leading-tight">Critical Operational Conflict</h3>
                                 </div>
                                 <p className="text-xs font-semibold text-slate-500 ml-6 mb-4 leading-normal">
-                                Platform 2 Occupancy Conflict — NGP
+                                Platform Occupancy Conflict – {activeConflictStation}
                               </p>
                               
                               <button 
@@ -572,7 +578,7 @@ const ATSDashboard = () => {
                 </div>
                 <div className="flex flex-col justify-center">
                   <h3 className="text-lg font-bold text-slate-900 tracking-tight leading-tight mb-1">Critical Operational Conflict</h3>
-                  <p className="text-sm font-medium text-slate-500 leading-tight">Platform 2 Occupancy Conflict — NGP</p>
+                  <p className="text-sm font-medium text-slate-500 leading-tight">Platform Occupancy Conflict – {activeConflictStation}</p>
                 </div>
               </div>
               <button 
@@ -589,18 +595,18 @@ const ATSDashboard = () => {
               <div className="grid grid-cols-2 gap-0 border border-slate-200 rounded-none bg-slate-50">
                 <div className="p-4 border-r border-slate-200 bg-white">
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Affected Train</div>
-                  <div className="text-sm font-bold text-[#1E3A8A] mb-2">12626 <span className="text-orange-600">Kerala Express</span></div>
+                  <div className="text-sm font-bold text-[#1E3A8A] mb-2">{sourceConflictTrain?.no} <span className="text-orange-600">{sourceConflictTrain?.name}</span></div>
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-semibold text-slate-500">ETA: 13:45</span>
-                    <span className="bg-red-50 text-red-700 text-[10px] font-bold px-2 py-0.5 border border-red-200 rounded-none uppercase tracking-wider">+02h 00m Delay</span>
+                    <span className="text-xs font-semibold text-slate-500">Delay: {sourceConflictTrain?.delayMinutes}m</span>
+                    <span className="bg-red-50 text-red-700 text-[10px] font-bold px-2 py-0.5 border border-red-200 rounded-none uppercase tracking-wider">{sourceConflictTrain?.delayStr}</span>
                   </div>
                 </div>
                 <div className="p-4 bg-white">
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Conflicting Train</div>
-                  <div className="text-sm font-bold text-[#1E3A8A] mb-2">12621 <span className="text-orange-600">Tamil Nadu Express</span></div>
+                  <div className="text-sm font-bold text-[#1E3A8A] mb-2">{targetConflictTrain?.no} <span className="text-orange-600">{targetConflictTrain?.name}</span></div>
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-semibold text-slate-500">ETA: 13:45</span>
-                    <span className="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2 py-0.5 border border-emerald-200 rounded-none uppercase tracking-wider">On Time</span>
+                    <span className="text-xs font-semibold text-slate-500">Delay: {targetConflictTrain?.delayMinutes}m</span>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 border rounded-none uppercase tracking-wider ${targetConflictTrain?.delayMinutes > 0 ? 'bg-orange-50 text-orange-700 border-orange-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>{targetConflictTrain?.delayStr || 'On Time'}</span>
                   </div>
                 </div>
               </div>
