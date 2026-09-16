@@ -46,7 +46,14 @@ export default function TrainForecast() {
   }, [trainNo]);
 
   const train = liveTrain;
-  const currentLocation = train?.currentLocation || location.state?.currentLocation || 'NGP';
+  let currentLocation = train?.currentLocation || location.state?.currentLocation;
+    if (!currentLocation && routeData.length > 2) {
+        currentLocation = routeData[Math.floor(routeData.length / 2)].code;
+    } else if (!currentLocation && routeData.length > 0) {
+        currentLocation = routeData[0].code;
+    } else if (!currentLocation) {
+        currentLocation = 'NGP';
+    }
   const liveDelay = train?.delayMinutes || 0;
 
   const calculateDynamicETA = (timeStr, delayMins) => {

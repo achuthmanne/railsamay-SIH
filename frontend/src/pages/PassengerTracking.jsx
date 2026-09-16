@@ -332,7 +332,14 @@ function PassengerForecastView({ trainNo, onBack, isLoggedIn }) {
 
   const liveDelay = train?.delayMinutes || 0;
   const trainName = train?.name || AVAILABLE_TRAINS.find(t => t.no === trainNo)?.name || '';
-  const currentLocation = train?.currentLocation || 'NGP';
+  let currentLocation = train?.currentLocation;
+    if (!currentLocation && routeData.length > 2) {
+        currentLocation = routeData[Math.floor(routeData.length / 2)].code;
+    } else if (!currentLocation && routeData.length > 0) {
+        currentLocation = routeData[0].code;
+    } else if (!currentLocation) {
+        currentLocation = 'NGP';
+    }
   
   const isMatch = (code) => {
       const regex = new RegExp(`\\b${code}\\b|\\(${code}\\)`);
